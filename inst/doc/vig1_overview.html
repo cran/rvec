@@ -16,27 +16,27 @@
 
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -50,55 +50,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -132,25 +131,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <style type="text/css">
-/* for pandoc --citeproc since 2.11 */
+
 div.csl-bib-body { }
 div.csl-entry {
-  clear: both;
+clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+margin-left:2em;
+text-indent:-2em;
 }
 div.csl-left-margin {
-  min-width:2em;
-  float:left;
+min-width:2em;
+float:left;
 }
 div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
+margin-left:2em;
+padding-left:1em;
 }
 div.csl-indent {
-  margin-left: 2em;
+margin-left: 2em;
 }
 </style>
 
@@ -395,20 +395,20 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="toy-example" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Toy example</h2>
 <p>We begin with a toy example, to illustrate basic functionality.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvec)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;rvec&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     sd, var</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     rank</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rvec</span>(l)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>theta</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3,1,0</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rvec)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;rvec&#39;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;     sd, var</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;     rank</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rvec</span>(l)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>theta</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; [1] 3,1,0</span></span></code></pre></div>
 <p>The header <code>&lt;rvec_dbl&lt;3&gt;[1]&gt;</code> describe the structure of <code>theta</code>:</p>
 <ul>
 <li><code>_dbl</code> indicates that <code>theta</code> is composed of <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/double">doubles</a></li>
@@ -416,14 +416,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><code>[1]</code> indicates that each draw has length 1.</li>
 </ul>
 <p>We can perform standard mathematical operations:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10,2,1</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] 10,2,1</span></span></code></pre></div>
 <p><code>theta</code> recycles to match the length of other vectors,</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> theta <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>beta</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[2]&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4,2,1  2,0,-1</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>beta <span class="ot">&lt;-</span> theta <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>beta</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[2]&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; [1] 4,2,1  2,0,-1</span></span></code></pre></div>
 <p><code>beta</code> consists of three draws:</p>
 <ol style="list-style-type: decimal">
 <li><code>c(4, 2)</code>, obtained from adding <code>3</code> and <code>c(1, -1)</code>,</li>
@@ -431,81 +431,81 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><code>c(1, -1)</code>, obtained from adding <code>0</code> and <code>c(1, -1)</code>.</li>
 </ol>
 <p>To summarize across random draws, we use <code>draws_*</code> functions, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">draws_mean</span>(beta)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.3333333 0.3333333</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">draws_mean</span>(beta)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.3333333 0.3333333</span></span></code></pre></div>
 </div>
 <div id="sec:divorce" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Divorce rates</h2>
 <p>Our next example is more involved, and includes the use of some standard tidyverse packages.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>We analyse a posterior sample from a Bayesian model of divorce rates in New Zealand. The rates are divorces per thousand people per year, disaggregated by age and sex. The rates are not stored as an rvec, but instead in a ‘data base’ format, where each row describes a single draw.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>divorce</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22,000 × 4</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age   sex     draw   rate</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female     1 0.0462</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 15-19 Female     2 0.0369</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 15-19 Female     3 0.0448</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 15-19 Female     4 0.0411</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 15-19 Female     5 0.0333</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 15-19 Female     6 0.0511</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 15-19 Female     7 0.0249</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 15-19 Female     8 0.0280</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 15-19 Female     9 0.0339</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 15-19 Female    10 0.0425</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 21,990 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>divorce</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22,000 × 4</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;    age   sex     draw   rate</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female     1 0.0462</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;  2 15-19 Female     2 0.0369</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;  3 15-19 Female     3 0.0448</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;  4 15-19 Female     4 0.0411</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;  5 15-19 Female     5 0.0333</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;  6 15-19 Female     6 0.0511</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;  7 15-19 Female     7 0.0249</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;  8 15-19 Female     8 0.0280</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;  9 15-19 Female     9 0.0339</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; 10 15-19 Female    10 0.0425</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 21,990 more rows</span></span></code></pre></div>
 <p>First we convert from database format to rvec format.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>divorce_rv</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>divorce_rv</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
 <p>When the number of draws is large, the print method displays <code>&lt;median&gt; (&lt;2.5% quantile&gt;, &lt;97.5% quantile&gt;)</code> for the distribution, rather than the individual draws.</p>
 <p>We define the ‘total divorce rate’ to be the number of divorces that a person would expect to experience over their lifetime under prevailing divorce rates. The total divorce rate can be calculated as</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TDR =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sex                  TDR</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TDR =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;   sex                  TDR</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)</span></span></code></pre></div>
 <p>We summarize across draws using <code>draws_ci()</code>, which, by default, calculates medians and 95% credible intervals. Function <code>draws_ci()</code> returns a tibble rather than a vector, so, following standard <code>mutate</code> rules, we do not explicitly create new columns.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">tdr =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(tdr))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sex                  tdr tdr.lower tdr.mid tdr.upper</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)     0.218   0.223     0.228</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)     0.221   0.226     0.231</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">tdr =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(tdr))</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;   sex                  tdr tdr.lower tdr.mid tdr.upper</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)     0.218   0.223     0.228</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)     0.221   0.226     0.231</span></span></code></pre></div>
 <p>Next we calculate the ratio between female and male divorce rates,</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>divorce_ratio <span class="ot">&lt;-</span> divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> Female <span class="sc">/</span> Male) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(ratio))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>divorce_ratio <span class="ot">&lt;-</span> divorce_rv <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> Female <span class="sc">/</span> Male) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(ratio))</span></code></pre></div>
 <p>and graph the result</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(divorce_ratio,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymin =</span> ratio.lower, </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> ratio.mid,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">ymax =</span> ratio.upper)) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggplot</span>(divorce_ratio,</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>           <span class="at">ymin =</span> ratio.lower, </span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>           <span class="at">y =</span> ratio.mid,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>           <span class="at">ymax =</span> ratio.upper)) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>()</span></code></pre></div>
 <p><img src="data:image/png;base64,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34V6Jnjsu0//NmzYMBbufn+t2tCF/M6fxqCfDfpa1Lwlfn87zZ9dGzpPB7/y9+Pay/9v1eeKvifLt+zdlKwpQJcvXy433HCD6LGdevycDqWlpXL11VebwlELS/2nXx7169dPmoFkbeibtn///qJfNIsWLZKZM2eaY/O8LEJvuukm80GiZ/U99NBD0qhRI/nlL38p+kH6m9/8RrZv3y7z5s0zb6BOnTolLZCt2ohBbNq0SX7/+99L9erVpXXr1rHJnvy1iq0i+bNqIwj5u/nmm81rT/M1ZswYadu2rTl+pyL5s2ojliA/82cVW0XyZ9WGXqpp6NChpvDUy4rpD0g9vtmPQS89pF9SF198sVl9RfIXi7dsG7Hps2fPFr20ynnnnbffD+jYfC/+lo2tIvmLxVe2jSDkb9SoUTJ37lz597//bd6H2q+WLVuagka/M3SDxVNPPWV+GOqxrckGqzZiy/qZP6vY9DtBvy/WrFlj+q3ff+ecc04s5P3+WrURhPzpJQUnT54s1apVE718m77/f/GLX1Qof1ZtxBD8zF8shsS/VvFW5j2Z2K7n49HT9UM/vPrqq5ELL7ww0rNnz8ibb74Z7++XX34ZiRag8cd2I1ZtRK8VGnn88cfjT40WaZFoERp/7PZIdKtZ5Morr4yvRtd94403msfRL+TI6NGj4/OuvfbayHvvvRd/HBuxayO2zP/8z/9Errnmmoi26eVgF5vT/Nm14Xf+vv7668j1118fJ41+QceNnebPro1Yw37lzy42p/mza0Pf05988onpZnRrRyR64llk165dsW579nfatGmR6I+9SO/evePrdJq/2BOStaHz1q5daz6nzj///Ei0SIot7unfZLE5zV8s0GRtBCF/l19+eSS6FywWZvyv5vKf//ynefzdd99F1D+6oSE+P3HEqg1dxu/8WcUWLaojf/nLXxK7YTlu1Ybf+Vu1alXksssui0S3rJvYoxuBIi+++KIZd5o/uza0Ib/zZzqT8J9dvKnek9Gt3vvVCwnN+jKaFceA6ib5P//5z2bLZ+KWyWiyzC6HqVOnml9QdmelWrWxZMkS82s59stBz9796quvYg9d/6tnK+oF82ODHgYQ/QI2D3WX8wknnBCbZcajX9bxx7ERuzZ0mddff11q164tJ598cuwpnv21i81p/uza8Dt/usX94YcfNp66lVIPo9At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" /><!-- --></p>
 </div>
 </div>
@@ -631,65 +631,65 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="creating-rvecs" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Creating rvecs</h1>
 <p>An individual rvec can be created from a list of vectors,</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(LETTERS, letters)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;26&gt;[2]&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] ..A.. ..a..</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(LETTERS, letters)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;26&gt;[2]&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [1] ..A.. ..a..</span></span></code></pre></div>
 <p>a matrix,</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2000</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;1000&gt;[2]&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.012 (-1.9, 1.8)  -0.015 (-1.9, 1.9)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2000</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;1000&gt;[2]&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.02 (-1.9, 1.9)  0.024 (-1.7, 1.7)</span></span></code></pre></div>
 <p>or an atomic vector</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;1&gt;[2]&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] T F</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;1&gt;[2]&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; [1] T F</span></span></code></pre></div>
 <p>Function <code>rvec()</code> chooses from classes <code>&quot;rvec_dbl&quot;</code>, <code>&quot;rvec_int&quot;</code>, <code>&quot;rvec_lgl&quot;</code>, and <code>&quot;rvec_chr&quot;</code>, based on the input. To enforce a particular class, use function <code>rvec_dbl()</code>, <code>rvec_int()</code>, <code>rvec_lgl()</code>, or <code>rvec_chr()</code>,</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[1]&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,2,3</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec_dbl</span>(x)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,2,3</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rvec_chr</span>(x)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;3&gt;[1]&gt;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1&quot;,&quot;2&quot;,&quot;3&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[1]&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; [1] 1,2,3</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="fu">rvec_dbl</span>(x)</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; [1] 1,2,3</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">rvec_chr</span>(x)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;3&gt;[1]&gt;</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1&quot;,&quot;2&quot;,&quot;3&quot;</span></span></code></pre></div>
 <p>When the raw data take the form of a database with one draw per row, the most efficient way to create rvecs is to use <code>collapse_to_rvec()</code>. See Section <a href="#sec:divorce">2.2</a> for an example.</p>
 <p>Section <a href="#sec:prob">6</a> shows how to create an rvec consisting of draws from a standard probability distribution.</p>
 </div>
 <div id="mathematical-and-logical-operations" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Mathematical and logical operations</h1>
 <p>Mathematical and logical operations are applied independently to each draw.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>)))</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(x)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] T,F</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(x)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] T,T</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>)))</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">all</span>(x)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; [1] T,F</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="fu">any</span>(x)</span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; [1] T,T</span></span></code></pre></div>
 <p>User-defined functions that consist entirely of standard mathematical and logical operations should work with no modifications.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span>p))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.4</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.9</span>))),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">logit</span>(x)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           x              y</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;rdbl&lt;2&gt;&gt;      &lt;rdbl&lt;2&gt;&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   0.2,0.4 -1.386,-0.4055</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   0.6,0.9   0.4055,2.197</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span>p))</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.4</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.9</span>))),</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">logit</span>(x)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt;           x              y</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt;   &lt;rdbl&lt;2&gt;&gt;      &lt;rdbl&lt;2&gt;&gt;</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; 1   0.2,0.4 -1.386,-0.4055</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; 2   0.6,0.9   0.4055,2.197</span></span></code></pre></div>
 <p>Multiplying an rvec by a matrix produces an rvec,</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>m <span class="sc">%*%</span> x</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4,6 3,4</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>           <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>m <span class="sc">%*%</span> x</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; [1] 4,6 3,4</span></span></code></pre></div>
 <p><strong>rvec</strong> contains a suite of functions for summarising weighted data:</p>
 <ul>
 <li><code>weighted_mad()</code></li>
@@ -701,42 +701,42 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>All of these are built on functions from package <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>.</p>
 <p>The elements of an rvec do not have a well-defined order when there is more than one draw. Functions <code>sort()</code> and <code>order()</code> fail when called on an rvec, unless <code>n_draw</code> is 1.</p>
 <p>Ranking does, however, have a useful interpretation. We apply the ranking operation independently to each draw, and return the results as an integer rvec.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>divorce_ratio <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, ratio) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(ratio))</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 × 3</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age               ratio         rank</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;      &lt;rdbl&lt;1000&gt;&gt; &lt;rint&lt;1000&gt;&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 15-19   1.7 (0.66, 4.3)   10 (2, 11)</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 20-24    2.1 (1.6, 2.6)  11 (10, 11)</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 25-29    1.6 (1.4, 1.7)    9 (9, 10)</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 30-34    1.2 (1.1, 1.3)     8 (8, 9)</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 35-39      1.1 (1, 1.2)     7 (5, 8)</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 40-44     1 (0.98, 1.1)     6 (5, 7)</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 45-49     1 (0.93, 1.1)     5 (5, 7)</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 50-54 0.89 (0.83, 0.94)     4 (4, 5)</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 55-59 0.79 (0.74, 0.85)     3 (2, 4)</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 60-64 0.73 (0.65, 0.82)     2 (2, 3)</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 65+   0.51 (0.45, 0.57)     1 (1, 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>divorce_ratio <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">select</span>(age, ratio) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(ratio))</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 × 3</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt;    age               ratio         rank</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;      &lt;rdbl&lt;1000&gt;&gt; &lt;rint&lt;1000&gt;&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19   1.7 (0.66, 4.3)   10 (2, 11)</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24    2.1 (1.6, 2.6)  11 (10, 11)</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29    1.6 (1.4, 1.7)    9 (9, 10)</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34    1.2 (1.1, 1.3)     8 (8, 9)</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39      1.1 (1, 1.2)     7 (5, 8)</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44     1 (0.98, 1.1)     6 (5, 7)</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49     1 (0.93, 1.1)     5 (5, 7)</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 0.89 (0.83, 0.94)     4 (4, 5)</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 0.79 (0.74, 0.85)     3 (2, 4)</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 0.73 (0.65, 0.82)     2 (2, 3)</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; 11 65+   0.51 (0.45, 0.57)     1 (1, 1)</span></span></code></pre></div>
 <p>The rank of the 15-19 age group is uncertain, while the rank of the 65+ age group is estimated precisely.</p>
 </div>
 <div id="sec:prob" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Probability distributions</h1>
 <p>Standard R probability functions such as <code>dnorm()</code> or <code>rbinom()</code> do not allow rvec arguments. Package <strong>rvec</strong> provides modified functions that do. For instance,</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.2</span>),</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">7</span>)))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)))</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm_rvec</span>(y, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1258,0.1283 0.08066,0.018</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom_rvec</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fu">round</span>(y<span class="sc">+</span><span class="dv">10</span>), <span class="at">prob =</span> <span class="fl">0.8</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 8,9  12,3</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.2</span>),</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">7</span>)))</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="fu">dnorm_rvec</span>(y, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1258,0.1283 0.08066,0.018</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="fu">rbinom_rvec</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fu">round</span>(y<span class="sc">+</span><span class="dv">10</span>), <span class="at">prob =</span> <span class="fl">0.8</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; [1] 9,7  11,2</span></span></code></pre></div>
 <p>The return value from an <strong>rvec</strong> probability function is an rvec if and only if at least one argument to the function is an rvec – with one exception. The exception is random variate functions, where a value can be supplied for a special argument called <code>n_draw</code>. When a value for <code>n_draw</code> is supplied, the return value is an rvec with <code>n_draw</code> draws,</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm_rvec</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">n_draw =</span> <span class="dv">2</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[3]&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 110.4,93.06 106,96.98   115.3,100.7</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">rnorm_rvec</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">n_draw =</span> <span class="dv">2</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[3]&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] 87.42,109.8 119.7,85.2  87.75,89.06</span></span></code></pre></div>
 <p>This is a convenient way to create inputs to a simulation.</p>
 </div>
 <div id="manipulating-rvecs" class="section level1" number="7">
@@ -744,145 +744,145 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="subsetting" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Subsetting</h2>
 <p>Standard R ways of selecting elements from vectors work with rvecs.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>))</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>]  <span class="do">## element number</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[1]&gt;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a </span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1,2</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>)]  <span class="do">## element name</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)]  <span class="do">## logical flag</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>               <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>               <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>x[<span class="dv">1</span>]  <span class="do">## element number</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[1]&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;   a </span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 1,2</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>)]  <span class="do">## element name</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)]  <span class="do">## logical flag</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span></code></pre></div>
 </div>
 <div id="sec:ifelse" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> If-Else</h2>
 <p>The standard R function <code>ifelse()</code> does not work at all with rvecs.</p>
 <p>The tidyverse function <code>if_else()</code> works when the <code>true</code>, <code>false</code>, or <code>missing</code> arguments are rvecs,</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">true =</span> x,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">false =</span> <span class="sc">-</span>x)        </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,2   -3,-4</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>        <span class="at">true =</span> x,</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>        <span class="at">false =</span> <span class="sc">-</span>x)        </span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; [1] 1,2   -3,-4</span></span></code></pre></div>
 <p><code>if_else()</code>does not work, however, when the <code>condition</code> argument is an rvec.</p>
 <p>When the <code>condition</code> argument is an rvec, we need the <strong>rvec</strong> function <code>if_else_rvec()</code>,</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else_rvec</span>(x <span class="sc">&lt;=</span> <span class="dv">2</span>, x, <span class="dv">2</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,2 2,2</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">if_else_rvec</span>(x <span class="sc">&lt;=</span> <span class="dv">2</span>, x, <span class="dv">2</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; [1] 1,2 2,2</span></span></code></pre></div>
 <p>Function <code>if_else_rvec()</code> can be used to independently transform or recode values across different draws,</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">3.3</span>),</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>)))</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 NA,-2</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>x_recode <span class="ot">&lt;-</span> <span class="fu">if_else_rvec</span>(<span class="fu">is.na</span>(x), <span class="dv">99</span>, x)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>x_recode</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 99,-2</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">3.3</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>)))</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>x</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 NA,-2</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>x_recode <span class="ot">&lt;-</span> <span class="fu">if_else_rvec</span>(<span class="fu">is.na</span>(x), <span class="dv">99</span>, x)</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>x_recode</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 99,-2</span></span></code></pre></div>
 </div>
 <div id="combining" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Combining</h2>
 <p>The standard R concatenation function <code>c()</code> works with rvecs,</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>),</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>)))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.8</span>)))</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(x1, x2)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[4]&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.1,0.2 0.3,0.4 0.5,0.6 0.7,0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>),</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>)))</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.8</span>)))</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="fu">c</span>(x1, x2)</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[4]&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1,0.2 0.3,0.4 0.5,0.6 0.7,0.8</span></span></code></pre></div>
 <p>Unfortunately, <code>cbind()</code> and <code>rbind()</code> cannot be made to work properly on raw rvecs,</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(x1, x2)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    data     </span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x1 numeric,4</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x2 numeric,4</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(x1, x2)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      x1        x2       </span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data numeric,4 numeric,4</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">rbind</span>(x1, x2)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt;    data     </span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="co">#&gt; x1 numeric,4</span></span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; x2 numeric,4</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="fu">cbind</span>(x1, x2)</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt;      x1        x2       </span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co">#&gt; data numeric,4 numeric,4</span></span></code></pre></div>
 <p>though <code>cbind()</code> does work if the rvecs are contained in data frames</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x2)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(df1, df2)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        x1      x2</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x2)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="fu">cbind</span>(df1, df2)</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt;        x1      x2</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
 <p>Tidyverse equivalents such as <code>dplyr::bind_rows()</code>, <code>dbplyr::bind_cols()</code>, <code>vctrs::vec_cbind()</code>, and <code>vctrs::vec_rbind()</code> <em>do</em> work with rvecs,</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vctrs, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_cbind</span>(<span class="at">a =</span> x1, <span class="at">b =</span> x2)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         a       b</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">library</span>(vctrs, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">vec_cbind</span>(<span class="at">a =</span> x1, <span class="at">b =</span> x2)</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="co">#&gt;         a       b</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
 <p>Base R function <code>sapply()</code> does not work with rvecs (unless <code>simplify</code> is set to <code>FALSE</code>). <strong>rvec</strong> supplies a function called <code>map_rvec()</code> (based on map functions in package <a href="https://purrr.tidyverse.org">purrr</a>) that does the same job:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))),</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">b =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>))))</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>l</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $a</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,4</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $b</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 9,16</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="fu">map_rvec</span>(l, sqrt)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   a   b </span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1,2 3,4</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))),</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>          <span class="at">b =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>))))</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>l</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co">#&gt; $a</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="co">#&gt; [1] 1,4</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="co">#&gt; $b</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; [1] 9,16</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="fu">map_rvec</span>(l, sqrt)</span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt;   a   b </span></span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; 1,2 3,4</span></span></code></pre></div>
 </div>
 <div id="coercing" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Coercing</h2>
 <p>Function <code>as.matrix()</code> returns the data underlying an rvec.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nr =</span> <span class="dv">2</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>m</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(m)</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[2]&gt;</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1,3,5 2,4,6</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">as.matrix</span>(x)</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nr =</span> <span class="dv">2</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>m</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(m)</span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>x</span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[2]&gt;</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3,5 2,4,6</span></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="fu">as.matrix</span>(x)</span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span></code></pre></div>
 <p>Function <code>as_list_col()</code> returns a list of vectors</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_list_col</span>(x)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 3 5</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2 4 6</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">as_list_col</span>(x)</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 3 5</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; [1] 2 4 6</span></span></code></pre></div>
 <p>Functions such as <a href="https://mjskay.github.io/ggdist/reference/point_interval.html">point_interval</a> in package <a href="https://mjskay.github.io/ggdist/">ggdist</a> accept lists of vector. A good way to access the sophisticated plotting facilities in <strong>ggdist</strong>, or in packages such as <a href="https://mjskay.github.io/tidybayes/">tidybayes</a> and <a href="https://mc-stan.org/bayesplot/">bayesplot</a>, is to use <code>as_list_col()</code> to convert an rvec to a list column.</p>
 <p>Function <code>expand_from_rvec()</code> is the inverse of function <code>collapse_to_rvec()</code>, introduced in Section <a href="#sec:divorce">2.2</a>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   age   sex                    rate</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_from_rvec</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;   age   sex                    rate</span></span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female 0.036 (0.019, 0.068)</span></span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt; 2 20-24 Female    0.67 (0.58, 0.78)</span></span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a>  <span class="fu">expand_from_rvec</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
+<span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
+<span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span></code></pre></div>
 </div>
 </div>
 <div id="summarising-distributions" class="section level1" number="8">
@@ -901,39 +901,39 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ul>
 <p>Internally, most of these functions call functions from <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>, which means they are fast.</p>
 <p><code>draws_ci()</code>, which calculates credible intervals, is the draws function that is used most often,</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>divorce_rv</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(rate))</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 6</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate rate.lower rate.mid rate.upper</span></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)     0.0193   0.0360     0.0678</span></span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)     0.579    0.673      0.782 </span></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)     3.02     3.22       3.45  </span></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)     5.54     5.80       6.06  </span></span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)     6.21     6.54       6.86  </span></span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)     6.85     7.13       7.42  </span></span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)     6.87     7.22       7.57  </span></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)     5.77     6.03       6.33  </span></span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)     4.17     4.40       4.66  </span></span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)     2.48     2.72       2.99  </span></span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>divorce_rv</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(rate))</span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 6</span></span>
+<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate rate.lower rate.mid rate.upper</span></span>
+<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)     0.0193   0.0360     0.0678</span></span>
+<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)     0.579    0.673      0.782 </span></span>
+<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)     3.02     3.22       3.45  </span></span>
+<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)     5.54     5.80       6.06  </span></span>
+<span id="cb34-27"><a href="#cb34-27" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)     6.21     6.54       6.86  </span></span>
+<span id="cb34-28"><a href="#cb34-28" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)     6.85     7.13       7.42  </span></span>
+<span id="cb34-29"><a href="#cb34-29" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)     6.87     7.22       7.57  </span></span>
+<span id="cb34-30"><a href="#cb34-30" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)     5.77     6.03       6.33  </span></span>
+<span id="cb34-31"><a href="#cb34-31" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)     4.17     4.40       4.66  </span></span>
+<span id="cb34-32"><a href="#cb34-32" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)     2.48     2.72       2.99  </span></span>
+<span id="cb34-33"><a href="#cb34-33" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
 </div>
 <div id="other-packages" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Other packages</h1>
@@ -943,7 +943,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-kerman2007manipulating" class="csl-entry">
 Kerman, Jouni, and Andrew Gelman. 2007. <span>“Manipulating and Summarizing Posterior Simulations Using Random Variable Objects.”</span> <em>Statistics and Computing</em> 17: 235–44.
 </div>
