@@ -1,4 +1,20 @@
 
+# rvec 0.0.8
+
+## Changes to interface
+
+- Added function `prob()`, a version of `draws_mean()` that works only
+  with logical rvecs. (#27)
+- `rvec()` and `rvec_dbl()` now accept sparse matrices (inheriting
+  from "Matrix"), in addition to dense matrices. (#25)
+- Function `rbinom_rvec()`, `rgeom_rvec()`, `rhyper_rvec()`,
+  `rmultinom_rvec()`, `rnbinom_rvec()`, and `rpois_rvec()` now always
+  return doubles, even when the counts are small. The standard R
+  approach of giving integers when counts are small and doubles when
+  counts are large was generating Valgrind errors in dependent
+  packages.
+  
+
 # rvec 0.0.7
 
 ## Changes to interface

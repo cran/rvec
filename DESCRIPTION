@@ -1,7 +1,7 @@
 Package: rvec
 Type: Package
-Title: Vector Representing a Random Variable
-Version: 0.0.7
+Title: Vectors Representing Random Variables
+Version: 0.0.8
 Authors@R: 
     c(person(given = "John",
              family = "Bryant",
@@ -11,9 +11,9 @@ Authors@R:
              role = "cph"))
 Description: Random vectors, called rvecs. An rvec holds
     multiple draws, but tries to behave like a standard
-    R vector, including working well in data frames. Rvecs are
-    useful for working with output from a simulation or
-    a Bayesian analysis.
+    R vector, including working well in data frames.
+    Rvecs are useful for analysing
+    output from a simulation or a Bayesian analysis.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -22,16 +22,16 @@ Depends: R (>= 4.3.0)
 Imports: cli, glue, graphics, grDevices, matrixStats, methods, rlang,
         stats, tibble, tidyselect, utils, vctrs
 Suggests: bookdown, covr, dplyr, ggdist, ggplot2, knitr, posterior,
-        rmarkdown, testthat (>= 3.0.0), tidyr, vdiffr
+        Matrix, rmarkdown, testthat (>= 3.0.0), tidyr
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://bayesiandemography.github.io/rvec/,
         https://github.com/bayesiandemography/rvec
 BugReports: https://github.com/bayesiandemography/rvec/issues
 NeedsCompilation: no
-Packaged: 2024-09-15 01:30:21 UTC; johnbryant
+Packaged: 2025-07-13 00:39:17 UTC; johnbryant
 Author: John Bryant [aut, cre],
   Bayesian Demography Limited [cph]
 Maintainer: John Bryant <john@bayesiandemography.com>
 Repository: CRAN
-Date/Publication: 2024-09-15 04:10:02 UTC
+Date/Publication: 2025-07-13 02:30:07 UTC
