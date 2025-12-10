@@ -28,8 +28,11 @@ For instance, to calculate a credible interval, use \code{\link[=draws_ci]{draws
 \item \code{\link[=rvec_int]{rvec_int()}} Integers
 \item \code{\link[=rvec_lgl]{rvec_lgl()}} Logical
 \item \code{\link[=rvec_chr]{rvec_chr()}} Character
+\item \code{\link[=new_rvec_dbl]{new_rvec_dbl()}} Empty doubles
+\item \code{\link[=new_rvec_int]{new_rvec_int()}} Empty integers
+\item \code{\link[=new_rvec_lgl]{new_rvec_lgl()}} Empty logical
+\item \code{\link[=new_rvec_chr]{new_rvec_chr()}} Empty character
 \item \code{\link[=collapse_to_rvec]{collapse_to_rvec()}} Data in data frame
-\item \code{\link[=new_rvec]{new_rvec()}} Blanks
 }
 
 \strong{Manipulating rvecs}
@@ -37,6 +40,7 @@ For instance, to calculate a credible interval, use \code{\link[=draws_ci]{draws
 \item \code{\link[=if_else_rvec]{if_else_rvec()}} \code{if_else()} where \code{condition} is rvec
 \item \code{\link[=map_rvec]{map_rvec()}} \code{map()} for rvecs
 \item \code{\link[=extract_draw]{extract_draw()}} Single draw from rvec
+\item \code{\link[=pool_draws]{pool_draws()}} Combine samples
 }
 
 \strong{Probability distributions}
@@ -62,17 +66,20 @@ For instance, to calculate a credible interval, use \code{\link[=draws_ci]{draws
 
 \strong{Summarizing across draws}
 \itemize{
-\item \code{\link[=draws_all]{draws_all()}} All draws
-\item \code{\link[=draws_any]{draws_any()}} Any draws
-\item \code{\link[=draws_min]{draws_min()}} Minimum draw
-\item \code{\link[=draws_max]{draws_max()}} Maximum draw
-\item \code{\link[=draws_median]{draws_median()}} Median draw
-\item \code{\link[=draws_mean]{draws_mean()}} Mean draw
-\item \code{\link[=draws_mode]{draws_mode()}} Modal draw
+\item \code{\link[=draws_all]{draws_all()}} All
+\item \code{\link[=draws_any]{draws_any()}} Any
+\item \code{\link[=draws_min]{draws_min()}} Minimum
+\item \code{\link[=draws_max]{draws_max()}} Maximum
+\item \code{\link[=draws_median]{draws_median()}} Median
+\item \code{\link[=draws_mean]{draws_mean()}} Mean
+\item \code{\link[=draws_mode]{draws_mode()}} Modal
+\item \code{\link[=draws_sd]{draws_sd()}} Standard deviation
+\item \code{\link[=draws_var]{draws_var()}} Variances
+\item \code{\link[=draws_cv]{draws_cv()}} Coefficients of variation
 \item \code{\link[=draws_ci]{draws_ci()}} Credible intervals
 \item \code{\link[=draws_quantile]{draws_quantile()}} Quantiles
 \item \code{\link[=draws_fun]{draws_fun()}} Arbitrary function
-\item \code{\link[=n_draw]{n_draw()}} Number of draws
+\item \code{\link[=n_draw]{n_draw()}} Number
 }
 
 \strong{Coercion, classes}

@@ -1,13 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rvec <a href="https://github.com/bayesiandemography/rvec"><img src="data-raw/sticker.png" align="right" height="138" /></a>
+<a href="https://github.com/bayesiandemography/rvec">
+<img src="man/figures/sticker/sticker.png"
+       style="float:right; height:138px;" /> </a>
+
+# rvec
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/bayesiandemography/rvec/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bayesiandemography/rvec/actions/workflows/R-CMD-check.yaml)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
 coverage](https://codecov.io/gh/bayesiandemography/rvec/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bayesiandemography/rvec?branch=main)
 [![CRAN
@@ -21,8 +23,7 @@ multiple draws but which behaves (mainly) like a standard R vector.
 ## Installation
 
 ``` r
-install.packages("rvec")                            ## CRAN version
-devtools::install_github("bayesiandemography/rvec") ## development version
+install.packages(rvec)
 ```
 
 ## Example

@@ -20,8 +20,8 @@ beta
 ## -----------------------------------------------------------------------------
 draws_mean(beta)
 
-## -----------------------------------------------------------------------------
-library(dplyr, warn.conflicts = FALSE)
+## ----message = FALSE----------------------------------------------------------
+library(dplyr)
 library(tidyr)
 library(ggplot2)
 
@@ -79,6 +79,7 @@ rvec_chr(x)
 ## -----------------------------------------------------------------------------
 x <- rvec(list(c(TRUE, FALSE),
                c(TRUE, TRUE)))
+x	       
 all(x)
 any(x)
 
@@ -191,4 +192,20 @@ divorce_rv <- divorce |>
 divorce_rv
 divorce_rv |>
   mutate(draws_ci(rate))
+
+## ----echo = FALSE-------------------------------------------------------------
+set.seed(0)
+mi_data <- tibble::tibble(
+  sex = rep(c("Female", "Male"), each = 3),
+  imputed_dataset = rep(1:3, times = 2),
+  value = rnorm_rvec(n = 6,
+                     mean = c(0.9, 1.2, 1.1, 0.8, 0.7, 0.5),
+		     sd = 0.2,
+		     n_draw = 1000)
+  )
+
+## -----------------------------------------------------------------------------
+mi_data
+mi_data |>
+  pool_draws(by = sex)
 

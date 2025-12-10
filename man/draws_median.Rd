@@ -37,8 +37,9 @@ calculating summaries. Default is \code{FALSE}.}
 A vector.
 }
 \description{
-Summarise the distribution of random draws
-in an \code{rvec}, using means, medians, or modes.
+Use means, medians, or modes to
+summarise the distribution of random draws
+in an rvec.
 }
 \details{
 When \code{method} is \code{"mode"}, \code{reduce_rvec()}
@@ -63,6 +64,9 @@ Apply pre-specified functions across draws:
 \item \code{\link[=draws_any]{draws_any()}}
 \item \code{\link[=draws_min]{draws_min()}}
 \item \code{\link[=draws_max]{draws_max()}}
+\item \code{\link[=draws_sd]{draws_sd()}}
+\item \code{\link[=draws_var]{draws_var()}}
+\item \code{\link[=draws_cv]{draws_cv()}}
 \item \code{\link[=draws_ci]{draws_ci()}}
 \item \code{\link[=draws_quantile]{draws_quantile()}}
 }
@@ -71,10 +75,4 @@ Apply arbitrary function across draws:
 \itemize{
 \item \code{\link[=draws_fun]{draws_fun()}}
 }
-
-For additional functions for summarising random draws, see
-\href{https://CRAN.R-project.org/package=tidybayes}{tidybayes}
-and \href{https://CRAN.R-project.org/package=ggdist}{ggdist}.
-Function \code{\link[=as_list_col]{as_list_col()}} converts rvecs into a
-format that \code{tidybayes} and \code{ggdist} can work with.
 }

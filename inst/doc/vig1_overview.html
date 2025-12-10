@@ -35,8 +35,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -47,7 +48,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -370,31 +371,32 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><a href="#coercing" id="toc-coercing"><span class="toc-section-number">7.4</span> Coercing</a></li>
 </ul></li>
 <li><a href="#summarising-distributions" id="toc-summarising-distributions"><span class="toc-section-number">8</span> Summarising distributions</a></li>
-<li><a href="#other-packages" id="toc-other-packages"><span class="toc-section-number">9</span> Other packages</a></li>
+<li><a href="#pooling-distributions" id="toc-pooling-distributions"><span class="toc-section-number">9</span> Pooling distributions</a></li>
+<li><a href="#other-packages" id="toc-other-packages"><span class="toc-section-number">10</span> Other packages</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
 <div id="sec:aims" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Aims of <strong>rvec</strong></h1>
-<p>Many statistical methods, particularly Bayesian methods, produce random draws from a distribution. A useful feature of these draws is that they can be used to make inferences about derived quantities. The procedure is:</p>
+<p>Statistical models – particularly Bayesian statistical models – often produce outputs consisting of random draws from a distribution. A useful feature of these draws is that they can be used to make inferences about derived quantities. The procedure is:</p>
 <ul>
 <li>Step 1. Calculate the derived quantity for each of the random draws.</li>
 <li>Step 2. Summaries the distribution of these derived quantities.</li>
 </ul>
-<p>If, for instance, we have randoms draws of age-specific mortality rates, and we want make inferences about life expectancy (a summary indicator for mortality rates), then we proceed as follows:</p>
+<p>If, for instance, we have randoms draws from a posterior distribution for age-specific mortality rates, and we want make inferences about life expectancy (a summary indicator for mortality rates), then we proceed as follows:</p>
 <ul>
 <li>Step 1. Derive life expectancy for each set of age-specific mortality rates.</li>
 <li>Step 2. Calculate means, medians, or other statistics for these life expectancies.</li>
 </ul>
 <p>For more on the theory behind manipulating random draws, and for an argument that R needs high-level tools to help with this manipulation, see <span class="citation">Kerman and Gelman (2007)</span>.</p>
-<p>Package <strong>rvec</strong> provides tools for working with random draws. The draws are held in a structure called an rvec, which can, for many purposes, be treated like an ordinary R vector, and manipulated using ordinary base R and <a href="https://www.tidyverse.org">tidyverse</a> code. <strong>rvec</strong> also contains functions for summarizing across random draws.</p>
+<p>Package <code>rvec</code> provides tools for working with random draws. The draws are held in a structure called an rvec, which can, for many purposes, be treated like an ordinary R vector, and manipulated using ordinary base R and <a href="https://tidyverse.org/">tidyverse</a> code. <code>rvec</code> also contains functions for summarizing across random draws.</p>
 </div>
 <div id="examples" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Examples</h1>
 <div id="toy-example" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Toy example</h2>
-<p>We begin with a toy example, to illustrate basic functionality.</p>
+<p>We begin with a toy example to illustrate basic functionality.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rvec)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;rvec&#39;</span></span>
@@ -437,7 +439,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="sec:divorce" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Divorce rates</h2>
 <p>Our next example is more involved, and includes the use of some standard tidyverse packages.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>We analyse a posterior sample from a Bayesian model of divorce rates in New Zealand. The rates are divorces per thousand people per year, disaggregated by age and sex. The rates are not stored as an rvec, but instead in a ‘data base’ format, where each row describes a single draw.</p>
@@ -474,7 +476,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
 <span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
 <span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
-<p>When the number of draws is large, the print method displays <code>&lt;median&gt; (&lt;2.5% quantile&gt;, &lt;97.5% quantile&gt;)</code> for the distribution, rather than the individual draws.</p>
+<p>When the number of draws is large, the print method for rvecs of doubles displays <code>&lt;median&gt; (&lt;2.5% quantile&gt;, &lt;97.5% quantile&gt;)</code>, rather than the individual draws.</p>
 <p>We define the ‘total divorce rate’ to be the number of divorces that a person would expect to experience over their lifetime under prevailing divorce rates. The total divorce rate can be calculated as</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
@@ -513,13 +515,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1><span class="header-section-number">3</span> Structure of an rvec</h1>
 <p>The class <code>&quot;rvec&quot;</code> has four subclasses:</p>
 <ul>
-<li><code>&quot;rvec_dbl&quot;</code>, which holds doubles, e.g. <code>3.142</code>, <code>-1.01</code>.</li>
-<li><code>&quot;rvec_int&quot;</code>, which holds integers, e.g. <code>42</code>, <code>-1</code>.</li>
-<li><code>&quot;rvec_lgl&quot;</code>, which holds <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code>.</li>
+<li><code>&quot;rvec_dbl&quot;</code>, which holds doubles, e.g. <code>3.142</code>, <code>-1.01</code>;</li>
+<li><code>&quot;rvec_int&quot;</code>, which holds integers, e.g. <code>42</code>, <code>-1</code>;</li>
+<li><code>&quot;rvec_lgl&quot;</code>, which holds <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code>; and</li>
 <li><code>&quot;rvec_chr&quot;</code>, which hold characters, e.g. <code>&quot;a&quot;</code>, <code>&quot;Thomas Bayes&quot;</code>.</li>
 </ul>
 <p>Internally, an rvec is a matrix, with each row representing one unknown quantity, and each column representing one draw from the joint distribution of the unknown quantities,</p>
 <table style="width:100%;">
+<caption><strong>The internal structure of an rvec</strong></caption>
 <colgroup>
 <col width="20%" />
 <col width="21%" />
@@ -568,6 +571,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </tbody>
 </table>
 <p>Ordinary functions are applied independently to each column. For instance, calling <code>sum()</code> on an rvec creates a new rvec with structure</p>
+<p>Table : <strong>The result of summing along the vector</strong></p>
 <table style="width:100%;">
 <colgroup>
 <col width="13%" />
@@ -597,6 +601,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </table>
 <p>Functions with a <code>draws_</code> prefix are applied independently to each row. For instance, calling <code>draws_mean()</code> on an rvec creates a new numeric vector with structure</p>
 <table>
+<caption><strong>The result of taking means across draws</strong></caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -634,18 +639,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(LETTERS, letters)</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;26&gt;[2]&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [1] ..A.. ..a..</span></span></code></pre></div>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [1] ..&quot;A&quot;.. ..&quot;a&quot;..</span></span></code></pre></div>
 <p>a matrix,</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2000</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;1000&gt;[2]&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] -0.03 (-2, 1.9)  -0.024 (-2, 1.9)</span></span></code></pre></div>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] -0.016 (-1.9, 2)   -0.031 (-1.9, 2.1)</span></span></code></pre></div>
 <p>or an atomic vector</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;1&gt;[2]&gt;</span></span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; [1] T F</span></span></code></pre></div>
-<p>Function <code>rvec()</code> chooses from classes <code>&quot;rvec_dbl&quot;</code>, <code>&quot;rvec_int&quot;</code>, <code>&quot;rvec_lgl&quot;</code>, and <code>&quot;rvec_chr&quot;</code>, based on the input. To enforce a particular class, use function <code>rvec_dbl()</code>, <code>rvec_int()</code>, <code>rvec_lgl()</code>, or <code>rvec_chr()</code>,</p>
+<p>Function <code>rvec()</code> chooses from classes <code>&quot;rvec_dbl&quot;</code>, <code>&quot;rvec_int&quot;</code>, <code>&quot;rvec_lgl&quot;</code>, and <code>&quot;rvec_chr&quot;</code>, based on the input. To enforce a particular choice of class, use function <code>rvec_dbl()</code>, <code>rvec_int()</code>, <code>rvec_lgl()</code>, or <code>rvec_chr()</code>,</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[1]&gt;</span></span>
@@ -664,12 +669,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>Mathematical and logical operations are applied independently to each draw.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>)))</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">all</span>(x)</span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; [1] T,F</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="fu">any</span>(x)</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>x          </span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; [1] T,F T,T</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="fu">all</span>(x)</span>
 <span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; [1] T,T</span></span></code></pre></div>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; [1] T,F</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="fu">any</span>(x)</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_lgl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt; [1] T,T</span></span></code></pre></div>
 <p>User-defined functions that consist entirely of standard mathematical and logical operations should work with no modifications.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="fu">log</span>(p <span class="sc">/</span> (<span class="dv">1</span><span class="sc">-</span>p))</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
@@ -690,7 +698,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>m <span class="sc">%*%</span> x</span>
 <span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; [1] 4,6 3,4</span></span></code></pre></div>
-<p><strong>rvec</strong> contains a suite of functions for summarising weighted data:</p>
+<p><code>rvec</code> contains a suite of functions for summarising weighted data:</p>
 <ul>
 <li><code>weighted_mad()</code></li>
 <li><code>weighted_mean()</code></li>
@@ -718,11 +726,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 0.79 (0.74, 0.85)     3 (2, 4)</span></span>
 <span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 0.73 (0.65, 0.82)     2 (2, 3)</span></span>
 <span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; 11 65+   0.51 (0.45, 0.57)     1 (1, 1)</span></span></code></pre></div>
-<p>The rank of the 15-19 age group is uncertain, while the rank of the 65+ age group is estimated precisely.</p>
+<p>In the example above, the rank of the 15-19 age group is uncertain, while the rank of the 65+ age group is estimated precisely.</p>
 </div>
 <div id="sec:prob" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Probability distributions</h1>
-<p>Standard R probability functions such as <code>dnorm()</code> or <code>rbinom()</code> do not allow rvec arguments. Package <strong>rvec</strong> provides modified functions that do. For instance,</p>
+<p>Standard R probability functions such as <code>dnorm()</code> or <code>rbinom()</code> do not allow rvec arguments. Package <code>rvec</code> provides modified functions that do. For instance,</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.2</span>),</span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">7</span>)))</span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
@@ -732,11 +740,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1258,0.1283 0.08066,0.018</span></span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="fu">rbinom_rvec</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fu">round</span>(y<span class="sc">+</span><span class="dv">10</span>), <span class="at">prob =</span> <span class="fl">0.8</span>)</span>
 <span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; [1] 8,8  13,1</span></span></code></pre></div>
-<p>The return value from an <strong>rvec</strong> probability function is an rvec if and only if at least one argument to the function is an rvec – with one exception. The exception is random variate functions, where a value can be supplied for a special argument called <code>n_draw</code>. When a value for <code>n_draw</code> is supplied, the return value is an rvec with <code>n_draw</code> draws,</p>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; [1] 8,9 8,3</span></span></code></pre></div>
+<p>The return value from an <code>rvec</code> probability function is an rvec if and only if at least one argument to the function is an rvec, with one exception. The exception is random variate functions, where a value can be supplied for a special argument called <code>n_draw</code>. When a value for <code>n_draw</code> is supplied, the return value is an rvec with <code>n_draw</code> draws,</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">rnorm_rvec</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">n_draw =</span> <span class="dv">2</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[3]&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] 94.18,102.6 95.46,97.98 81.27,90.6</span></span></code></pre></div>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] 88.47,95.33 88.06,100.1 85.97,108.4</span></span></code></pre></div>
 <p>This is a convenient way to create inputs to a simulation.</p>
 </div>
 <div id="manipulating-rvecs" class="section level1" number="7">
@@ -771,8 +779,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>        <span class="at">false =</span> <span class="sc">-</span>x)        </span>
 <span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
 <span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; [1] 1,2   -3,-4</span></span></code></pre></div>
-<p><code>if_else()</code>does not work, however, when the <code>condition</code> argument is an rvec.</p>
-<p>When the <code>condition</code> argument is an rvec, we need the <strong>rvec</strong> function <code>if_else_rvec()</code>,</p>
+<p>However, <code>if_else()</code> does not work when the <code>condition</code> argument is an rvec. For this we need <code>rvec</code> function <code>if_else_rvec()</code>,</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">if_else_rvec</span>(x <span class="sc">&lt;=</span> <span class="dv">2</span>, x, <span class="dv">2</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
 <span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; [1] 1,2 2,2</span></span></code></pre></div>
@@ -818,7 +825,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="co">#&gt;         a       b</span></span>
 <span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
 <span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
-<p>Base R function <code>sapply()</code> does not work with rvecs (unless <code>simplify</code> is set to <code>FALSE</code>). <strong>rvec</strong> supplies a function called <code>map_rvec()</code> (based on map functions in package <a href="https://purrr.tidyverse.org">purrr</a>) that does the same job:</p>
+<p>Base R function <code>sapply()</code> does not work with rvecs (unless <code>simplify</code> is set to <code>FALSE</code>). <code>rvec</code> supplies a function called <code>map_rvec()</code> (based on map functions in package <a href="https://purrr.tidyverse.org">purrr</a>) that does the same job:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))),</span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>          <span class="at">b =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>))))</span>
 <span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>l</span>
@@ -857,7 +864,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
 <span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; [1] 2 4 6</span></span></code></pre></div>
-<p>Functions such as <a href="https://mjskay.github.io/ggdist/reference/point_interval.html">point_interval</a> in package <a href="https://mjskay.github.io/ggdist/">ggdist</a> accept lists of vector. A good way to access the sophisticated plotting facilities in <strong>ggdist</strong>, or in packages such as <a href="https://mjskay.github.io/tidybayes/">tidybayes</a> and <a href="https://mc-stan.org/bayesplot/">bayesplot</a>, is to use <code>as_list_col()</code> to convert an rvec to a list column.</p>
+<p>Functions such as <a href="https://mjskay.github.io/ggdist/reference/point_interval.html">point_interval</a> in package <a href="https://mjskay.github.io/ggdist/">ggdist</a> accept lists of vector. A good way to access the facilities for working with random draws in <code>ggdist</code>, or in packages such as <a href="https://mjskay.github.io/tidybayes/">tidybayes</a> and <a href="https://mc-stan.org/bayesplot/">bayesplot</a>, is to use <code>as_list_col()</code> to convert an rvec to a list column.</p>
 <p>Function <code>expand_from_rvec()</code> is the inverse of function <code>collapse_to_rvec()</code>, introduced in Section <a href="#sec:divorce">2.2</a>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
 <span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
@@ -887,7 +894,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="summarising-distributions" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Summarising distributions</h1>
-<p>Most functions in <strong>rvec</strong> are concerned with deriving random vectors from other random vectors: that is, with the column-wise calculations described in Section <a href="#sec:structure">3</a>. But once we have derived the random vectors, we typically want to summarise them, using statistics such as means or quantiles: that is, we want to carry out row-wise calculations.</p>
+<p>Most functions in <code>rvec</code> are concerned with deriving random vectors from other random vectors: that is, with the column-wise calculations described in Section <a href="#sec:structure">3</a>. But once we have derived the random vectors, we typically want to summarise them, using statistics such as means or quantiles: that is, we want to carry out row-wise calculations.</p>
 <p>The functions for carrying out row-wise calculations on rvecs are:</p>
 <ul>
 <li><code>draws_all()</code></li>
@@ -895,11 +902,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><code>draws_median()</code></li>
 <li><code>draws_mean()</code></li>
 <li><code>draws_mode()</code></li>
+<li><code>draws_sd()</code></li>
+<li><code>draws_var()</code></li>
+<li><code>draws_cv()</code></li>
 <li><code>draws_ci()</code></li>
 <li><code>draws_quantile()</code></li>
 <li><code>draws_fun()</code></li>
 </ul>
-<p>Internally, most of these functions call functions from <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>, which means they are fast.</p>
+<p>Internally, most of these functions call functions from <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>, and are therefore fast.</p>
 <p><code>draws_ci()</code>, which calculates credible intervals, is the draws function that is used most often,</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
@@ -935,11 +945,33 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb34-32"><a href="#cb34-32" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)     2.48     2.72       2.99  </span></span>
 <span id="cb34-33"><a href="#cb34-33" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
 </div>
-<div id="other-packages" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Other packages</h1>
+<div id="pooling-distributions" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Pooling distributions</h1>
+<p>Sometimes when working with simulation draws, we want to combine multiple samples of draws into a single overall sample. When using multiple imputation, for instance, we might want to combine posterior samples constructed from each of the <span class="math inline">\(m = 1, \cdots, M\)</span> imputed datasets into a single pooled posterior sample.</p>
+<p>To combine samples, we use function <code>pool_draws()</code>:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>mi_data</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co">#&gt;   sex    imputed_dataset             value</span></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;      &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="co">#&gt; 1 Female               1   0.9 (0.52, 1.3)</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co">#&gt; 2 Female               2   1.2 (0.79, 1.6)</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co">#&gt; 3 Female               3   1.1 (0.69, 1.5)</span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="co">#&gt; 4 Male                 1  0.81 (0.43, 1.2)</span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co">#&gt; 5 Male                 2   0.7 (0.32, 1.1)</span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="co">#&gt; 6 Male                 3 0.48 (0.12, 0.88)</span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>mi_data <span class="sc">|&gt;</span></span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a>  <span class="fu">pool_draws</span>(<span class="at">by =</span> sex)</span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a><span class="co">#&gt;   sex               value</span></span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;rdbl&lt;3000&gt;&gt;</span></span>
+<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a><span class="co">#&gt; 1 Female  1.1 (0.61, 1.5)</span></span>
+<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.67 (0.19, 1.1)</span></span></code></pre></div>
+</div>
+<div id="other-packages" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Other packages</h1>
 <p>The first R package to provide a specialized object for handling multiple draws was <a href="https://CRAN.R-project.org/package=rv">rv</a>. The specialized object, called an rv, can be manipulated and summarized much like an rvec. However, in software terms, an rv is not strictly a vector (calling <code>is.vector()</code> on one returns <code>FALSE</code>) and an rv does not always behave as expected inside a data frame. It is therefore not well suited to tidyverse-style work flows.</p>
-<p>R package <a href="https://CRAN.R-project.org/package=posterior">posterior</a> provides several data structures for handling multiple draws, including one, called a rvar, that is similar to an rvec. An rvar is, however, is not limited to a single dimension, and has special facilities for dealing with multiple chains (as produced by Markov chain Monte Carlo methods.) These features are essential for some analyses, but they can make rvars harder to master, and they are not needed for most tidyverse-style work flows.</p>
-<p>Whereas rvecs interpret summary functions such as <code>mean()</code> and <code>sum()</code> as operations to be applied independently on each draw, rvars interpret them as operations to be applied across draws. The result is that code written for ordinary R vectors will often work on rvecs, but need modification to work on rvars. The tidyverse function <code>count()</code>, for instance, works with rvecs but not rvars.</p>
+<p>R package <a href="https://CRAN.R-project.org/package=posterior">posterior</a> provides several data structures for handling multiple draws. One of these – the rvar – is similar to an rvec. An rvar is, however, is not limited to a single dimension, and has special facilities for dealing with multiple chains (as produced by Markov chain Monte Carlo methods.) These features are essential for some analyses, but they can make rvars harder to master, and they are not needed for most tidyverse-style work flows.</p>
+<p>Another impportant different between rvers and rvecs is that, whereas rvecs interpret summary functions such as <code>mean()</code> and <code>sum()</code> as operations to be applied independently on each draw, rvars interpret them as operations to be applied across draws. The result is that code written for ordinary R vectors will often work on rvecs, but need modification to work on rvars. The tidyverse function <code>count()</code>, for instance, works with rvecs but not rvars. This again makes rvecs easier to work with for many tasks.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
