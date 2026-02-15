@@ -1,8 +1,8 @@
-893373d48229d730f513e2fc9ce2be1a *DESCRIPTION
+05cf93c63070e199663abc54925a53bd *DESCRIPTION
 6fc0e540c924600a2a8f5d0c90079640 *LICENSE
-511b563eee5c487311051d007e76058f *NAMESPACE
-4ccb824bb0179d3d62e64ca15709443a *NEWS.md
-e677b1c922753a3a4f09621cc6f2ebb8 *R/aaa-rvec-classes.R
+79bc38f7c60ea9b3ff24a4dfdec69747 *NAMESPACE
+daf40251639e63fab0263e1d152a13d9 *NEWS.md
+3c6eba563ea109d368edd0a11d62daa3 *R/aaa-rvec-classes.R
 0544c3cbb453981a86177afb6b94ff49 *R/as.R
 190b1ea8fbe497db74edf1e9aa713289 *R/as_list_col.R
 6f5732067e2861cc54d7f2c456135b61 *R/atomic_to_rvec.R
@@ -17,7 +17,7 @@ e5edaa9f9b1bcb101d490c892bac332d *R/extract_draw.R
 86615025acc3147e46963a85cf3ea98b *R/format.R
 82e57f285ffcf2e59bb504eb970096ff *R/if_else_rvec.R
 8c03fbe9211f321e8a101f7caa13dd98 *R/map_rvec.R
-f180768bb37f19be1fa11ed3b22da4a0 *R/matrixOps.R
+163ce58cc7da5e9515fc73d7177c6a24 *R/matrixOps.R
 999e1e9ecf3e3226b97e600a7c5ee165 *R/median.R
 2263b20ac2fce14f717fa15a5e864da1 *R/missing.R
 8422558e6ef73a314efc477be8169a7e *R/n_draw.R
@@ -40,13 +40,14 @@ a7af8439d07e4335209cd6250101be2f *R/vec_ptype2.R
 6e7b1e44d97ff021117c917166d1b0e5 *R/vec_ptype_abbr.R
 dd64216a54e0387205111f9d7575f988 *R/vec_ptype_full.R
 eefb7a90ae82705a493848175b853168 *R/weighted_mean.R
+64d9e59f413739a4691ba53e065ddf82 *R/zzz.R
 f6dcbd7eade76080fe56cd3eceb0fa22 *README.md
 9e31ab0330823c569191f09be6162cbc *build/vignette.rds
 bfd3c57b15d58a6d5eebb40f0c8b0ced *data/divorce.rda
 46f82307c6528da57dfd454e9e90c8f3 *data/reg_post.rda
-6dfc35e4588d8e7c3405c3e791b72095 *inst/doc/vig1_overview.R
-5b8b824b5586eaf53b593006680dba6c *inst/doc/vig1_overview.Rmd
-e9ce460e2aa85c28e74d7abdf6119777 *inst/doc/vig1_overview.html
+d81213b56b26a09e8dcec8402cb0b05a *inst/doc/vig1_overview.R
+9d67213f5d9d472ce2b4cc15397c1e82 *inst/doc/vig1_overview.Rmd
+3cb42dc1c8aff49eca22fcb9c3dc82e3 *inst/doc/vig1_overview.html
 6ff306fefca2249b172702887503f18b *man/as_list_col.Rd
 ba5bc2a49d717572107b1a53b4691603 *man/collapse_to_rvec.Rd
 2958d4276a52271c21689d1c884eaedc *man/dbeta_rvec.Rd
@@ -85,7 +86,6 @@ fd084a4d72715b388cf2500738f990cf *man/figures/sticker/sticker.R
 67dbdf9d68c25ccf36a97e38bc5b1699 *man/if_else_rvec.Rd
 09fbe167cbad11c895673895d4aa04e6 *man/is_rvec.Rd
 207a9a4286f9bddcd44bec4d8c83a32b *man/map_rvec.Rd
-e13894c85d4d5bbc5e87e64b895fadc3 *man/matrixOps.rvec.Rd
 5dd55575145e433a0c2a59c694a143ab *man/missing.Rd
 9ecab35c805e8ba777fa8688fa7ff9c7 *man/n_draw.Rd
 20b4fe7a45332defab0b0e1948f8ce50 *man/new_rvec_blank.Rd
@@ -94,7 +94,7 @@ ad6510e3d0de174b628842b4a18dcc6a *man/pool_draws.Rd
 6779a8d8893aec89d1dd14956da79163 *man/prob.Rd
 dc693cf84612887028a26d3d043942eb *man/rank.Rd
 bac0d7b2955a4a9fe09254c8c7de5477 *man/reg_post.Rd
-c2c7779b6d95c39787c0003131c04d34 *man/rvec-matrix-mult.Rd
+6b12abaa512ce4cbee0f010dc26f0717 *man/rvec-matrix-mult.Rd
 b1c03ee034333ed3dcb3aba9c6fa0644 *man/rvec-package.Rd
 df9616d5b1a53a594d1c538666b34c6e *man/rvec.Rd
 096c3795bf420b449b8e59d479791e01 *man/sd.Rd
@@ -115,7 +115,7 @@ df58f159691764877d0461fbd2d40200 *tests/testthat/test-extract_draw.R
 3a66dd0efdca55f76c7cfffa2028532c *tests/testthat/test-format.R
 2d0d573f74c57cbe2ec3a3fbb7ca960a *tests/testthat/test-if_else_rvec.R
 d5ef2c811f996cad1c69ec11c3d60c2b *tests/testthat/test-map_rvec.R
-7b664d525fa02b80ecf0056d02603e50 *tests/testthat/test-matrixOps.R
+b90c105656703f8dc381226a66dde5e2 *tests/testthat/test-matrixOps.R
 a52a09778c6e7c1241ffd9852e8ac958 *tests/testthat/test-median.R
 a636e3b68ffb9f78a179249c4fa360b0 *tests/testthat/test-missing.R
 3df450a8913af60be12dc1972a0f66df *tests/testthat/test-n_draw.R
@@ -137,4 +137,4 @@ de9e83c8d47b8d49ee7bb349da4117ef *tests/testthat/test-vec_ptype_abbr.R
 44901435589b90d4dd73d95f3bb6d5e8 *tests/testthat/test-vec_ptype_full.R
 ab503a0f00b8b20f5967f4cd32781b4f *tests/testthat/test-weighted_mean.R
 865bf2509e4c60db5f68e6952eb59359 *vignettes/references.bib
-5b8b824b5586eaf53b593006680dba6c *vignettes/vig1_overview.Rmd
+9d67213f5d9d472ce2b4cc15397c1e82 *vignettes/vig1_overview.Rmd
