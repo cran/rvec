@@ -14,10 +14,11 @@ n_draw(x)
 }
 \arguments{
 \item{x}{An object that holds random draws,
-eg an \link[=rvec]{rvec}.}
+eg an \link{rvec}.}
 }
 \value{
-An integer scalar.
+A positive integer scalar. An rvec always has at least one draw,
+including when it has zero elements.
 }
 \description{
 Get a count of the random draws
@@ -32,6 +33,8 @@ n_draw(x)
 }
 \seealso{
 \itemize{
+\item \code{\link[=extract_draws]{extract_draws()}} to select draws using indices.
+\item \code{\link[=thin_draws]{thin_draws()}} to randomly reduce the number of draws.
 \item \code{\link[=is_rvec]{is_rvec()}} to test if an object is an rvec.
 }
 }

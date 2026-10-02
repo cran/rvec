@@ -55,10 +55,19 @@
 #' - [dunif_rvec()] Uniform
 #' - [dweibull_rvec()] Weibull
 #'
+#' **Selecting draws**
+#'
+#' - [extract_draw()] One draw as an ordinary vector
+#' - [extract_draws()] Draws selected by index, as an rvec
+#' - [thin_draws()] Random selection without replacement
+#'
 #' **Summarizing across draws**
 #'
 #' - [draws_all()] All
 #' - [draws_any()] Any
+#' - [draws_any_na()], [draws_all_na()] Missing draws
+#' - [draws_any_infinite()], [draws_all_infinite()] Infinite draws
+#' - [draws_any_finite()], [draws_all_finite()] Finite draws
 #' - [draws_min()] Minimum
 #' - [draws_max()] Maximum
 #' - [draws_median()] Median
@@ -70,7 +79,16 @@
 #' - [draws_ci()] Credible intervals
 #' - [draws_quantile()] Quantiles
 #' - [draws_fun()] Arbitrary function
-#' - [n_draw()] Number
+#' - [n_draw()] Number of draws
+#'
+#' **Dealing with NAs and infinite values**
+#'
+#' - [draws_any_na()]
+#' - [draws_all_na()]
+#' - [draws_any_infinite()]
+#' - [draws_all_infinite()]
+#' - [draws_any_finite()]
+#' - [draws_all_finite()]
 #'
 #' **Coercion, classes**
 #'

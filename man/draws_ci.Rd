@@ -4,21 +4,39 @@
 \alias{draws_ci}
 \alias{draws_ci.rvec}
 \alias{draws_ci.rvec_chr}
-\title{Credible Intervals from Random Draws}
+\title{Credible Intervals and Point Estimates from Random Draws}
 \usage{
-draws_ci(x, width = 0.95, prefix = NULL, na_rm = FALSE)
+draws_ci(
+  x,
+  width = 0.95,
+  prefix = NULL,
+  na_rm = FALSE,
+  point = c("median", "mean")
+)
 
-\method{draws_ci}{rvec}(x, width = 0.95, prefix = NULL, na_rm = FALSE)
+\method{draws_ci}{rvec}(
+  x,
+  width = 0.95,
+  prefix = NULL,
+  na_rm = FALSE,
+  point = c("median", "mean")
+)
 
-\method{draws_ci}{rvec_chr}(x, width = 0.95, prefix = NULL, na_rm = FALSE)
+\method{draws_ci}{rvec_chr}(
+  x,
+  width = 0.95,
+  prefix = NULL,
+  na_rm = FALSE,
+  point = c("median", "mean")
+)
 }
 \arguments{
-\item{x}{An object of class \link[=rvec]{rvec}.}
+\item{x}{An \link{rvec}.}
 
 \item{width}{Width(s) of credible interval(s).
 One or more numbers greater than 0
 and less than or equal to 1.
-Default is \code{0.975}.}
+Default is \code{0.95}.}
 
 \item{prefix}{String to be added to the
 names of columns in the result.
@@ -26,14 +44,32 @@ Defaults to name of \code{x}.}
 
 \item{na_rm}{Whether to remove NAs before
 calculating summaries. Default is \code{FALSE}.}
+
+\item{point}{Summary measure used for point estimate:
+\code{"median"} (the default) or \code{"mean"}.}
 }
 \value{
 A \link[tibble:tibble]{tibble}
-with three columns.
+with \code{2 * length(width) + 1} columns.
+When \code{width} has length 1, the columns are
+\itemize{
+\item \verb{<name>.lower} Lower limit of credible interval
+\item \verb{<name>.mid} Point estimate
+\item \verb{<name>.upper} Upper limit of the credible interval
+}
 }
 \description{
 Summarise the distribution of random draws
-in an rvec, using  credible intervals.
+in an rvec, using credible intervals and point estimates.
+}
+\details{
+The credible intervals extend from the quantiles at
+\code{0.5 - 0.5 * width} to the quantiles \code{0.5 + 0.5 * width}.
+
+When \code{point} is \code{"mean"},  point estimates
+can lie outside the associated credible intervals,
+though this only happens in unusual cases, such as when
+distributions are highly skewed.
 }
 \section{Warning}{
 
@@ -46,7 +82,7 @@ as in
 \code{my_df$ci <- draws_ci(my_rvec)}
 
 However, creating columns in
-this way can corrupt an ordinary data frames.
+this way can corrupt an ordinary data frame.
 For safer options,
 see the examples below.
 }
@@ -60,6 +96,7 @@ x <- rvec(m)
 x
 draws_ci(x)
 draws_ci(x, width = c(0.5, 0.99))
+draws_ci(x, point = "mean")
 draws_ci(x, prefix = "results")
 
 ## results from 'draws_ci'
@@ -97,5 +134,15 @@ across draws are:
 Apply arbitrary function across draws:
 \itemize{
 \item \code{\link[=draws_fun]{draws_fun()}}
+}
+
+Check for missing or finite values:
+\itemize{
+\item \code{\link[=draws_any_na]{draws_any_na()}}
+\item \code{\link[=draws_all_na]{draws_all_na()}}
+\item \code{\link[=draws_any_infinite]{draws_any_infinite()}}
+\item \code{\link[=draws_all_infinite]{draws_all_infinite()}}
+\item \code{\link[=draws_any_finite]{draws_any_finite()}}
+\item \code{\link[=draws_all_finite]{draws_all_finite()}}
 }
 }

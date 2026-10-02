@@ -4,8 +4,13 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## -----------------------------------------------------------------------------
+## ----message = FALSE----------------------------------------------------------
 library(rvec)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+## -----------------------------------------------------------------------------
 l <- list(c(3, 1, 0))
 theta <- rvec(l)
 theta
@@ -20,35 +25,27 @@ beta
 ## -----------------------------------------------------------------------------
 draws_mean(beta)
 
-## ----message = FALSE----------------------------------------------------------
-library(dplyr)
-library(tidyr)
-library(ggplot2)
+## -----------------------------------------------------------------------------
+draws_sd(beta)
 
 ## -----------------------------------------------------------------------------
 divorce
 
 ## -----------------------------------------------------------------------------
-divorce_rv <- divorce |>
-  collapse_to_rvec(value = rate)
-divorce_rv
+divorce_rvec <- divorce |>
+  collapse_to_rvec(values = rate)
+divorce_rvec
 
 ## -----------------------------------------------------------------------------
-divorce_rv |>
-  group_by(sex) |>
-  summarise(TDR = sum(rate) * 5 / 1000)
-
-## -----------------------------------------------------------------------------
-divorce_rv |>
-  group_by(sex) |>
-  summarise(tdr = sum(rate) * 5 / 1000) |>
-  mutate(draws_ci(tdr))
-
-## -----------------------------------------------------------------------------
-divorce_ratio <- divorce_rv |>
+divorce_ratio <- divorce_rvec |>
   pivot_wider(names_from = sex, values_from = rate) |>
-  mutate(ratio = Female / Male) |>
+  mutate(ratio = Female / Male)
+divorce_ratio
+
+## -----------------------------------------------------------------------------
+divorce_ratio  <- divorce_ratio |>
   mutate(draws_ci(ratio))
+divorce_ratio
 
 ## ----fig.width = 7, fig.height = 4--------------------------------------------
 ggplot(divorce_ratio,
@@ -56,7 +53,9 @@ ggplot(divorce_ratio,
            ymin = ratio.lower, 
            y = ratio.mid,
            ymax = ratio.upper)) +
-  geom_pointrange()
+  geom_pointrange() +
+  ylab("Ratio") +
+  ggtitle("Ratio between female divorce rate and male divorce rate")
 
 ## -----------------------------------------------------------------------------
 x <- list(LETTERS, letters)
@@ -99,11 +98,6 @@ if (getRversion() >= "4.3.0") {
                  3:4))
   m %*% x
 }
-
-## -----------------------------------------------------------------------------
-divorce_ratio |> 
-  select(age, ratio) |>
-  mutate(rank = rank(ratio))
 
 ## -----------------------------------------------------------------------------
 y <- rvec(list(c(-1, 0.2),
@@ -187,27 +181,4 @@ divorce |>
   collapse_to_rvec(values = rate) |>
   expand_from_rvec() |>
   head(2)
-
-## -----------------------------------------------------------------------------
-divorce_rv <- divorce |>
-  collapse_to_rvec(value = rate)
-divorce_rv
-divorce_rv |>
-  mutate(draws_ci(rate))
-
-## ----echo = FALSE-------------------------------------------------------------
-set.seed(0)
-mi_data <- tibble::tibble(
-  sex = rep(c("Female", "Male"), each = 3),
-  imputed_dataset = rep(1:3, times = 2),
-  value = rnorm_rvec(n = 6,
-                     mean = c(0.9, 1.2, 1.1, 0.8, 0.7, 0.5),
-		     sd = 0.2,
-		     n_draw = 1000)
-  )
-
-## -----------------------------------------------------------------------------
-mi_data
-mi_data |>
-  pool_draws(by = sex)
 

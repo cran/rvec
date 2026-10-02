@@ -81,18 +81,18 @@ dbeta_rvec <- function(x, shape1, shape2, ncp = 0, log = FALSE) {
     shape2 <- args[[3]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = dbeta,
-                    arg1 = x,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    log = log)
+        dist_rvec_3_compact(fun = dbeta,
+                            arg1 = x,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            log = log)
     else
-        dist_rvec_3(fun = dbeta,
-                    arg1 = x,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    ncp = ncp,
-                    log = log)
+        dist_rvec_3_compact(fun = dbeta,
+                            arg1 = x,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            ncp = ncp,
+                            log = log)
 }
 
 ## HAS_TESTS
@@ -110,20 +110,20 @@ pbeta_rvec <- function(q, shape1, shape2, ncp = 0, lower.tail = TRUE, log.p = FA
     shape2 <- args[[3]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = pbeta,
-                    arg1 = q,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_3_compact(fun = pbeta,
+                            arg1 = q,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_3(fun = pbeta,
-                    arg1 = q,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)        
+        dist_rvec_3_compact(fun = pbeta,
+                            arg1 = q,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -141,20 +141,20 @@ qbeta_rvec <- function(p, shape1, shape2, ncp = 0, lower.tail = TRUE, log.p = FA
     shape2 <- args[[3L]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = qbeta,
-                    arg1 = p,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_3_compact(fun = qbeta,
+                            arg1 = p,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_3(fun = qbeta,
-                    arg1 = p,
-                    arg2 = shape1,
-                    arg3 = shape2,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)        
+        dist_rvec_3_compact(fun = qbeta,
+                            arg1 = p,
+                            arg2 = shape1,
+                            arg3 = shape2,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -168,23 +168,46 @@ rbeta_rvec <- function(n, shape1, shape2, ncp = 0, n_draw = NULL) {
     shape2 <- vec_recycle(shape2, size = n)
     ncp <- vec_recycle(ncp, size = n)
     args <- list(shape1 = shape1, shape2 = shape2)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    shape1 <- args[["shape1"]]
-    shape2 <- args[["shape2"]]
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(shape1, shape2, x_arg = "shape1", y_arg = "shape2")
+    else if (is_rv[["shape1"]])
+        n_draw <- n_draw(shape1)
+    else if (is_rv[["shape2"]])
+        n_draw <- n_draw(shape2)
+    # Base R distinguishes omitted ncp from an explicitly supplied zero.
     if (ncp_not_supplied)
-        dist_rvec_2(fun = rbeta,
-                    arg1 = shape1,
-                    arg2 = shape2,
-                    n = n)
+        rdist_rvec_2(fun = rbeta,
+                     arg1 = shape1,
+                     arg2 = shape2,
+                     n = n,
+                     n_draw = n_draw)
     else
-        dist_rvec_2(fun = rbeta,
-                    arg1 = shape1,
-                    arg2 = shape2,
-                    n = n,
-                    ncp = ncp)
+        rdist_rvec_2(fun = rbeta,
+                     arg1 = shape1,
+                     arg2 = shape2,
+                     n = n,
+                     n_draw = n_draw,
+                     ncp = ncp)
 }
 
 
@@ -249,7 +272,7 @@ dbinom_rvec <- function(x, size, prob, log = FALSE) {
     x <- args[[1]]
     size <- args[[2]]
     prob <- args[[3]]
-    dist_rvec_3(fun = dbinom,
+    dist_rvec_3_compact(fun = dbinom,
                 arg1 = x,
                 arg2 = size,
                 arg3 = prob,
@@ -267,7 +290,7 @@ pbinom_rvec <- function(q, size, prob, lower.tail = TRUE, log.p = FALSE) {
     q <- args[[1]]
     size <- args[[2]]
     prob <- args[[3]]
-    dist_rvec_3(fun = pbinom,
+    dist_rvec_3_compact(fun = pbinom,
                 arg1 = q,
                 arg2 = size,
                 arg3 = prob,
@@ -286,7 +309,7 @@ qbinom_rvec <- function(p, size, prob, lower.tail = TRUE, log.p = FALSE) {
     p <- args[[1L]]
     size <- args[[2L]]
     prob <- args[[3L]]
-    dist_rvec_3(fun = qbinom,
+    dist_rvec_3_compact(fun = qbinom,
                 arg1 = p,
                 arg2 = size,
                 arg3 = prob,
@@ -302,16 +325,37 @@ rbinom_rvec <- function(n, size, prob, n_draw = NULL) {
     size <- vec_recycle(size, size = n)
     prob <- vec_recycle(prob, size = n)
     args <- list(size = size, prob = prob)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    size <- args[["size"]]
-    prob <- args[["prob"]]
-    dist_rvec_2(fun = rbinom,
-                arg1 = size,
-                arg2 = prob,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(size, prob, x_arg = "size", y_arg = "prob")
+    else if (is_rv[["size"]])
+        n_draw <- n_draw(size)
+    else if (is_rv[["prob"]])
+        n_draw <- n_draw(prob)
+    rdist_rvec_2(fun = rbinom,
+                 arg1 = size,
+                 arg2 = prob,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -376,7 +420,7 @@ dcauchy_rvec <- function(x, location = 0, scale = 1, log = FALSE) {
     x <- args[[1]]
     location <- args[[2]]
     scale <- args[[3]]
-    dist_rvec_3(fun = dcauchy,
+    dist_rvec_3_compact(fun = dcauchy,
                 arg1 = x,
                 arg2 = location,
                 arg3 = scale,
@@ -394,7 +438,7 @@ pcauchy_rvec <- function(q, location = 0, scale = 1, lower.tail = TRUE, log.p = 
     q <- args[[1]]
     location <- args[[2]]
     scale <- args[[3]]
-    dist_rvec_3(fun = pcauchy,
+    dist_rvec_3_compact(fun = pcauchy,
                 arg1 = q,
                 arg2 = location,
                 arg3 = scale,
@@ -413,7 +457,7 @@ qcauchy_rvec <- function(p, location = 0, scale = 1, lower.tail = TRUE, log.p = 
     p <- args[[1L]]
     location <- args[[2L]]
     scale <- args[[3L]]
-    dist_rvec_3(fun = qcauchy,
+    dist_rvec_3_compact(fun = qcauchy,
                 arg1 = p,
                 arg2 = location,
                 arg3 = scale,
@@ -428,18 +472,38 @@ rcauchy_rvec <- function(n, location = 0, scale = 1, n_draw = NULL) {
     rcauchy <- stats::rcauchy
     location <- vec_recycle(location, size = n)
     scale <- vec_recycle(scale, size = n)
-    args <- list(location = location,
-                 scale = scale)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    location <- args[["location"]]
-    scale <- args[["scale"]]
-    dist_rvec_2(fun = rcauchy,
-                arg1 = location,
-                arg2 = scale,
-                n = n)
+    args <- list(location = location, scale = scale)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(location, scale, x_arg = "location", y_arg = "scale")
+    else if (is_rv[["location"]])
+        n_draw <- n_draw(location)
+    else if (is_rv[["scale"]])
+        n_draw <- n_draw(scale)
+    rdist_rvec_2(fun = rcauchy,
+                 arg1 = location,
+                 arg2 = scale,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -503,16 +567,16 @@ dchisq_rvec <- function(x, df, ncp = 0, log = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = dchisq,
-                    arg1 = x,
-                    arg2 = df,
-                    log = log)
+        dist_rvec_2_compact(fun = dchisq,
+                            arg1 = x,
+                            arg2 = df,
+                            log = log)
     else
-        dist_rvec_2(fun = dchisq,
-                    arg1 = x,
-                    arg2 = df,
-                    ncp = ncp,
-                    log = log)
+        dist_rvec_2_compact(fun = dchisq,
+                            arg1 = x,
+                            arg2 = df,
+                            ncp = ncp,
+                            log = log)
 }
 
 ## HAS_TESTS
@@ -529,18 +593,18 @@ pchisq_rvec <- function(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = pchisq,
-                    arg1 = q,
-                    arg2 = df,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = pchisq,
+                            arg1 = q,
+                            arg2 = df,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_2(fun = pchisq,
-                    arg1 = q,
-                    arg2 = df,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = pchisq,
+                            arg1 = q,
+                            arg2 = df,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -557,18 +621,18 @@ qchisq_rvec <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = qchisq,
-                    arg1 = p,
-                    arg2 = df,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = qchisq,
+                            arg1 = p,
+                            arg2 = df,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_2(fun = qchisq,
-                    arg1 = p,
-                    arg2 = df,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = qchisq,
+                            arg1 = p,
+                            arg2 = df,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -580,21 +644,32 @@ rchisq_rvec <- function(n, df, ncp = 0, n_draw = NULL) {
     rchisq <- stats::rchisq
     df <- vec_recycle(df, size = n)
     ncp <- vec_recycle(ncp, size = n)
-    args <- list(df = df)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    df <- args[["df"]]
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        if (is_rvec(df)) {
+            n_draw_arg <- n_draw(df)
+            if (n_draw_arg != n_draw)
+                cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg df}",
+                                     "has {n_draw_arg} draws."))
+        }
+        else if (!is.atomic(df) || !is.vector(df))
+            cli::cli_abort(c("{.arg df} is not a vector or rvec.",
+                             i = "{.arg df} has class {.cls {class(df)}}."))
+    }
+    else if (is_rvec(df))
+        n_draw <- n_draw(df)
+    # Base R distinguishes omitted ncp from an explicitly supplied zero.
     if (ncp_not_supplied)
-        dist_rvec_1(fun = rchisq,
-                    arg = df,
-                    n = n)
+        rdist_rvec_1(fun = rchisq,
+                     arg = df,
+                     n = n,
+                     n_draw = n_draw)
     else
-        dist_rvec_1(fun = rchisq,
-                    arg = df,
-                    ncp = ncp,
-                    n = n)
+        rdist_rvec_2(fun = rchisq,
+                     arg1 = df,
+                     arg2 = ncp,
+                     n = n,
+                     n_draw = n_draw)
 }
 
 
@@ -654,7 +729,7 @@ dexp_rvec <- function(x, rate = 1, log = FALSE) {
     args <- vec_recycle_common(x, rate)
     x <- args[[1L]]
     rate <- args[[2L]]
-    dist_rvec_2(fun = dexp,
+    dist_rvec_2_compact(fun = dexp,
                 arg1 = x,
                 arg2 = rate,
                 log = log)
@@ -670,7 +745,7 @@ pexp_rvec <- function(q, rate = 1, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(q, rate)
     q <- args[[1L]]
     rate <- args[[2L]]
-    dist_rvec_2(fun = pexp,
+    dist_rvec_2_compact(fun = pexp,
                 arg1 = q,
                 arg2 = rate,
                 lower.tail = lower.tail,
@@ -687,7 +762,7 @@ qexp_rvec <- function(p, rate = 1, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(p, rate)
     p <- args[[1L]]
     rate <- args[[2L]]
-    dist_rvec_2(fun = qexp,
+    dist_rvec_2_compact(fun = qexp,
                 arg1 = p,
                 arg2 = rate,
                 lower.tail = lower.tail,
@@ -700,15 +775,24 @@ qexp_rvec <- function(p, rate = 1, lower.tail = TRUE, log.p = FALSE) {
 rexp_rvec <- function(n, rate = 1, n_draw = NULL) {
     rexp <- stats::rexp
     rate <- vec_recycle(rate, size = n)
-    args <- list(rate = rate)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    rate <- args[["rate"]]
-    dist_rvec_1(fun = rexp,
-                arg = rate,
-                n = n)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        if (is_rvec(rate)) {
+            n_draw_arg <- n_draw(rate)
+            if (n_draw_arg != n_draw)
+                cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg rate}",
+                                     "has {n_draw_arg} draws."))
+        }
+        else if (!is.atomic(rate) || !is.vector(rate))
+            cli::cli_abort(c("{.arg rate} is not a vector or rvec.",
+                             i = "{.arg rate} has class {.cls {class(rate)}}."))
+    }
+    else if (is_rvec(rate))
+        n_draw <- n_draw(rate)
+    rdist_rvec_1(fun = rexp,
+                 arg = rate,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -775,18 +859,18 @@ df_rvec <- function(x, df1, df2, ncp = 0, log = FALSE) {
     df2 <- args[[3L]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = df,
-                    arg1 = x,
-                    arg2 = df1,
-                    arg3 = df2,
-                    log = log)
+        dist_rvec_3_compact(fun = df,
+                            arg1 = x,
+                            arg2 = df1,
+                            arg3 = df2,
+                            log = log)
     else
-        dist_rvec_3(fun = df,
-                    arg1 = x,
-                    arg2 = df1,
-                    arg3 = df2,
-                    ncp = ncp,
-                    log = log)
+        dist_rvec_3_compact(fun = df,
+                            arg1 = x,
+                            arg2 = df1,
+                            arg3 = df2,
+                            ncp = ncp,
+                            log = log)
 }
 
 ## HAS_TESTS
@@ -804,20 +888,20 @@ pf_rvec <- function(q, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df2 <- args[[3L]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = pf,
-                    arg1 = q,
-                    arg2 = df1,
-                    arg3 = df2,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_3_compact(fun = pf,
+                            arg1 = q,
+                            arg2 = df1,
+                            arg3 = df2,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_3(fun = pf,
-                    arg1 = q,
-                    arg2 = df1,
-                    arg3 = df2,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)        
+        dist_rvec_3_compact(fun = pf,
+                            arg1 = q,
+                            arg2 = df1,
+                            arg3 = df2,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -835,20 +919,20 @@ qf_rvec <- function(p, df1, df2, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df2 <- args[[3L]]
     ncp <- args[[4L]]
     if (ncp_not_supplied)
-        dist_rvec_3(fun = qf,
-                    arg1 = p,
-                    arg2 = df1,
-                    arg3 = df2,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_3_compact(fun = qf,
+                            arg1 = p,
+                            arg2 = df1,
+                            arg3 = df2,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_3(fun = qf,
-                    arg1 = p,
-                    arg2 = df1,
-                    arg3 = df2,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)        
+        dist_rvec_3_compact(fun = qf,
+                            arg1 = p,
+                            arg2 = df1,
+                            arg3 = df2,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -862,29 +946,52 @@ rf_rvec <- function(n, df1, df2, ncp = 0, n_draw = NULL) {
     df2 <- vec_recycle(df2, size = n)
     ncp <- vec_recycle(ncp, size = n)
     args <- list(df1 = df1, df2 = df2)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    df1 <- args[["df1"]]
-    df2 <- args[["df2"]]
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(df1, df2, x_arg = "df1", y_arg = "df2")
+    else if (is_rv[["df1"]])
+        n_draw <- n_draw(df1)
+    else if (is_rv[["df2"]])
+        n_draw <- n_draw(df2)
+    # Base R distinguishes omitted ncp from an explicitly supplied zero.
     if (ncp_not_supplied)
-        dist_rvec_2(fun = rf,
-                    arg1 = df1,
-                    arg2 = df2,
-                    n = n)
+        rdist_rvec_2(fun = rf,
+                     arg1 = df1,
+                     arg2 = df2,
+                     n = n,
+                     n_draw = n_draw)
     else
-        dist_rvec_2(fun = rf,
-                    arg1 = df1, 
-                    arg2 = df2,
-                    n = n,
-                    ncp = ncp)
+        rdist_rvec_2(fun = rf,
+                     arg1 = df1,
+                     arg2 = df2,
+                     n = n,
+                     n_draw = n_draw,
+                     ncp = ncp)
 }
 
 
 ## 'gamma' --------------------------------------------------------------------
 
-## Use 'rate' rather than 'scale' in call to 'dist_rvec_3'
+## Use 'rate' rather than 'scale' in call to 'dist_rvec_3_compact'
 ## because 'rate' appears first in base R gamma functions
 
 ## HAS_TESTS
@@ -953,7 +1060,7 @@ dgamma_rvec <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE) {
     x <- args[[1]]
     shape <- args[[2]]
     rate <- args[[3]]
-    dist_rvec_3(fun = dgamma,
+    dist_rvec_3_compact(fun = dgamma,
                 arg1 = x,
                 arg2 = shape,
                 arg3 = rate,
@@ -977,7 +1084,7 @@ pgamma_rvec <- function(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, l
     q <- args[[1]]
     shape <- args[[2]]
     rate <- args[[3]]
-    dist_rvec_3(fun = pgamma,
+    dist_rvec_3_compact(fun = pgamma,
                 arg1 = q,
                 arg2 = shape,
                 arg3 = rate,
@@ -1002,7 +1109,7 @@ qgamma_rvec <- function(p, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, l
     p <- args[[1L]]
     shape <- args[[2L]]
     rate <- args[[3L]]
-    dist_rvec_3(fun = qgamma,
+    dist_rvec_3_compact(fun = qgamma,
                 arg1 = p,
                 arg2 = shape,
                 arg3 = rate,
@@ -1024,16 +1131,37 @@ rgamma_rvec <- function(n, shape, rate = 1, scale = 1/rate, n_draw = NULL) {
     shape <- vec_recycle(shape, size = n)
     rate <- vec_recycle(rate, size = n)
     args <- list(shape = shape, rate = rate)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    shape <- args[["shape"]]
-    rate <- args[["rate"]]
-    dist_rvec_2(fun = rgamma,
-                arg1 = shape,
-                arg2 = rate,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(shape, rate, x_arg = "shape", y_arg = "rate")
+    else if (is_rv[["shape"]])
+        n_draw <- n_draw(shape)
+    else if (is_rv[["rate"]])
+        n_draw <- n_draw(rate)
+    rdist_rvec_2(fun = rgamma,
+                 arg1 = shape,
+                 arg2 = rate,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -1095,7 +1223,7 @@ dgeom_rvec <- function(x, prob, log = FALSE) {
     args <- vec_recycle_common(x, prob)
     x <- args[[1L]]
     prob <- args[[2L]]
-    dist_rvec_2(fun = dgeom,
+    dist_rvec_2_compact(fun = dgeom,
                 arg1 = x,
                 arg2 = prob,
                 log = log)
@@ -1111,7 +1239,7 @@ pgeom_rvec <- function(q, prob, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(q, prob)
     q <- args[[1L]]
     prob <- args[[2L]]
-    dist_rvec_2(fun = pgeom,
+    dist_rvec_2_compact(fun = pgeom,
                 arg1 = q,
                 arg2 = prob,
                 lower.tail = lower.tail,
@@ -1128,7 +1256,7 @@ qgeom_rvec <- function(p, prob, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(p, prob)
     p <- args[[1L]]
     prob <- args[[2L]]
-    dist_rvec_2(fun = qgeom,
+    dist_rvec_2_compact(fun = qgeom,
                 arg1 = p,
                 arg2 = prob,
                 lower.tail = lower.tail,
@@ -1141,15 +1269,24 @@ qgeom_rvec <- function(p, prob, lower.tail = TRUE, log.p = FALSE) {
 rgeom_rvec <- function(n, prob, n_draw = NULL) {
     rgeom <- stats::rgeom
     prob <- vec_recycle(prob, size = n)
-    args <- list(prob = prob)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    prob <- args[["prob"]]
-    dist_rvec_1(fun = rgeom,
-                arg = prob,
-                n = n)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        if (is_rvec(prob)) {
+            n_draw_arg <- n_draw(prob)
+            if (n_draw_arg != n_draw)
+                cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg prob}",
+                                     "has {n_draw_arg} draws."))
+        }
+        else if (!is.atomic(prob) || !is.vector(prob))
+            cli::cli_abort(c("{.arg prob} is not a vector or rvec.",
+                             i = "{.arg prob} has class {.cls {class(prob)}}."))
+    }
+    else if (is_rvec(prob))
+        n_draw <- n_draw(prob)
+    rdist_rvec_1(fun = rgeom,
+                 arg = prob,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -1223,12 +1360,12 @@ dhyper_rvec <- function(x, m, n, k, log = FALSE) {
     m <- args[[2]]
     n <- args[[3]]
     k <- args[[4]]
-    dist_rvec_4(fun = dhyper,
-                arg1 = x,
-                arg2 = m,
-                arg3 = n,
-                arg4 = k,
-                log = log)
+    dist_rvec_4_compact(fun = dhyper,
+                        arg1 = x,
+                        arg2 = m,
+                        arg3 = n,
+                        arg4 = k,
+                        log = log)
 }
 
 ## HAS_TESTS
@@ -1243,13 +1380,13 @@ phyper_rvec <- function(q, m, n, k, lower.tail = TRUE, log.p = FALSE) {
     m <- args[[2]]
     n <- args[[3]]
     k <- args[[4]]
-    dist_rvec_4(fun = phyper,
-                arg1 = q,
-                arg2 = m,
-                arg3 = n,
-                arg4 = k,
-                lower.tail = lower.tail,
-                log.p = log.p)
+    dist_rvec_4_compact(fun = phyper,
+                        arg1 = q,
+                        arg2 = m,
+                        arg3 = n,
+                        arg4 = k,
+                        lower.tail = lower.tail,
+                        log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -1264,13 +1401,13 @@ qhyper_rvec <- function(p, m, n, k, lower.tail = TRUE, log.p = FALSE) {
     m <- args[[2L]]
     n <- args[[3L]]
     k <- args[[4L]]
-    dist_rvec_4(fun = qhyper,
-                arg1 = p,
-                arg2 = m,
-                arg3 = n,
-                arg4 = k,
-                lower.tail = lower.tail,
-                log.p = log.p)
+    dist_rvec_4_compact(fun = qhyper,
+                        arg1 = p,
+                        arg2 = m,
+                        arg3 = n,
+                        arg4 = k,
+                        lower.tail = lower.tail,
+                        log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -1282,18 +1419,42 @@ rhyper_rvec <- function(nn, m, n, k, n_draw = NULL) {
     n <- vec_recycle(n, size = nn)
     k <- vec_recycle(k, size = nn)
     args <- list(m = m, n = n, k = k)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    nn <- n_rdist(n = nn, args = args)
-    m <- args[["m"]]
-    n <- args[["n"]]
-    k <- args[["k"]]
-    dist_rvec_3(fun = rhyper,
-                arg1 = m,
-                arg2 = n,
-                arg3 = k,
-                nn = nn)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else {
+        if (is_rv[["m"]] && is_rv[["n"]])
+            n_draw_common(m, n, x_arg = "m", y_arg = "n")
+        if (is_rv[["m"]] && is_rv[["k"]])
+            n_draw_common(m, k, x_arg = "m", y_arg = "k")
+        if (is_rv[["n"]] && is_rv[["k"]])
+            n_draw_common(n, k, x_arg = "n", y_arg = "k")
+        if (any(is_rv))
+            n_draw <- max(vapply(args[is_rv], n_draw, 1L))
+    }
+    rdist_rvec_3(fun = rhyper,
+                 arg1 = m,
+                 arg2 = n,
+                 arg3 = k,
+                 n = nn,
+                 n_draw = n_draw)
 }
 
 
@@ -1357,7 +1518,7 @@ dlnorm_rvec <- function(x, meanlog = 0, sdlog = 1, log = FALSE) {
     x <- args[[1]]
     meanlog <- args[[2]]
     sdlog <- args[[3]]
-    dist_rvec_3(fun = dlnorm,
+    dist_rvec_3_compact(fun = dlnorm,
                 arg1 = x,
                 arg2 = meanlog,
                 arg3 = sdlog,
@@ -1375,7 +1536,7 @@ plnorm_rvec <- function(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FA
     q <- args[[1]]
     meanlog <- args[[2]]
     sdlog <- args[[3]]
-    dist_rvec_3(fun = plnorm,
+    dist_rvec_3_compact(fun = plnorm,
                 arg1 = q,
                 arg2 = meanlog,
                 arg3 = sdlog,
@@ -1394,7 +1555,7 @@ qlnorm_rvec <- function(p, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FA
     p <- args[[1L]]
     meanlog <- args[[2L]]
     sdlog <- args[[3L]]
-    dist_rvec_3(fun = qlnorm,
+    dist_rvec_3_compact(fun = qlnorm,
                 arg1 = p,
                 arg2 = meanlog,
                 arg3 = sdlog,
@@ -1410,16 +1571,37 @@ rlnorm_rvec <- function(n, meanlog = 0, sdlog = 1, n_draw = NULL) {
     meanlog <- vec_recycle(meanlog, size = n)
     sdlog <- vec_recycle(sdlog, size = n)
     args <- list(meanlog = meanlog, sdlog = sdlog)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    meanlog <- args[["meanlog"]]
-    sdlog <- args[["sdlog"]]
-    dist_rvec_2(fun = rlnorm,
-                arg1 = meanlog,
-                arg2 = sdlog,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(meanlog, sdlog, x_arg = "meanlog", y_arg = "sdlog")
+    else if (is_rv[["meanlog"]])
+        n_draw <- n_draw(meanlog)
+    else if (is_rv[["sdlog"]])
+        n_draw <- n_draw(sdlog)
+    rdist_rvec_2(fun = rlnorm,
+                 arg1 = meanlog,
+                 arg2 = sdlog,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -1489,8 +1671,15 @@ rlnorm_rvec <- function(n, meanlog = 0, sdlog = 1, n_draw = NULL) {
 dmultinom_rvec <- function(x, size = NULL, prob, log = FALSE) {
     check_flag(log)
     dmultinom <- stats::dmultinom
-    if (is.null(size))
-        size <- sum(x)
+    if (is.null(size)) {
+        ## Summary dispatch concatenates its arguments, copying even one rvec.
+        ## Use the same sum method directly for standard double rvecs only;
+        ## retain dispatch for other types and subclasses.
+        if (identical(class(x), c("rvec_dbl", "rvec", "vctrs_rcrd", "vctrs_vctr")))
+            size <- vec_math.rvec_dbl("sum", x)
+        else
+            size <- sum(x)
+    }
     n_x <- length(x)
     n_p <- length(prob)
     if (n_x == 0L)
@@ -1536,25 +1725,20 @@ dmultinom_rvec <- function(x, size = NULL, prob, log = FALSE) {
             n_draw <- n_draw(prob)
         if (is_rv_x) {
             check_not_rvec_chr(x, nm_arg = "x")
-            x <- rvec_to_rvec_dbl(x, n_draw = n_draw)
             x <- as.matrix(x)
         }
         else
-            x <- matrix(x, nrow = n_x, ncol = n_draw)
+            x <- matrix(x, nrow = n_x, ncol = 1L)
         if (is_rv_s) {
             check_not_rvec_chr(size, nm_arg = "size")
-            size <- rvec_to_rvec_dbl(size, n_draw = n_draw)
             size <- as.vector(as.matrix(size))
         }
-        else
-            size <- rep.int(size, times = n_draw)
         if (is_rv_p) {
             check_not_rvec_chr(prob, nm_arg = "prob")
-            prob <- rvec_to_rvec_dbl(prob, n_draw = n_draw)
             prob <- as.matrix(prob)
         }
         else
-            prob <- matrix(prob, nrow = n_p, ncol = n_draw)
+            prob <- matrix(prob, nrow = n_p, ncol = 1L)
     }
     else {
         n_draw <- 1L
@@ -1563,9 +1747,13 @@ dmultinom_rvec <- function(x, size = NULL, prob, log = FALSE) {
     }
     ans <- double(length = n_draw)
     for (i_draw in seq_len(n_draw)) {
-        val <- tryCatch(dmultinom(x = x[, i_draw],
-                                  size = size[[i_draw]],
-                                  prob = prob[, i_draw],
+        ## Reuse shared inputs without expanding them across draws.
+        i_x <- if (ncol(x) == 1L) 1L else i_draw
+        i_size <- if (length(size) == 1L) 1L else i_draw
+        i_prob <- if (ncol(prob) == 1L) 1L else i_draw
+        val <- tryCatch(dmultinom(x = x[, i_x],
+                                  size = size[[i_size]],
+                                  prob = prob[, i_prob],
                                   log = log),
                         error = function(e) e)
         if (inherits(val, "error"))
@@ -1608,8 +1796,25 @@ rmultinom_rvec <- function(n, size, prob, n_draw = NULL) {
     }
     else {
         args <- list(size = size, prob = prob)
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (is.atomic(arg) && is.vector(arg)) {
+                ## Retain one column; the loop reuses it for every draw.
+                m <- matrix(arg, nrow = length(arg), ncol = 1L)
+                rownames(m) <- names(arg)
+                args[[nm]] <- rvec(m)
+            }
+            else
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
         size <- args[["size"]]
         prob <- args[["prob"]]
         is_rv_s <- TRUE
@@ -1617,25 +1822,23 @@ rmultinom_rvec <- function(n, size, prob, n_draw = NULL) {
     }
     if (is_rv_s) {
         check_not_rvec_chr(size, nm_arg = "size")
-        size <- rvec_to_rvec_dbl(size, n_draw = n_draw)
         size <- as.vector(as.matrix(size))
     }
-    else
-        size <- rep.int(size, times = n_draw)
     if (is_rv_p) {
         check_not_rvec_chr(prob, nm_arg = "prob")
-        prob <- rvec_to_rvec_dbl(prob, n_draw = n_draw)
         prob <- as.matrix(prob)
     }
     else
-        prob <- matrix(prob, nrow = n_p, ncol = n_draw)
+        prob <- matrix(prob, nrow = n_p, ncol = 1L)
     ans <- vector(mode = "list", length = n)
     for (i_ans in seq_along(ans)) {
-        m <- matrix(nrow = n_p, ncol = n_draw)
+        m <- matrix(0, nrow = n_p, ncol = n_draw)
         for (i_draw in seq_len(n_draw)) {
+            i_size <- if (length(size) == 1L) 1L else i_draw
+            i_prob <- if (ncol(prob) == 1L) 1L else i_draw
             val <- tryCatch(rmultinom(n = 1L,
-                                      size = size[[i_draw]],
-                                      prob = prob[, i_draw]),
+                                      size = size[[i_size]],
+                                      prob = prob[, i_prob]),
                             error = function(e) e)
             if (inherits(val, "error"))
                 cli::cli_abort(c("Problem with call to function {.fun rmultinom}:",
@@ -1732,13 +1935,13 @@ dnbinom_rvec <- function(x, size, prob, mu, log = FALSE) {
         x <- args[[1]]
         size <- args[[2]]
         mu <- args[[3]]
-        prob <- size / (size + mu)
+        prob <- nbinom_prob_from_mu(size, mu)
     }
-    dist_rvec_3(fun = dnbinom,
-                arg1 = x,
-                arg2 = size,
-                arg3 = prob,
-                log = log)
+    dist_rvec_3_compact(fun = dnbinom,
+                        arg1 = x,
+                        arg2 = size,
+                        arg3 = prob,
+                        log = log)
 }
 
 ## HAS_TESTS
@@ -1765,14 +1968,14 @@ pnbinom_rvec <- function(q, size, prob, mu, lower.tail = TRUE, log.p = FALSE) {
         q <- args[[1]]
         size <- args[[2]]
         mu <- args[[3]]
-        prob <- size / (size + mu)
+        prob <- nbinom_prob_from_mu(size, mu)
     }
-    dist_rvec_3(fun = pnbinom,
-                arg1 = q,
-                arg2 = size,
-                arg3 = prob,
-                lower.tail = lower.tail,
-                log.p = log.p)
+    dist_rvec_3_compact(fun = pnbinom,
+                        arg1 = q,
+                        arg2 = size,
+                        arg3 = prob,
+                        lower.tail = lower.tail,
+                        log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -1799,14 +2002,14 @@ qnbinom_rvec <- function(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE) {
         p <- args[[1]]
         size <- args[[2]]
         mu <- args[[3]]
-        prob <- size / (size + mu)
+        prob <- nbinom_prob_from_mu(size, mu)
     }
-    dist_rvec_3(fun = qnbinom,
-                arg1 = p,
-                arg2 = size,
-                arg3 = prob,
-                lower.tail = lower.tail,
-                log.p = log.p)
+    dist_rvec_3_compact(fun = qnbinom,
+                        arg1 = p,
+                        arg2 = size,
+                        arg3 = prob,
+                        lower.tail = lower.tail,
+                        log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -1829,21 +2032,38 @@ rnbinom_rvec <- function(n, size, prob, mu, n_draw = NULL) {
         mu <- vec_recycle(mu, size = n)
         args <- list(size = size, mu = mu)
     }
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    size <- args[["size"]]
-    if (has_prob)
-        prob <- args[["prob"]]
-    else {
-        mu <- args[["mu"]]
-        prob <- size / (size + mu)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
     }
-    dist_rvec_2(fun = rnbinom,
-                arg1 = size,
-                arg2 = prob,
-                n = n)
+    else if (all(is_rv))
+        n_draw <- n_draw_common(args[[1L]], args[[2L]],
+                                x_arg = "size", y_arg = names(args)[[2L]])
+    else if (any(is_rv))
+        n_draw <- n_draw(args[[which(is_rv)]])
+    if (!has_prob)
+        prob <- nbinom_prob_from_mu(size, mu)
+    rdist_rvec_2(fun = rnbinom,
+                 arg1 = size,
+                 arg2 = prob,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -1908,7 +2128,7 @@ dnorm_rvec <- function(x, mean = 0, sd = 1, log = FALSE) {
     x <- args[[1]]
     mean <- args[[2]]
     sd <- args[[3]]
-    dist_rvec_3(fun = dnorm,
+    dist_rvec_3_compact(fun = dnorm,
                 arg1 = x,
                 arg2 = mean,
                 arg3 = sd,
@@ -1926,7 +2146,7 @@ pnorm_rvec <- function(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
     q <- args[[1]]
     mean <- args[[2]]
     sd <- args[[3]]
-    dist_rvec_3(fun = pnorm,
+    dist_rvec_3_compact(fun = pnorm,
                 arg1 = q,
                 arg2 = mean,
                 arg3 = sd,
@@ -1945,7 +2165,7 @@ qnorm_rvec <- function(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE) {
     p <- args[[1L]]
     mean <- args[[2L]]
     sd <- args[[3L]]
-    dist_rvec_3(fun = qnorm,
+    dist_rvec_3_compact(fun = qnorm,
                 arg1 = p,
                 arg2 = mean,
                 arg3 = sd,
@@ -1961,16 +2181,37 @@ rnorm_rvec <- function(n, mean = 0, sd = 1, n_draw = NULL) {
     mean <- vec_recycle(mean, size = n)
     sd <- vec_recycle(sd, size = n)
     args <- list(mean = mean, sd = sd)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    mean <- args[["mean"]]
-    sd <- args[["sd"]]
-    dist_rvec_2(fun = rnorm,
-                arg1 = mean,
-                arg2 = sd,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(mean, sd, x_arg = "mean", y_arg = "sd")
+    else if (is_rv[["mean"]])
+        n_draw <- n_draw(mean)
+    else if (is_rv[["sd"]])
+        n_draw <- n_draw(sd)
+    rdist_rvec_2(fun = rnorm,
+                 arg1 = mean,
+                 arg2 = sd,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -2031,7 +2272,7 @@ dpois_rvec <- function(x, lambda, log = FALSE) {
     args <- vec_recycle_common(x, lambda)
     x <- args[[1L]]
     lambda <- args[[2L]]
-    dist_rvec_2(fun = dpois,
+    dist_rvec_2_compact(fun = dpois,
                 arg1 = x,
                 arg2 = lambda,
                 log = log)
@@ -2047,7 +2288,7 @@ ppois_rvec <- function(q, lambda, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(q, lambda)
     q <- args[[1L]]
     lambda <- args[[2L]]
-    dist_rvec_2(fun = ppois,
+    dist_rvec_2_compact(fun = ppois,
                 arg1 = q,
                 arg2 = lambda,
                 lower.tail = lower.tail,
@@ -2064,7 +2305,7 @@ qpois_rvec <- function(p, lambda, lower.tail = TRUE, log.p = FALSE) {
     args <- vec_recycle_common(p, lambda)
     p <- args[[1L]]
     lambda <- args[[2L]]
-    dist_rvec_2(fun = qpois,
+    dist_rvec_2_compact(fun = qpois,
                 arg1 = p,
                 arg2 = lambda,
                 lower.tail = lower.tail,
@@ -2077,15 +2318,24 @@ qpois_rvec <- function(p, lambda, lower.tail = TRUE, log.p = FALSE) {
 rpois_rvec <- function(n, lambda, n_draw = NULL) {
     rpois <- stats::rpois
     lambda <- vec_recycle(lambda, size = n)
-    args <- list(lambda = lambda)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    lambda <- args[["lambda"]]
-    dist_rvec_1(fun = rpois,
-                arg = lambda,
-                n = n)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        if (is_rvec(lambda)) {
+            n_draw_arg <- n_draw(lambda)
+            if (n_draw_arg != n_draw)
+                cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg lambda}",
+                                     "has {n_draw_arg} draws."))
+        }
+        else if (!is.atomic(lambda) || !is.vector(lambda))
+            cli::cli_abort(c("{.arg lambda} is not a vector or rvec.",
+                             i = "{.arg lambda} has class {.cls {class(lambda)}}."))
+    }
+    else if (is_rvec(lambda))
+        n_draw <- n_draw(lambda)
+    rdist_rvec_1(fun = rpois,
+                 arg = lambda,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -2152,16 +2402,16 @@ dt_rvec <- function(x, df, ncp = 0, log = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = dt,
-                    arg1 = x,
-                    arg2 = df,
-                    log = log)
+        dist_rvec_2_compact(fun = dt,
+                            arg1 = x,
+                            arg2 = df,
+                            log = log)
     else
-        dist_rvec_2(fun = dt,
-                    arg1 = x,
-                    arg2 = df,
-                    ncp = ncp,
-                    log = log)
+        dist_rvec_2_compact(fun = dt,
+                            arg1 = x,
+                            arg2 = df,
+                            ncp = ncp,
+                            log = log)
 }
 
 ## HAS_TESTS
@@ -2178,18 +2428,18 @@ pt_rvec <- function(q, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = pt,
-                    arg1 = q,
-                    arg2 = df,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = pt,
+                            arg1 = q,
+                            arg2 = df,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_2(fun = pt,
-                    arg1 = q,
-                    arg2 = df,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = pt,
+                            arg1 = q,
+                            arg2 = df,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -2206,18 +2456,18 @@ qt_rvec <- function(p, df, ncp = 0, lower.tail = TRUE, log.p = FALSE) {
     df <- args[[2L]]
     ncp <- args[[3L]]
     if (ncp_not_supplied)
-        dist_rvec_2(fun = qt,
-                    arg1 = p,
-                    arg2 = df,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = qt,
+                            arg1 = p,
+                            arg2 = df,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
     else
-        dist_rvec_2(fun = qt,
-                    arg1 = p,
-                    arg2 = df,
-                    ncp = ncp,
-                    lower.tail = lower.tail,
-                    log.p = log.p)
+        dist_rvec_2_compact(fun = qt,
+                            arg1 = p,
+                            arg2 = df,
+                            ncp = ncp,
+                            lower.tail = lower.tail,
+                            log.p = log.p)
 }
 
 ## HAS_TESTS
@@ -2229,21 +2479,32 @@ rt_rvec <- function(n, df, ncp = 0, n_draw = NULL) {
     rt <- stats::rt
     df <- vec_recycle(df, size = n)
     ncp <- vec_recycle(ncp, size = n)
-    args <- list(df = df)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    df <- args[["df"]]
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        if (is_rvec(df)) {
+            n_draw_arg <- n_draw(df)
+            if (n_draw_arg != n_draw)
+                cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg df}",
+                                     "has {n_draw_arg} draws."))
+        }
+        else if (!is.atomic(df) || !is.vector(df))
+            cli::cli_abort(c("{.arg df} is not a vector or rvec.",
+                             i = "{.arg df} has class {.cls {class(df)}}."))
+    }
+    else if (is_rvec(df))
+        n_draw <- n_draw(df)
+    # Base R distinguishes omitted ncp from an explicitly supplied zero.
     if (ncp_not_supplied)
-        dist_rvec_1(fun = rt,
-                    arg = df,
-                    n = n)
+        rdist_rvec_1(fun = rt,
+                     arg = df,
+                     n = n,
+                     n_draw = n_draw)
     else
-        dist_rvec_1(fun = rt,
-                    arg = df,
-                    ncp = ncp,
-                    n = n)
+        rdist_rvec_1(fun = rt,
+                     arg = df,
+                     n = n,
+                     n_draw = n_draw,
+                     ncp = ncp)
 }
 
 
@@ -2305,7 +2566,7 @@ dunif_rvec <- function(x, min = 0, max = 1, log = FALSE) {
     x <- args[[1]]
     min <- args[[2]]
     max <- args[[3]]
-    dist_rvec_3(fun = dunif,
+    dist_rvec_3_compact(fun = dunif,
                 arg1 = x,
                 arg2 = min,
                 arg3 = max,
@@ -2323,7 +2584,7 @@ punif_rvec <- function(q, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
     q <- args[[1]]
     min <- args[[2]]
     max <- args[[3]]
-    dist_rvec_3(fun = punif,
+    dist_rvec_3_compact(fun = punif,
                 arg1 = q,
                 arg2 = min,
                 arg3 = max,
@@ -2342,7 +2603,7 @@ qunif_rvec <- function(p, min = 0, max = 1, lower.tail = TRUE, log.p = FALSE) {
     p <- args[[1L]]
     min <- args[[2L]]
     max <- args[[3L]]
-    dist_rvec_3(fun = qunif,
+    dist_rvec_3_compact(fun = qunif,
                 arg1 = p,
                 arg2 = min,
                 arg3 = max,
@@ -2358,16 +2619,37 @@ runif_rvec <- function(n, min = 0, max = 1, n_draw = NULL) {
     min <- vec_recycle(min, size = n)
     max <- vec_recycle(max, size = n)
     args <- list(min = min, max = max)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    min <- args[["min"]]
-    max <- args[["max"]]
-    dist_rvec_2(fun = runif,
-                arg1 = min,
-                arg2 = max,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(min, max, x_arg = "min", y_arg = "max")
+    else if (is_rv[["min"]])
+        n_draw <- n_draw(min)
+    else if (is_rv[["max"]])
+        n_draw <- n_draw(max)
+    rdist_rvec_2(fun = runif,
+                 arg1 = min,
+                 arg2 = max,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
@@ -2430,7 +2712,7 @@ dweibull_rvec <- function(x, shape, scale = 1, log = FALSE) {
     x <- args[[1]]
     shape <- args[[2]]
     scale <- args[[3]]
-    dist_rvec_3(fun = dweibull,
+    dist_rvec_3_compact(fun = dweibull,
                 arg1 = x,
                 arg2 = shape,
                 arg3 = scale,
@@ -2448,7 +2730,7 @@ pweibull_rvec <- function(q, shape, scale = 1, lower.tail = TRUE, log.p = FALSE)
     q <- args[[1]]
     shape <- args[[2]]
     scale <- args[[3]]
-    dist_rvec_3(fun = pweibull,
+    dist_rvec_3_compact(fun = pweibull,
                 arg1 = q,
                 arg2 = shape,
                 arg3 = scale,
@@ -2467,7 +2749,7 @@ qweibull_rvec <- function(p, shape, scale = 1, lower.tail = TRUE, log.p = FALSE)
     p <- args[[1L]]
     shape <- args[[2L]]
     scale <- args[[3L]]
-    dist_rvec_3(fun = qweibull,
+    dist_rvec_3_compact(fun = qweibull,
                 arg1 = p,
                 arg2 = shape,
                 arg3 = scale,
@@ -2483,139 +2765,129 @@ rweibull_rvec <- function(n, shape, scale = 1, n_draw = NULL) {
     shape <- vec_recycle(shape, size = n)
     scale <- vec_recycle(scale, size = n)
     args <- list(shape = shape, scale = scale)
-    if (!is.null(n_draw))
-        args <- promote_args_to_rvec(args = args,
-                                     n_draw = n_draw)
-    n <- n_rdist(n = n, args = args)
-    shape <- args[["shape"]]
-    scale <- args[["scale"]]
-    dist_rvec_2(fun = rweibull,
-                arg1 = shape,
-                arg2 = scale,
-                n = n)
+    is_rv <- vapply(args, is_rvec, TRUE)
+    if (!is.null(n_draw)) {
+        check_n_draw(n_draw)
+        for (nm in names(args)) {
+            arg <- args[[nm]]
+            if (is_rvec(arg)) {
+                n_draw_arg <- n_draw(arg)
+                if (n_draw_arg != n_draw)
+                    cli::cli_abort(paste("{.arg n_draw} is {n_draw} but {.arg {nm}}",
+                                         "has {n_draw_arg} draws."))
+            }
+            else if (!is.atomic(arg) || !is.vector(arg))
+                cli::cli_abort(c("{.arg {nm}} is not a vector or rvec.",
+                                 i = "{.arg {nm}} has class {.cls {class(arg)}}."))
+        }
+        for (nm in names(args)) {
+            if (is.character(args[[nm]]) && !is_rvec(args[[nm]]))
+                cli::cli_abort("{.arg {nm}} must not be a character vector.")
+        }
+    }
+    else if (all(is_rv))
+        n_draw <- n_draw_common(shape, scale, x_arg = "shape", y_arg = "scale")
+    else if (is_rv[["shape"]])
+        n_draw <- n_draw(shape)
+    else if (is_rv[["scale"]])
+        n_draw <- n_draw(scale)
+    rdist_rvec_2(fun = rweibull,
+                 arg1 = shape,
+                 arg2 = scale,
+                 n = n,
+                 n_draw = n_draw)
 }
 
 
 ## Helper functions -----------------------------------------------------------
 
 ## HAS_TESTS
-#' Apply random-distribution function to an rvec:
-#' function has one parameter
+#' Convert negative-binomial means to probabilities without expanding draws
 #'
-#' Assume that 'arg' has already be recycled,
-#' if necessary, to have the desired length.
-#'
-#' In practice random variate
-#' functions are the
-#' only distribution functions to
-#' have one parameter.
-#'
-#' The 'n' argument
-#' is not a parameter. It is passed in
-#' via .... The calling function
-#' is responsible for setting 'n'
-#' to 'length(as.matrix(arg))'.
-#'
-#' @param fun The function to be applied
-#' @param arg Parameter argument for the function
-#' @param ... Other arguments passed to fun
-#'
-#' @returns If arg is an rvec, then an rvec.
-#' Otherwise a numeric vector.
+#' Arguments have already been recycled to a common observation count.
+#' Keep the same arithmetic as size / (size + mu), but avoid constructing
+#' intermediate rvecs. Single-column parameters recycle as ordinary vectors.
 #'
 #' @noRd
-dist_rvec_1 <- function(fun, arg, ...) {
-  nm_fun <- rlang::as_name(rlang::enquo(fun))
-  is_arg_rvec <- is_rvec(arg)
-  if (is_arg_rvec) {
-    n_draw <- n_draw(arg)
-    arg <- as.vector(as.matrix(arg))
+nbinom_prob_from_mu <- function(size, mu) {
+  is_rv_size <- is_rvec(size)
+  is_rv_mu <- is_rvec(mu)
+  if (!is_rv_size && !is_rv_mu)
+    return(size / (size + mu))
+  numeric_size <- if (is_rv_size) !inherits(size, "rvec_chr") else is.numeric(size) || is.logical(size)
+  numeric_mu <- if (is_rv_mu) !inherits(mu, "rvec_chr") else is.numeric(mu) || is.logical(mu)
+  ## Preserve existing errors for unsupported argument types.
+  if (!numeric_size || !numeric_mu)
+    return(size / (size + mu))
+  if (is_rv_size && is_rv_mu)
+    n_draw <- n_draw_common(size, mu, x_arg = "x", y_arg = "y")
+  else if (is_rv_size)
+    n_draw <- n_draw(size)
+  else
+    n_draw <- n_draw(mu)
+  n <- length(size)
+  if (is_rv_size) {
+    size <- as.matrix(size)
+    if (ncol(size) == 1L)
+      dim(size) <- NULL
   }
-  ans <- tryCatch(
-    withCallingHandlers(fun(arg, ...),
-                        warning = function(w) {
-                          if (grepl("NAs produced|NaNs produced", w$message))
-                            invokeRestart("muffleWarning")
-                        }),
-    error = function(e) e
-  )
-  if (inherits(ans, "error"))
-    cli::cli_abort(c("Problem with call to function {.fun {nm_fun}}.",
-                     i = ans$message))
-  if (anyNA(ans))
-    cli::cli_warn("NAs produced")
-  if (!identical(length(ans), length(arg)))
-    cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
-  ans <- as.double(ans)
-  if (is_arg_rvec) {
-    ans <- matrix(ans, ncol = n_draw)
-    ans <- rvec(ans)
+  if (is_rv_mu) {
+    mu <- as.matrix(mu)
+    if (ncol(mu) == 1L)
+      dim(mu) <- NULL
   }
-  ans
+  prob <- size / (size + mu)
+  dim(prob) <- c(n, n_draw)
+  rvec(prob)
 }
 
-
 ## HAS_TESTS
-#' Apply random-distribution function to an rvec:
-#' function has two parameter
+#' Apply a two-argument distribution function without expanding draws
 #'
-#' Assume that 'arg1' and 'arg2' have
-#' already been recycled,
-#' if necessary, to have the required lengths.
-#'
-#' If the function is a random variate
-#' function, then the 'n' argument
-#' is  passed in via ....
-#' The calling function
-#' is responsible for setting 'n'
-#' to 'length(as.matrix(arg))'.
-#'
-#' @param fun The function to be applied
-#' @param arg1,arg2 Parameter arguments for the function
-#' @param ... Other arguments passed to fun
-#'
-#' @returns If arg1 or arg2 is an rvec, then an rvec.
-#' Otherwise a numeric vector.
+#' Arguments have already been recycled to a common observation count.
+#' The function must return doubles. Output dimensions are determined
+#' separately from the compact argument storage.
 #'
 #' @noRd
-dist_rvec_2 <- function(fun, arg1, arg2, ...) {
+dist_rvec_2_compact <- function(fun, arg1, arg2, ...) {
   nm_fun <- rlang::as_name(rlang::enquo(fun))
   nm_arg1 <- rlang::as_name(rlang::enquo(arg1))
   nm_arg2 <- rlang::as_name(rlang::enquo(arg2))
+  n <- length(arg1)
   is_rv_1 <- is_rvec(arg1)
   is_rv_2 <- is_rvec(arg2)
-  is_rv <- is_rv_1 || is_rv_2
-  if (is_rv) {
-    if (is_rv_1 && is_rv_2)
-      n_draw <- n_draw_common(x = arg1,
-                              y = arg2,
-                              x_arg = nm_arg1,
-                              y_arg = nm_arg2)
-    else if (is_rv_1 && !is_rv_2)
-      n_draw <- n_draw(arg1)
-    else
-      n_draw <- n_draw(arg2)
-    if (is_rv_1) {
-      check_not_rvec_chr(arg1, nm_arg = nm_arg1)
-      arg1 <- rvec_to_rvec_dbl(x = arg1, n_draw = n_draw)
-      arg1 <- as.vector(as.matrix(arg1))
-    }
-    else
-      arg1 <- rep.int(arg1, times = n_draw)
-    if (is_rv_2) {
-      check_not_rvec_chr(arg2, nm_arg = nm_arg2)
-      arg2 <- rvec_to_rvec_dbl(x = arg2, n_draw = n_draw)
-      arg2 <- as.vector(as.matrix(arg2))
-    }
-    else
-      arg2 <- rep.int(arg2, times = n_draw)
+  n_draw <- NULL
+  if (is_rv_1 && is_rv_2)
+    n_draw <- n_draw_common(arg1, arg2, x_arg = nm_arg1, y_arg = nm_arg2)
+  else if (is_rv_1)
+    n_draw <- n_draw(arg1)
+  else if (is_rv_2)
+    n_draw <- n_draw(arg2)
+  if (is_rv_1) {
+    check_not_rvec_chr(arg1, nm_arg = nm_arg1)
+    arg1 <- as.matrix(arg1)
   }
+  if (is_rv_2) {
+    check_not_rvec_chr(arg2, nm_arg = nm_arg2)
+    arg2 <- as.matrix(arg2)
+  }
+  n_values <- if (is.null(n_draw)) n else n * n_draw
   ans <- tryCatch(
-    withCallingHandlers(fun(arg1, arg2, ...),
-                        warning = function(w) {
-                          if (grepl("NAs produced|NaNs produced", w$message))
-                            invokeRestart("muffleWarning")
-                        }),
+    withCallingHandlers({
+      ans <- fun(arg1, arg2, ...)
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Base functions can retain input attributes. Remove them without
+      ## copying the double data, then set dimensions before tryCatch returns.
+      attributes(ans) <- NULL
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
     error = function(e) e
   )
   if (inherits(ans, "error"))
@@ -2623,108 +2895,71 @@ dist_rvec_2 <- function(fun, arg1, arg2, ...) {
                      i = ans$message))
   if (anyNA(ans))
     cli::cli_warn("NAs produced")
-  if (!identical(length(ans), length(arg1)))
-    cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
-  ans <- as.double(ans)
-  if (is_rv) {
-    ans <- matrix(ans, ncol = n_draw)
+  if (!is.null(n_draw))
     ans <- rvec(ans)
-  }
   ans
 }
 
-
 ## HAS_TESTS
-#' Apply random-distribution function to an rvec:
-#' function has three parameter
+#' Apply a three-argument distribution function without expanding draws
 #'
-#' Assume that 'arg1', 'arg2', 'arg3' have
-#' already been recycled, if necessary,
-#' to have the required lengths.
-#'
-#' If the functin is a random variate
-#' function, then the 'n' argument
-#' is  passed in via ....
-#' The calling function
-#' is responsible for setting 'n'
-#' to 'length(as.matrix(arg))'.
-#'
-#' @param fun The function to be applied
-#' @param arg1,arg2,arg3 Parameter arguments for the function
-#' @param ... Other arguments passed to fun
-#'
-#' @returns If arg1, arg2, or arg3 is an rvec,
-#' then an rvec. Otherwise a numeric vector.
+#' Arguments have already been recycled to a common observation count.
+#' The function must return doubles. Single-draw arguments can remain
+#' compact because base R recycles them in column order.
 #'
 #' @noRd
-dist_rvec_3 <- function(fun, arg1, arg2, arg3, ...) {
+dist_rvec_3_compact <- function(fun, arg1, arg2, arg3, ...) {
   nm_fun <- rlang::as_name(rlang::enquo(fun))
   nm_arg1 <- rlang::as_name(rlang::enquo(arg1))
   nm_arg2 <- rlang::as_name(rlang::enquo(arg2))
   nm_arg3 <- rlang::as_name(rlang::enquo(arg3))
+  n <- length(arg1)
   is_rv_1 <- is_rvec(arg1)
   is_rv_2 <- is_rvec(arg2)
   is_rv_3 <- is_rvec(arg3)
-  is_rv <- is_rv_1 || is_rv_2 || is_rv_3
-  if (is_rv) {
-    if (is_rv_1 && is_rv_2)
-      n_draw_12 <- n_draw_common(x = arg1,
-                                 y = arg2,
-                                 x_arg = nm_arg1,
-                                 y_arg = nm_arg2)
-    if (is_rv_1 && is_rv_3)
-      n_draw_13 <- n_draw_common(x = arg1,
-                                 y = arg3,
-                                 x_arg = nm_arg1,
-                                 y_arg = nm_arg3)
-    if (is_rv_2 && is_rv_3)
-      n_draw_23 <- n_draw_common(x = arg2,
-                                 y = arg3,
-                                 x_arg = nm_arg2,
-                                 y_arg = nm_arg3)
-    case <- c(is_rv_1, is_rv_2, is_rv_3)
-    if (identical(case, c(TRUE, TRUE, TRUE)))
-      n_draw <- max(n_draw_12, n_draw_13, n_draw_23)
-    else if (identical(case, c(FALSE, TRUE, TRUE)))
-      n_draw <- n_draw_23
-    else if (identical(case, c(TRUE, FALSE, TRUE)))
-      n_draw <- n_draw_13
-    else if (identical(case, c(FALSE, FALSE, TRUE)))
-      n_draw <- n_draw(arg3)
-    else if (identical(case, c(TRUE, TRUE, FALSE)))
-      n_draw <- n_draw_12
-    else if (identical(case, c(FALSE, TRUE, FALSE)))
-      n_draw <- n_draw(arg2)
-    else if (identical(case, c(TRUE, FALSE, FALSE)))
-      n_draw <- n_draw(arg1)
-    if (is_rv_1) {
-      check_not_rvec_chr(arg1, nm_arg = nm_arg1)
-      arg1 <- rvec_to_rvec_dbl(arg1, n_draw = n_draw)
-      arg1 <- as.vector(as.matrix(arg1))
-    }
-    else
-      arg1 <- rep.int(arg1, times = n_draw)
-    if (is_rv_2) {
-      check_not_rvec_chr(arg2, nm_arg = nm_arg2)
-      arg2 <- rvec_to_rvec_dbl(arg2, n_draw = n_draw)
-      arg2 <- as.vector(as.matrix(arg2))
-    }
-    else
-      arg2 <- rep.int(arg2, times = n_draw)
-    if (is_rv_3) {
-      check_not_rvec_chr(arg3, nm_arg = nm_arg3)
-      arg3 <- rvec_to_rvec_dbl(arg3, n_draw = n_draw)
-      arg3 <- as.vector(as.matrix(arg3))
-    }
-    else
-      arg3 <- rep.int(arg3, times = n_draw)
+  ## Check every pair: a single-draw argument can align with two others
+  ## whose draw counts are incompatible with each other.
+  if (is_rv_1 && is_rv_2)
+    n_draw_common(arg1, arg2, x_arg = nm_arg1, y_arg = nm_arg2)
+  if (is_rv_1 && is_rv_3)
+    n_draw_common(arg1, arg3, x_arg = nm_arg1, y_arg = nm_arg3)
+  if (is_rv_2 && is_rv_3)
+    n_draw_common(arg2, arg3, x_arg = nm_arg2, y_arg = nm_arg3)
+  n_draw <- NULL
+  if (is_rv_1 || is_rv_2 || is_rv_3)
+    n_draw <- 1L
+  if (is_rv_1) {
+    check_not_rvec_chr(arg1, nm_arg = nm_arg1)
+    n_draw <- max(n_draw, n_draw(arg1))
+    arg1 <- as.matrix(arg1)
   }
+  if (is_rv_2) {
+    check_not_rvec_chr(arg2, nm_arg = nm_arg2)
+    n_draw <- max(n_draw, n_draw(arg2))
+    arg2 <- as.matrix(arg2)
+  }
+  if (is_rv_3) {
+    check_not_rvec_chr(arg3, nm_arg = nm_arg3)
+    n_draw <- max(n_draw, n_draw(arg3))
+    arg3 <- as.matrix(arg3)
+  }
+  n_values <- if (is.null(n_draw)) n else n * n_draw
   ans <- tryCatch(
-    withCallingHandlers(fun(arg1, arg2, arg3, ...),
-                        warning = function(w) {
-                          if (grepl("NAs produced|NaNs produced", w$message))
-                            invokeRestart("muffleWarning")
-                        }),
+    withCallingHandlers({
+      ans <- fun(arg1, arg2, arg3, ...)
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Remove inherited attributes and set dimensions before tryCatch
+      ## returns, avoiding a copy of the double data.
+      attributes(ans) <- NULL
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
     error = function(e) e
   )
   if (inherits(ans, "error"))
@@ -2732,157 +2967,84 @@ dist_rvec_3 <- function(fun, arg1, arg2, arg3, ...) {
                      i = ans$message))
   if (anyNA(ans))
     cli::cli_warn("NAs produced")
-  if (!identical(length(ans), length(arg1)))
-    cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
-  ans <- as.double(ans)
-  if (is_rv) {
-    ans <- matrix(ans, ncol = n_draw)
+  if (!is.null(n_draw))
     ans <- rvec(ans)
-  }
   ans
 }
 
-
 ## HAS_TESTS
-#' Apply random-distribution function to an rvec:
-#' function has four parameters
+#' Apply a four-argument distribution function without expanding draws
 #'
-#' Assume that 'arg1', 'arg2', 'arg3', 'arg4' have
-#' already been recycled, if necessary,
-#' to have the required lengths.
-#'
-#' If the function is a random variate
-#' function, then the 'n' argument
-#' is  passed in via ....
-#' The calling function
-#' is responsible for setting 'n'
-#' to 'length(as.matrix(arg))'.
-#'
-#' The logic of how to handle combinations of
-#' ordinary vectors and rvecs is tricky,
-#' so the function uses brute force,
-#' going through case by case.
-#'
-#' @param fun The function to be applied
-#' @param arg1,arg2,arg3,arg4 Parameter arguments for the function
-#' @param ... Other arguments passed to fun
-#'
-#' @returns If arg1, arg2, arg3, or arg4 is an rvec,
-#' then an rvec. Otherwise a numeric vector.
+#' Arguments have already been recycled to a common observation count.
+#' The function must return doubles. Check every pair of rvec draw counts,
+#' then let base R recycle single-draw arguments in column order.
 #'
 #' @noRd
-dist_rvec_4 <- function(fun, arg1, arg2, arg3, arg4, ...) {
+dist_rvec_4_compact <- function(fun, arg1, arg2, arg3, arg4, ...) {
   nm_fun <- rlang::as_name(rlang::enquo(fun))
   nm_arg1 <- rlang::as_name(rlang::enquo(arg1))
   nm_arg2 <- rlang::as_name(rlang::enquo(arg2))
   nm_arg3 <- rlang::as_name(rlang::enquo(arg3))
   nm_arg4 <- rlang::as_name(rlang::enquo(arg4))
+  n <- length(arg1)
   is_rv_1 <- is_rvec(arg1)
   is_rv_2 <- is_rvec(arg2)
   is_rv_3 <- is_rvec(arg3)
   is_rv_4 <- is_rvec(arg4)
-  is_rv <- is_rv_1 || is_rv_2 || is_rv_3 || is_rv_4
-  if (is_rv) {
-    if (is_rv_1 && is_rv_2)
-      n_draw_12 <- n_draw_common(x = arg1,
-                                 y = arg2,
-                                 x_arg = nm_arg1,
-                                 y_arg = nm_arg2)
-    if (is_rv_1 && is_rv_3)
-      n_draw_13 <- n_draw_common(x = arg1,
-                                 y = arg3,
-                                 x_arg = nm_arg1,
-                                 y_arg = nm_arg3)
-    if (is_rv_1 && is_rv_4)
-      n_draw_14 <- n_draw_common(x = arg1,
-                                 y = arg4,
-                                 x_arg = nm_arg1,
-                                 y_arg = nm_arg4)
-    if (is_rv_2 && is_rv_3)
-      n_draw_23 <- n_draw_common(x = arg2,
-                                 y = arg3,
-                                 x_arg = nm_arg2,
-                                 y_arg = nm_arg3)
-    if (is_rv_2 && is_rv_4)
-      n_draw_24 <- n_draw_common(x = arg2,
-                                 y = arg4,
-                                 x_arg = nm_arg2,
-                                 y_arg = nm_arg4)
-    if (is_rv_3 && is_rv_4)
-      n_draw_34 <- n_draw_common(x = arg3,
-                                 y = arg4,
-                                 x_arg = nm_arg4,
-                                 y_arg = nm_arg4)
-    case <- c(is_rv_1, is_rv_2, is_rv_3, is_rv_4)
-    if (identical(case, c(TRUE, TRUE, TRUE, TRUE)))
-      n_draw <- max(n_draw_12, n_draw_13, n_draw_14,
-                    n_draw_23, n_draw_24,
-                    n_draw_34)
-    else if (identical(case, c(FALSE, TRUE, TRUE, TRUE)))
-      n_draw <- max(n_draw_23, n_draw_24, n_draw_34)
-    else if (identical(case, c(TRUE, FALSE, TRUE, TRUE)))
-      n_draw <- max(n_draw_13, n_draw_14, n_draw_34)
-    else if (identical(case, c(FALSE, FALSE, TRUE, TRUE)))
-      n_draw <- n_draw_34
-    else if (identical(case, c(TRUE, TRUE, FALSE, TRUE)))
-      n_draw <- max(n_draw_12, n_draw_14, n_draw_24)
-    else if (identical(case, c(FALSE, TRUE, FALSE, TRUE)))
-      n_draw <- n_draw_24
-    else if (identical(case, c(TRUE, FALSE, FALSE, TRUE)))
-      n_draw <- n_draw_14
-    else if (identical(case, c(FALSE, FALSE, FALSE, TRUE)))
-      n_draw <- n_draw(arg4)
-    else if (identical(case, c(TRUE, TRUE, TRUE, FALSE)))
-      n_draw <- max(n_draw_12, n_draw_13, n_draw_23)
-    else if (identical(case, c(FALSE, TRUE, TRUE, FALSE)))
-      n_draw <- n_draw_23
-    else if (identical(case, c(TRUE, FALSE, TRUE, FALSE)))
-      n_draw <- n_draw_13
-    else if (identical(case, c(FALSE, FALSE, TRUE, FALSE)))
-      n_draw <- n_draw(arg3)
-    else if (identical(case, c(TRUE, TRUE, FALSE, FALSE)))
-      n_draw <- n_draw_12
-    else if (identical(case, c(FALSE, TRUE, FALSE, FALSE)))
-      n_draw <- n_draw(arg2)
-    else if (identical(case, c(TRUE, FALSE, FALSE, FALSE)))
-      n_draw <- n_draw(arg1)
-    else                                                               
-      cli::cli_abort("Internal error: invalid combinations of rvecs") # nocov
-    if (is_rv_1) {
-      check_not_rvec_chr(arg1, nm_arg = nm_arg1)
-      arg1 <- rvec_to_rvec_dbl(arg1, n_draw = n_draw)
-      arg1 <- as.vector(as.matrix(arg1))
-    }
-    else
-      arg1 <- rep.int(arg1, times = n_draw)
-    if (is_rv_2) {
-      check_not_rvec_chr(arg2, nm_arg = nm_arg2)
-      arg2 <- rvec_to_rvec_dbl(arg2, n_draw = n_draw)
-      arg2 <- as.vector(as.matrix(arg2))
-    }
-    else
-      arg2 <- rep.int(arg2, times = n_draw)
-    if (is_rv_3) {
-      check_not_rvec_chr(arg3, nm_arg = nm_arg3)
-      arg3 <- rvec_to_rvec_dbl(arg3, n_draw = n_draw)
-      arg3 <- as.vector(as.matrix(arg3))
-    }
-    else
-      arg3 <- rep.int(arg3, times = n_draw)
-    if (is_rv_4) {
-      check_not_rvec_chr(arg4, nm_arg = nm_arg4)
-      arg4 <- rvec_to_rvec_dbl(arg4, n_draw = n_draw)
-      arg4 <- as.vector(as.matrix(arg4))
-    }
-    else
-      arg4 <- rep.int(arg4, times = n_draw)
+  ## Check every pair: a single-draw argument can align with two others
+  ## whose draw counts are incompatible with each other.
+  if (is_rv_1 && is_rv_2)
+    n_draw_common(arg1, arg2, x_arg = nm_arg1, y_arg = nm_arg2)
+  if (is_rv_1 && is_rv_3)
+    n_draw_common(arg1, arg3, x_arg = nm_arg1, y_arg = nm_arg3)
+  if (is_rv_2 && is_rv_3)
+    n_draw_common(arg2, arg3, x_arg = nm_arg2, y_arg = nm_arg3)
+  if (is_rv_1 && is_rv_4)
+    n_draw_common(arg1, arg4, x_arg = nm_arg1, y_arg = nm_arg4)
+  if (is_rv_2 && is_rv_4)
+    n_draw_common(arg2, arg4, x_arg = nm_arg2, y_arg = nm_arg4)
+  if (is_rv_3 && is_rv_4)
+    n_draw_common(arg3, arg4, x_arg = nm_arg3, y_arg = nm_arg4)
+  n_draw <- NULL
+  if (is_rv_1 || is_rv_2 || is_rv_3 || is_rv_4)
+    n_draw <- 1L
+  if (is_rv_1) {
+    check_not_rvec_chr(arg1, nm_arg = nm_arg1)
+    n_draw <- max(n_draw, n_draw(arg1))
+    arg1 <- as.matrix(arg1)
   }
+  if (is_rv_2) {
+    check_not_rvec_chr(arg2, nm_arg = nm_arg2)
+    n_draw <- max(n_draw, n_draw(arg2))
+    arg2 <- as.matrix(arg2)
+  }
+  if (is_rv_3) {
+    check_not_rvec_chr(arg3, nm_arg = nm_arg3)
+    n_draw <- max(n_draw, n_draw(arg3))
+    arg3 <- as.matrix(arg3)
+  }
+  if (is_rv_4) {
+    check_not_rvec_chr(arg4, nm_arg = nm_arg4)
+    n_draw <- max(n_draw, n_draw(arg4))
+    arg4 <- as.matrix(arg4)
+  }
+  n_values <- if (is.null(n_draw)) n else n * n_draw
   ans <- tryCatch(
-    withCallingHandlers(fun(arg1, arg2, arg3, arg4, ...),
-                        warning = function(w) {
-                          if (grepl("NAs produced|NaNs produced", w$message))
-                            invokeRestart("muffleWarning")
-                        }),
+    withCallingHandlers({
+      ans <- fun(arg1, arg2, arg3, arg4, ...)
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Remove inherited attributes and set dimensions before tryCatch
+      ## returns, avoiding a copy of the double data.
+      attributes(ans) <- NULL
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
     error = function(e) e
   )
   if (inherits(ans, "error"))
@@ -2890,14 +3052,160 @@ dist_rvec_4 <- function(fun, arg1, arg2, arg3, arg4, ...) {
                      i = ans$message))
   if (anyNA(ans))
     cli::cli_warn("NAs produced")
-  if (!identical(length(ans), length(arg1)))
-    cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
-  ans <- as.double(ans)
-  if (is_rv) {
-    ans <- matrix(ans, ncol = n_draw)
+  if (!is.null(n_draw))
     ans <- rvec(ans)
-  }
   ans
 }
 
+## HAS_TESTS
+#' Generate random values with one parameter without expanding draws
+#'
+#' The parameter has already been recycled to the required observation count.
+#' A NULL n_draw requests an ordinary vector; otherwise it specifies the
+#' validated output draw count. Additional ordinary arguments pass through
+#' to the base function without expanding across draws.
+#'
+#' @noRd
+rdist_rvec_1 <- function(fun, arg, n, n_draw, ...) {
+  nm_fun <- rlang::as_name(rlang::enquo(fun))
+  if (is_rvec(arg))
+    arg <- as.matrix(arg)
+  n_values <- if (is.null(n_draw)) n else n * n_draw
+  ans <- tryCatch(
+    withCallingHandlers({
+      ans <- as.double(fun(n = n_values, arg, ...))
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Set dimensions before tryCatch returns and shares the result.
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
+    error = function(e) e
+  )
+  if (inherits(ans, "error"))
+    cli::cli_abort(c("Problem with call to function {.fun {nm_fun}}.",
+                     i = ans$message))
+  if (anyNA(ans))
+    cli::cli_warn("NAs produced")
+  if (!is.null(n_draw))
+    ans <- rvec(ans)
+  ans
+}
 
+## HAS_TESTS
+#' Generate random values with two parameters without expanding draws
+#'
+#' Parameters have already been recycled to the required observation count.
+#' A NULL n_draw requests an ordinary vector; otherwise it specifies the
+#' validated output draw count. Single-column parameters recycle in base R.
+#' Additional ordinary arguments pass through without expanding across draws.
+#'
+#' @noRd
+rdist_rvec_2 <- function(fun, arg1, arg2, n, n_draw, ...) {
+  nm_fun <- rlang::as_name(rlang::enquo(fun))
+  nm_arg1 <- rlang::as_name(rlang::enquo(arg1))
+  nm_arg2 <- rlang::as_name(rlang::enquo(arg2))
+  ## Base R arithmetic (for example in noncentral rf) needs ordinary
+  ## vectors to recycle single-draw parameters across multiple draws.
+  if (is_rvec(arg1)) {
+    check_not_rvec_chr(arg1, nm_arg = nm_arg1)
+    arg1 <- as.matrix(arg1)
+    if (ncol(arg1) == 1L)
+      dim(arg1) <- NULL
+  }
+  if (is_rvec(arg2)) {
+    check_not_rvec_chr(arg2, nm_arg = nm_arg2)
+    arg2 <- as.matrix(arg2)
+    if (ncol(arg2) == 1L)
+      dim(arg2) <- NULL
+  }
+  n_values <- if (is.null(n_draw)) n else n * n_draw
+  ans <- tryCatch(
+    withCallingHandlers({
+      ans <- as.double(fun(n = n_values, arg1, arg2, ...))
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Set dimensions before tryCatch returns and shares the result.
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
+    error = function(e) e
+  )
+  if (inherits(ans, "error"))
+    cli::cli_abort(c("Problem with call to function {.fun {nm_fun}}.",
+                     i = ans$message))
+  if (anyNA(ans))
+    cli::cli_warn("NAs produced")
+  if (!is.null(n_draw))
+    ans <- rvec(ans)
+  ans
+}
+
+## HAS_TESTS
+#' Generate random values with three parameters without expanding draws
+#'
+#' Parameters have already been recycled to the required observation count.
+#' A NULL n_draw requests an ordinary vector; otherwise it specifies the
+#' validated output draw count. The base function takes the count first.
+#'
+#' @noRd
+rdist_rvec_3 <- function(fun, arg1, arg2, arg3, n, n_draw, ...) {
+  nm_fun <- rlang::as_name(rlang::enquo(fun))
+  nm_arg1 <- rlang::as_name(rlang::enquo(arg1))
+  nm_arg2 <- rlang::as_name(rlang::enquo(arg2))
+  nm_arg3 <- rlang::as_name(rlang::enquo(arg3))
+  if (is_rvec(arg1)) {
+    check_not_rvec_chr(arg1, nm_arg = nm_arg1)
+    arg1 <- as.matrix(arg1)
+    if (ncol(arg1) == 1L)
+      dim(arg1) <- NULL
+  }
+  if (is_rvec(arg2)) {
+    check_not_rvec_chr(arg2, nm_arg = nm_arg2)
+    arg2 <- as.matrix(arg2)
+    if (ncol(arg2) == 1L)
+      dim(arg2) <- NULL
+  }
+  if (is_rvec(arg3)) {
+    check_not_rvec_chr(arg3, nm_arg = nm_arg3)
+    arg3 <- as.matrix(arg3)
+    if (ncol(arg3) == 1L)
+      dim(arg3) <- NULL
+  }
+  n_values <- if (is.null(n_draw)) n else n * n_draw
+  ans <- tryCatch(
+    withCallingHandlers({
+      ## Pass the count positionally: rhyper calls it nn, not n.
+      ans <- as.double(fun(n_values, arg1, arg2, arg3, ...))
+      if (length(ans) != n_values)
+        cli::cli_abort("Internal error: Return value has incorrect length.") # nocov
+      ## Set dimensions before tryCatch returns and shares the result.
+      if (!is.null(n_draw))
+        dim(ans) <- c(n, n_draw)
+      ans
+    },
+    warning = function(w) {
+      if (grepl("NAs produced|NaNs produced", w$message))
+        invokeRestart("muffleWarning")
+    }),
+    error = function(e) e
+  )
+  if (inherits(ans, "error"))
+    cli::cli_abort(c("Problem with call to function {.fun {nm_fun}}.",
+                     i = ans$message))
+  if (anyNA(ans))
+    cli::cli_warn("NAs produced")
+  if (!is.null(n_draw))
+    ans <- rvec(ans)
+  ans
+}

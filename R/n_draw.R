@@ -10,9 +10,12 @@
 #' @param x An object that holds random draws,
 #' eg an [rvec][rvec()].
 #'
-#' @returns An integer scalar.
+#' @returns A positive integer scalar. An rvec always has at least one draw,
+#' including when it has zero elements.
 #'
 #' @seealso
+#' - [extract_draws()] to select draws using indices.
+#' - [thin_draws()] to randomly reduce the number of draws.
 #' - [is_rvec()] to test if an object is an rvec.
 #'
 #' @examples

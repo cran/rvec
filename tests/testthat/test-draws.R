@@ -165,6 +165,61 @@ test_that("'draws_ci' throws correct error with rvec_chr", {
 })
 
 
+test_that("draws_ci selects the point estimate without changing intervals", {
+    x <- rvec(rbind(a = c(0, 1, 2, 3, 24), b = c(1, 1, 1, 2, 10)))
+    for (width in list(0.95, c(0.5, 0.8, 0.95))) {
+        default <- draws_ci(x, width = width, prefix = "var")
+        median <- draws_ci(x, width = width, prefix = "var", point = "median")
+        mean <- draws_ci(x, width = width, prefix = "var", point = "mean")
+        expect_identical(default, median)
+        expect_equal(unname(mean$var.mid), c(6, 3))
+        expect_false(isTRUE(all.equal(mean$var.mid, median$var.mid)))
+        mid <- length(width) + 1L
+        expect_identical(mean[-mid], median[-mid])
+        expect_identical(names(mean), names(median))
+    }
+    expect_identical(draws_ci(x, 0.8, "var", FALSE),
+                     draws_ci(x, width = 0.8, prefix = "var", point = "median"))
+    expect_identical(names(draws_ci(x, point = "mean")),
+                     c("x.lower", "x.mid", "x.upper"))
+})
+
+
+test_that("draws_ci mean supports numeric types and missing values", {
+    for (values in list(c(0, 0, 1, 9), c(0L, 0L, 1L, 9L),
+                        c(FALSE, FALSE, FALSE, TRUE))) {
+        x <- rvec(rbind(values, replace(values, 2L, NA)))
+        result <- draws_ci(x, point = "mean")
+        expect_equal(unname(result$x.mid), c(mean(values), NA_real_))
+        result <- draws_ci(x, point = "mean", na_rm = TRUE)
+        expect_equal(unname(result$x.mid), c(mean(values), mean(values[-2L])))
+        median <- draws_ci(x, na_rm = TRUE)
+        expect_identical(result[c(1, 3)], median[c(1, 3)])
+    }
+    x <- rvec(matrix(NA_real_, nrow = 1, ncol = 4))
+    expect_true(is.na(draws_ci(x, point = "mean")$x.mid))
+    expect_true(is.nan(draws_ci(x, point = "mean", na_rm = TRUE)$x.mid))
+})
+
+
+test_that("draws_ci mean preserves the empty input result structure", {
+    x <- rvec(matrix(integer(), nrow = 0, ncol = 5))
+    expect_identical(draws_ci(x, point = "mean"),
+                     tibble::tibble(x.lower = NA_real_, x.mid = NaN,
+                                    x.upper = NA_real_))
+})
+
+
+test_that("draws_ci validates point and continues to reject character inputs", {
+    x <- rvec(c(1, 2, 3))
+    expect_error(draws_ci(x, point = "mode"), "arg.*should be one of")
+    expect_error(draws_ci(x, point = "m"), "arg.*should be one of")
+    expect_identical(draws_ci(x, point = "mea"), draws_ci(x, point = "mean"))
+    expect_error(draws_ci(rvec_chr("a"), point = "mean"),
+                 "Credible intervals not defined for character.")
+})
+
+
 ## 'draws_max' ----------------------------------------------------------------
 
 test_that("'draws_max' works with rvec_dbl when nrow > 0", {
@@ -645,3 +700,71 @@ test_that("'prob' works with logical vector", {
 })
 
 
+
+
+test_that("double draw summaries retain results without coercion copies", {
+    functions <- list(draws_median, draws_mean, draws_sd, draws_var)
+    matrix_functions <- list(matrixStats::rowMedians, matrixStats::rowMeans2,
+                             matrixStats::rowSds, matrixStats::rowVars)
+    for (v in list(c(0, -0, NA_real_, NaN), c(Inf, -Inf, 1, 1e300),
+                   c(1e16, 1, -1e16, 1))) {
+        m <- matrix(v, 2L, dimnames = list(c("a", "b"), NULL))
+        x <- rvec(m)
+        before <- serialize(x, NULL)
+        for (remove in c(FALSE, TRUE)) {
+            for (i in seq_along(functions)) {
+                expected <- matrix_functions[[i]](1 * m, na.rm = remove)
+                names(expected) <- rownames(m)
+                expect_identical(functions[[i]](x, na_rm = remove), expected)
+            }
+            expected <- matrixStats::rowSds(1 * m, na.rm = remove) /
+                matrixStats::rowMeans2(1 * m, na.rm = remove)
+            expected[matrixStats::rowMeans2(1 * m, na.rm = remove) == 0] <- NA_real_
+            names(expected) <- rownames(m)
+            expect_identical(draws_cv(x, na_rm = remove), expected)
+            expect_identical(sd(x, na.rm = remove),
+                             rvec(matrix(matrixStats::colSds(1 * m, na.rm = remove), 1L)))
+            expect_identical(var(x, na.rm = remove),
+                             rvec(matrix(matrixStats::colVars(1 * m, na.rm = remove), 1L)))
+        }
+        expect_identical(serialize(x, NULL), before)
+    }
+})
+
+test_that("draws_mode preserves ties, missing values, types, and input data", {
+    for (kind in c("dbl", "int", "lgl", "chr")) {
+        constructor <- get(paste0("rvec_", kind))
+        values <- switch(kind, dbl = c(1.5, 2.5), int = c(1L, 2L),
+                         lgl = c(TRUE, FALSE), chr = c("b", "a"))
+        a <- values[1L]
+        b <- values[2L]
+        m <- rbind(unique = c(a, a, b, NA), tied = c(a, a, b, b),
+                   missing = c(NA, NA, a, b), missing_tie = c(a, a, NA, NA))
+        x <- constructor(m)
+        expect_identical(draws_mode(x),
+                         setNames(c(a, values[NA_integer_], values[NA_integer_], values[NA_integer_]),
+                                  rownames(m)))
+        expect_identical(draws_mode(x, na_rm = TRUE),
+                         setNames(c(a, values[NA_integer_], values[NA_integer_], a), rownames(m)))
+        expect_identical(vctrs::field(x, "data"), m)
+        empty <- constructor(matrix(values[integer()], 0L, 3L))
+        expect_identical(draws_mode(empty), values[NA_integer_])
+        all_missing <- constructor(matrix(rep(values[NA_integer_], 6L), 2L, 3L))
+        expect_identical(draws_mode(all_missing), rep(values[NA_integer_], 2L))
+        warnings <- character()
+        result <- withCallingHandlers(draws_mode(all_missing, na_rm = TRUE),
+                                      warning = function(w) {
+                                          warnings <<- c(warnings, conditionMessage(w))
+                                          invokeRestart("muffleWarning")
+                                      })
+        expect_identical(result, rep(values[NA_integer_], 2L))
+        expect_identical(warnings, rep("no non-missing arguments to max; returning -Inf", 2L))
+    }
+})
+
+test_that("draws_mode retains non-finite modes", {
+    x <- rvec_dbl(rbind(infinite = c(Inf, Inf, 1),
+                        negative = c(-Inf, -Inf, 1), nan = c(NaN, NaN, 1)))
+    expect_identical(draws_mode(x), c(infinite = Inf, negative = -Inf, nan = NaN))
+    expect_identical(draws_mode(x, na_rm = TRUE), c(infinite = Inf, negative = -Inf, nan = 1))
+})

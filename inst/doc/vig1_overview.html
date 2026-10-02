@@ -131,29 +131,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 
 
-<style type="text/css">
-
-div.csl-bib-body { }
-div.csl-entry {
-clear: both;
-margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-margin-left:2em;
-text-indent:-2em;
-}
-div.csl-left-margin {
-min-width:2em;
-float:left;
-}
-div.csl-right-inline {
-margin-left:2em;
-padding-left:1em;
-}
-div.csl-indent {
-margin-left: 2em;
-}
-</style>
 
 <style type="text/css">body {
 background-color: #fff;
@@ -353,163 +330,157 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="TOC">
 <ul>
-<li><a href="#sec:aims" id="toc-sec:aims"><span class="toc-section-number">1</span> Aims of <strong>rvec</strong></a></li>
-<li><a href="#examples" id="toc-examples"><span class="toc-section-number">2</span> Examples</a>
-<ul>
-<li><a href="#toy-example" id="toc-toy-example"><span class="toc-section-number">2.1</span> Toy example</a></li>
-<li><a href="#sec:divorce" id="toc-sec:divorce"><span class="toc-section-number">2.2</span> Divorce rates</a></li>
-</ul></li>
+<li><a href="#sec:intro" id="toc-sec:intro"><span class="toc-section-number">1</span> Introduction</a></li>
+<li><a href="#sec:examples" id="toc-sec:examples"><span class="toc-section-number">2</span> Examples</a></li>
 <li><a href="#sec:structure" id="toc-sec:structure"><span class="toc-section-number">3</span> Structure of an rvec</a></li>
 <li><a href="#creating-rvecs" id="toc-creating-rvecs"><span class="toc-section-number">4</span> Creating rvecs</a></li>
 <li><a href="#mathematical-and-logical-operations" id="toc-mathematical-and-logical-operations"><span class="toc-section-number">5</span> Mathematical and logical operations</a></li>
 <li><a href="#sec:prob" id="toc-sec:prob"><span class="toc-section-number">6</span> Probability distributions</a></li>
 <li><a href="#manipulating-rvecs" id="toc-manipulating-rvecs"><span class="toc-section-number">7</span> Manipulating rvecs</a>
 <ul>
-<li><a href="#subsetting" id="toc-subsetting"><span class="toc-section-number">7.1</span> Subsetting</a></li>
-<li><a href="#sec:ifelse" id="toc-sec:ifelse"><span class="toc-section-number">7.2</span> If-Else</a></li>
-<li><a href="#combining" id="toc-combining"><span class="toc-section-number">7.3</span> Combining</a></li>
-<li><a href="#coercing" id="toc-coercing"><span class="toc-section-number">7.4</span> Coercing</a></li>
+<li><a href="#compatibility-with-base-r" id="toc-compatibility-with-base-r"><span class="toc-section-number">7.1</span> Compatibility with base R</a></li>
+<li><a href="#subsetting" id="toc-subsetting"><span class="toc-section-number">7.2</span> Subsetting</a></li>
+<li><a href="#sec:ifelse" id="toc-sec:ifelse"><span class="toc-section-number">7.3</span> If-Else</a></li>
+<li><a href="#combining" id="toc-combining"><span class="toc-section-number">7.4</span> Combining</a></li>
+<li><a href="#coercing" id="toc-coercing"><span class="toc-section-number">7.5</span> Coercing</a></li>
 </ul></li>
 <li><a href="#summarising-distributions" id="toc-summarising-distributions"><span class="toc-section-number">8</span> Summarising distributions</a></li>
-<li><a href="#pooling-distributions" id="toc-pooling-distributions"><span class="toc-section-number">9</span> Pooling distributions</a></li>
-<li><a href="#other-packages" id="toc-other-packages"><span class="toc-section-number">10</span> Other packages</a></li>
-<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#similar-packages" id="toc-similar-packages"><span class="toc-section-number">9</span> Similar packages</a></li>
 </ul>
 </div>
 
-<div id="sec:aims" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Aims of <strong>rvec</strong></h1>
-<p>Statistical models – particularly Bayesian statistical models – often produce outputs consisting of random draws from a distribution. A useful feature of these draws is that they can be used to make inferences about derived quantities. The procedure is:</p>
-<ul>
-<li>Step 1. Calculate the derived quantity for each of the random draws.</li>
-<li>Step 2. Summaries the distribution of these derived quantities.</li>
-</ul>
-<p>If, for instance, we have randoms draws from a posterior distribution for age-specific mortality rates, and we want make inferences about life expectancy (a summary indicator for mortality rates), then we proceed as follows:</p>
-<ul>
-<li>Step 1. Derive life expectancy for each set of age-specific mortality rates.</li>
-<li>Step 2. Calculate means, medians, or other statistics for these life expectancies.</li>
-</ul>
-<p>For more on the theory behind manipulating random draws, and for an argument that R needs high-level tools to help with this manipulation, see <span class="citation">Kerman and Gelman (2007)</span>.</p>
-<p>Package <code>rvec</code> provides tools for working with random draws. The draws are held in a structure called an rvec, which can, for many purposes, be treated like an ordinary R vector, and manipulated using ordinary base R and <a href="https://tidyverse.org/">tidyverse</a> code. <code>rvec</code> also contains functions for summarizing across random draws.</p>
+<div id="sec:intro" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>The <code>rvec</code> package provides tools for working with random draws. The draws are held in a structure called an rvec. An rvec can, for many purposes, be treated like an ordinary R vector, and manipulated using standard functions from base R and the <a href="https://tidyverse.org/">tidyverse</a>. <code>rvec</code> also provides tools for summarising across draws to, for instance, produce point estimates or credible intervals.</p>
 </div>
-<div id="examples" class="section level1" number="2">
+<div id="sec:examples" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Examples</h1>
-<div id="toy-example" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Toy example</h2>
-<p>We begin with a toy example to illustrate basic functionality.</p>
+<p>We start with some examples. Along with the <code>rvec</code> package, we will need some tidyverse packages,</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rvec)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;rvec&#39;</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:stats&#39;:</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;     sd, var</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt;     rank</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rvec</span>(l)</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>theta</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; [1] 3,1,0</span></span></code></pre></div>
-<p>The header <code>&lt;rvec_dbl&lt;3&gt;[1]&gt;</code> describe the structure of <code>theta</code>:</p>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>When <code>rvec</code> is loaded, R emits messages about functions such as <code>sd()</code> and <code>var()</code>
+being “masked”. However, these functions retain their usual behavior for ordinary
+vectors, while gaining new behavior for rvecs. No action is needed.</p>
+<p>We create an rvec called <code>theta</code> containing three draws,</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">rvec</span>(l)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>theta</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; [1] 3,1,0</span></span></code></pre></div>
+<p>The header <code>&lt;rvec_dbl&lt;3&gt;[1]&gt;</code> describes the structure of <code>theta</code>:</p>
 <ul>
 <li><code>_dbl</code> indicates that <code>theta</code> is composed of <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/double">doubles</a></li>
 <li><code>&lt;3&gt;</code> indicates that <code>theta</code> holds three random draws, and</li>
 <li><code>[1]</code> indicates that each draw has length 1.</li>
 </ul>
-<p>We can perform standard mathematical operations:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] 10,2,1</span></span></code></pre></div>
+<p>We can perform standard mathematical operations on <code>theta</code>,</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>theta<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[1]&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; [1] 10,2,1</span></span></code></pre></div>
 <p><code>theta</code> recycles to match the length of other vectors,</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>beta <span class="ot">&lt;-</span> theta <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>beta</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[2]&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; [1] 4,2,1  2,0,-1</span></span></code></pre></div>
-<p><code>beta</code> consists of three draws:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>beta <span class="ot">&lt;-</span> theta <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>beta</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;3&gt;[2]&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; [1] 4,2,1  2,0,-1</span></span></code></pre></div>
+<p>The new rvec <code>beta</code> consists of three draws of a vector of length 2:</p>
 <ol style="list-style-type: decimal">
-<li><code>c(4, 2)</code>, obtained from adding <code>3</code> and <code>c(1, -1)</code>,</li>
-<li><code>c(2, 0)</code>, obtained from adding <code>1</code> and <code>c(1, -1)</code>, and</li>
-<li><code>c(1, -1)</code>, obtained from adding <code>0</code> and <code>c(1, -1)</code>.</li>
+<li>the first vector, <code>c(4, 2)</code>, is obtained by adding <code>3</code> to <code>c(1, -1)</code>,</li>
+<li>the second vector, <code>c(2, 0)</code>, is obtained by adding <code>1</code> to <code>c(1, -1)</code>, and</li>
+<li>the third vector, <code>c(1, -1)</code>, is obtained by adding <code>0</code> to <code>c(1, -1)</code>.</li>
 </ol>
-<p>To summarize across random draws, we use <code>draws_*</code> functions, e.g.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">draws_mean</span>(beta)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.3333333 0.3333333</span></span></code></pre></div>
-</div>
-<div id="sec:divorce" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Divorce rates</h2>
-<p>Our next example is more involved, and includes the use of some standard tidyverse packages.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<p>We analyse a posterior sample from a Bayesian model of divorce rates in New Zealand. The rates are divorces per thousand people per year, disaggregated by age and sex. The rates are not stored as an rvec, but instead in a ‘data base’ format, where each row describes a single draw.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>divorce</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22,000 × 4</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;    age   sex     draw   rate</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female     1 0.0462</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;  2 15-19 Female     2 0.0369</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;  3 15-19 Female     3 0.0448</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;  4 15-19 Female     4 0.0411</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;  5 15-19 Female     5 0.0333</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;  6 15-19 Female     6 0.0511</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;  7 15-19 Female     7 0.0249</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt;  8 15-19 Female     8 0.0280</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt;  9 15-19 Female     9 0.0339</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; 10 15-19 Female    10 0.0425</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 21,990 more rows</span></span></code></pre></div>
-<p>First we convert from database format to rvec format.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>divorce_rv</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
-<p>When the number of draws is large, the print method for rvecs of doubles displays <code>&lt;median&gt; (&lt;2.5% quantile&gt;, &lt;97.5% quantile&gt;)</code>, rather than the individual draws.</p>
-<p>We define the ‘total divorce rate’ to be the number of divorces that a person would expect to experience over their lifetime under prevailing divorce rates. The total divorce rate can be calculated as</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TDR =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;   sex                  TDR</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)</span></span></code></pre></div>
-<p>We summarize across draws using <code>draws_ci()</code>, which, by default, calculates medians and 95% credible intervals. Function <code>draws_ci()</code> returns a tibble rather than a vector, so, following standard <code>mutate</code> rules, we do not explicitly create new columns.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">tdr =</span> <span class="fu">sum</span>(rate) <span class="sc">*</span> <span class="dv">5</span> <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(tdr))</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;   sex                  tdr tdr.lower tdr.mid tdr.upper</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;       &lt;rdbl&lt;1000&gt;&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 1 Female 0.22 (0.22, 0.23)     0.218   0.223     0.228</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.23 (0.22, 0.23)     0.221   0.226     0.231</span></span></code></pre></div>
-<p>Next we calculate the ratio between female and male divorce rates,</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>divorce_ratio <span class="ot">&lt;-</span> divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> Female <span class="sc">/</span> Male) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(ratio))</span></code></pre></div>
-<p>and graph the result</p>
+<p>To summarize across random draws, we use <code>draws_*</code> functions, e.g.,</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">draws_mean</span>(beta)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; [1] 2.3333333 0.3333333</span></span></code></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">draws_sd</span>(beta)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; [1] 1.527525 1.527525</span></span></code></pre></div>
+<p>Our next example is based on draws from the posterior distribution from a Bayesian analysis of divorce in New Zealand. The posterior distribution refers to divorces per thousand people per year, disaggregated by age and sex. In their original form, the draws are not stored as an rvec, but instead in a one-draw-per-row format,</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>divorce</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22,000 × 4</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;    age   sex     draw   rate</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female     1 0.0462</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;  2 15-19 Female     2 0.0369</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;  3 15-19 Female     3 0.0448</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;  4 15-19 Female     4 0.0411</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;  5 15-19 Female     5 0.0333</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;  6 15-19 Female     6 0.0511</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;  7 15-19 Female     7 0.0249</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;  8 15-19 Female     8 0.0280</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;  9 15-19 Female     9 0.0339</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 10 15-19 Female    10 0.0425</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; # ℹ 21,990 more rows</span></span></code></pre></div>
+<p>We use function <code>collapse_to_rvec()</code> to convert from the one-draw-per-row format to an rvec,</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>divorce_rvec <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>divorce_rvec</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
+<p><code>collapse_to_rvec()</code> ensures that, internally, draw 1 for females aged 15-19 lines up with draw 1 for females aged 20-24, which lines up with draw 1 for females aged 25-29, and so on.</p>
+<p>In this example, the rvec has many draws, so, rather than showing each draw, the print method shows the median value followed by the 2.5% and 97.5% quantiles.</p>
+<p>We calculate the ratio between female and male divorce rates,</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>divorce_ratio <span class="ot">&lt;-</span> divorce_rvec <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sex, <span class="at">values_from =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ratio =</span> Female <span class="sc">/</span> Male)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>divorce_ratio</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 × 4</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;    age                 Female                 Male             ratio</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;         &lt;rdbl&lt;1000&gt;&gt;         &lt;rdbl&lt;1000&gt;&gt;      &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;  1 15-19 0.036 (0.019, 0.068) 0.022 (0.012, 0.041)   1.7 (0.66, 4.3)</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;  2 20-24    0.67 (0.58, 0.78)     0.33 (0.27, 0.4)    2.1 (1.6, 2.6)</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;  3 25-29         3.2 (3, 3.4)         2 (1.9, 2.2)    1.6 (1.4, 1.7)</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt;  4 30-34       5.8 (5.5, 6.1)         4.7 (4.5, 5)    1.2 (1.1, 1.3)</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt;  5 35-39       6.5 (6.2, 6.9)       6.1 (5.8, 6.4)      1.1 (1, 1.2)</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;  6 40-44       7.1 (6.8, 7.4)       6.9 (6.6, 7.2)     1 (0.98, 1.1)</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;  7 45-49       7.2 (6.9, 7.6)       7.3 (6.9, 7.6)     1 (0.93, 1.1)</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;  8 50-54         6 (5.8, 6.3)       6.8 (6.5, 7.1) 0.89 (0.83, 0.94)</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;  9 55-59       4.4 (4.2, 4.7)       5.6 (5.3, 5.9) 0.79 (0.74, 0.85)</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt; 10 60-64         2.7 (2.5, 3)         3.7 (3.5, 4) 0.73 (0.65, 0.82)</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 11 65+      0.84 (0.76, 0.93)       1.7 (1.5, 1.8) 0.51 (0.45, 0.57)</span></span></code></pre></div>
+<p>Note that although <code>rate</code>, <code>Female</code>, and <code>Male</code> in these calculations are all rvecs, the code is identical to the code that would be needed for an ordinary R vector.</p>
+<p>To obtain point estimates and uncertainty measures for rvecs, we use the <code>draw</code> functions. <code>draws_ci()</code>, for instance, returns medians and 95% credible intervals.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>divorce_ratio  <span class="ot">&lt;-</span> divorce_ratio <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(ratio))</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>divorce_ratio</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 × 7</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt;    age                 Female                 Male             ratio ratio.lower</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;         &lt;rdbl&lt;1000&gt;&gt;         &lt;rdbl&lt;1000&gt;&gt;      &lt;rdbl&lt;1000&gt;&gt;       &lt;dbl&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 0.036 (0.019, 0.068) 0.022 (0.012, 0.041)   1.7 (0.66, 4.3)       0.662</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24    0.67 (0.58, 0.78)     0.33 (0.27, 0.4)    2.1 (1.6, 2.6)       1.59 </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29         3.2 (3, 3.4)         2 (1.9, 2.2)    1.6 (1.4, 1.7)       1.42 </span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34       5.8 (5.5, 6.1)         4.7 (4.5, 5)    1.2 (1.1, 1.3)       1.15 </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39       6.5 (6.2, 6.9)       6.1 (5.8, 6.4)      1.1 (1, 1.2)       1.00 </span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44       7.1 (6.8, 7.4)       6.9 (6.6, 7.2)     1 (0.98, 1.1)       0.982</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49       7.2 (6.9, 7.6)       7.3 (6.9, 7.6)     1 (0.93, 1.1)       0.934</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54         6 (5.8, 6.3)       6.8 (6.5, 7.1) 0.89 (0.83, 0.94)       0.831</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59       4.4 (4.2, 4.7)       5.6 (5.3, 5.9) 0.79 (0.74, 0.85)       0.735</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64         2.7 (2.5, 3)         3.7 (3.5, 4) 0.73 (0.65, 0.82)       0.651</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; 11 65+      0.84 (0.76, 0.93)       1.7 (1.5, 1.8) 0.51 (0.45, 0.57)       0.447</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt; # ℹ 2 more variables: ratio.mid &lt;dbl&gt;, ratio.upper &lt;dbl&gt;</span></span></code></pre></div>
+<p>Next we graph the results,</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">ggplot</span>(divorce_ratio,</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> age, </span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>           <span class="at">ymin =</span> ratio.lower, </span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>           <span class="at">y =</span> ratio.mid,</span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>           <span class="at">ymax =</span> ratio.upper)) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>()</span></code></pre></div>
-<p><img role="img" src="data:image/png;base64,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34V6Jnjsu0//NmzYMBbufn+t2tCF/M6fxqCfDfpa1Lwlfn87zZ9dGzpPB7/y9+Pay/9v1eeKvifLt+zdlKwpQJcvXy433HCD6LGdevycDqWlpXL11VebwlELS/2nXx7169dPmoFkbeibtn///qJfNIsWLZKZM2eaY/O8LEJvuukm80GiZ/U99NBD0qhRI/nlL38p+kH6m9/8RrZv3y7z5s0zb6BOnTolLZCt2ohBbNq0SX7/+99L9erVpXXr1rHJnvy1iq0i+bNqIwj5u/nmm81rT/M1ZswYadu2rTl+pyL5s2ojliA/82cVW0XyZ9WGXqpp6NChpvDUy4rpD0g9vtmPQS89pF9SF198sVl9RfIXi7dsG7Hps2fPFr20ynnnnbffD+jYfC/+lo2tIvmLxVe2jSDkb9SoUTJ37lz597//bd6H2q+WLVuagka/M3SDxVNPPWV+GOqxrckGqzZiy/qZP6vY9DtBvy/WrFlj+q3ff+ecc04s5P3+WrURhPzpJQUnT54s1apVE718m77/f/GLX1Qof1ZtxBD8zF8shsS/VvFW5j2Z2K7n49HT9UM/vPrqq5ELL7ww0rNnz8ibb74Z7++XX34ZiRag8cd2I1ZtRK8VGnn88cfjT40WaZFoERp/7PZIdKtZ5Morr4yvRtd94403msfRL+TI6NGj4/OuvfbayHvvvRd/HBuxayO2zP/8z/9Errnmmoi26eVgF5vT/Nm14Xf+vv7668j1118fJ41+QceNnebPro1Yw37lzy42p/mza0Pf05988onpZnRrRyR64llk165dsW579nfatGmR6I+9SO/evePrdJq/2BOStaHz1q5daz6nzj///Ei0SIot7unfZLE5zV8s0GRtBCF/l19+eSS6FywWZvyv5vKf//ynefzdd99F1D+6oSE+P3HEqg1dxu/8WcUWLaojf/nLXxK7YTlu1Ybf+Vu1alXksssui0S3rJvYoxuBIi+++KIZd5o/uza0Ib/zZzqT8J9dvKnek9Gt3vvVCwnN+jKaFceA6ib5P//5z2bLZ+KWyWiyzC6HqVOnml9QdmelWrWxZMkS82s59stBz9796quvYg9d/6tnK+oF82ODHgYQ/QI2D3WX8wknnBCbZcajX9bxx7ERuzZ0mddff11q164tJ598cuwpnv21i81p/uza8Dt/usX94YcfNp66lVIPo9At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" /><!-- --></p>
-</div>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>() <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Ratio&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Ratio between female divorce rate and male divorce rate&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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3/Ja112fT+3DjR20X6vfqE5v+qdKc9Mod30U659vXy81L7orgO6eoYvCdAFhUwftC16g7E7vhx03mrqd4PqlliGN+62/36sve6HPVKn7StA8ON6U/bYpdRDMA+MIpFEglQFoGiuKMiGAAAIIIIAAAmkRqMqLkNKCTzkQQAABBBBAAIFaFCAArcVap8wIIIAAAggggECMAgSgMeKzaQQQQAABBBBAoBYFCEBrsdYpMwIIIIAAAgggEKMAAWiM+GwaAQQQQAABBBCoRQEC0FqsdcqMAAIIIIAAAgjEKEAAGiM+m0YAAQQQQAABBGpRgAC0FmudMiOAAAIIIIAAAjEKEIDGiM+mEUAAAQQQQACBWhRo+rPpIlKbMmVKRCkXl2z79u3Ne+6wTZ06tbgVqmwplU1lpHxVVnHfZ1f1p8cR6jGxaRw6duzoHqdL+aqzdlV/bdq0senTp1dnARrItR5/q0fYUr4GoBI6W/XXqlUrmzFjRkJz2LRsde7c2T1iPO7y6TOy8sorFywMLaAFaZiBAAIIIIAAAgggEIUAAWgUqqSJAAIIIIAAAgggUFCAALQgDTMQQAABBBBAAAEEohAgAI1ClTQRQAABBBBAAAEECgoQgBakYQYCCCCAAAIIIIBAFAIEoFGokiYCCCCAAAIIIIBAQQEC0II0zEAAAQQQQAABBBCIQoAANApV0kQAAQQQQAABBBAoKEAAWpCGGQgggAACCCCAAAJRCBCARqFKmggggAACCCCAAAIFBQhAC9IwAwEEEEAAAQQQQCAKAQLQKFRJEwEEEEAAAQQQQKCgAAFoQRpmIIAAAggggAACCEQhQABaQPXaa6+17t27F5jLZAQQQAABBBBAAIFSBQhAC8h99913Nnfu3AJzmYwAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKlyrIcAAggggAACCCBQkgABaElsrIQAAggggAACCCBQqgABaKly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swEEEEAAAQQQQACBoAABaFCDcQQQQAABBBBAAIHIBQhAIydmAwgggAACCCCAAAJBAQLQoAbjCCCAAAIIIIAAApELEIBGTswGEEAAAQQQQAABBIICBKBBDcYRQAABBBBAAAEEIhcgAI2cmA0ggAACCCCAAAIIBAUIQIMajCOAAAIIIIAAAghELkAAGjkxG0AAAQQQQAABBBAIChCABjUYRwABBBBAAAEEEIhcgAA0cmI2gAACCCCAAAIIIBAUIAANajCOAAIIIIAAAgggELkAAWjkxGwAAQQQQAABBBBAIChAABrUYBwBBBBAAAEEEEAgcgEC0MiJ2QACCCCAAAIIIIBAUIAANKhRQ+PPPvusXXDBBTVUYoqKAAIIIIAAAkkRIABNSk1UOB+vvPKKXX311RXeKptDAAEEEEAAAQTMCEDZCxBAAAEEEEAAAQQqKkAAWlFuNoYAAggggAACCCDQojEEc+bMsVGjRtmHH35o3bp1sy233NL69OljrVu3bkwyLIsAAggggAACCCBQwwJFB6BvvfWW9e3b16ZOnWq9evWy6dOn25QpU6xfv3720EMPWZs2bWqYkaIjgAACCCCAAAIIFCtQ9Cn44447znbYYQf74osv7M0337TJkyfb66+/bh988IH96U9/KnZ7LIcAAggggAACCCBQ4wJFBaALFiyw1157zS655BJba621HFldXZ07BX/66afb008/XeOMFB8BBBBAAAEEEECgWIGiAtBmzZpZJpMxBaK5w7fffmtLly7Nncx7BBBAAAEEEEAAAQTyChQVgKp/py42Gjp0qL366qsuGF24cKGNHTvWnX7fY4898ibORAQQQAABBBBAAAEEcgWKvgjpxhtvtP3339+23XZb69q1q82fP98UhPbv39/OOOOM3HSb/L5Dhw5NTqMpCbRo8V+auPPRlDKErdu8eXM3O63la9WqVerLp24waa2/li1bWprLp/0z7eXTmbM0759pL1+a908dX9Jcf4pfklA+nTkPG4oOQDfYYAP717/+ZePHj3cXHqlVdIsttrAdd9wxLP2S53333Xclr1uOFZcvX+6SiTsf5ShLvjTSXj4F2DrIpLX+aqF8Ooimuf5Uh2ktn+qO8uU78lbHND+ASfP+qQAtreXzA+y4y6djQNgQGoC+9NJL1rFjR9tss83sueeec309/cBTiS5atMieeuop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y9999507Da9g8ze/+Y0/2b3ql0jwFkFrrrmmxX2KXk8JUl7jzkc9qDK86dmzpz322GN22WWX2fXXX28TJ050v3K1o+gvLYN+5Cig/uabb9JSpHrlSHv52rZtazoTktb6q4XytWzZMnU/4P0PoeqP8vka1feqoKiFd3Y2bQ1Mfk2ofM2bN7d58+b5k2J5VWwXewCqwGbo0KGmwPLMM890MLkae++9d71JcV8t73cRUJeBNA46eKp5fvHixWksnju4KABNa/3p4KkALa3l0/6pP8pXnR9P1Z320bTWnz57lK86903l2u/ml9b9U999+n6Pu3wNnVWtSAvo+eefbxtttJGddNJJ1bvHknMEEEAAAQQQQACBsghEHoC+//779tJLL7m/0aNHZzOtp+706tUr+54RBBBAAAEEEEAAgdoQiDwA3WSTTUzPGmdAAAEEEEAAAQQQQEAC8d7riDpAAAEEEEAAAQQQqDkBAtCaq3IKjAACCCCAAAIIxCtAABqvP1tHAAEEEEAAAQRqToAAtOaqnAIjgAACCCCAAALxChCAxuvP1hFAAAEEEEAAgZoTIACtuSqnwAgggAACCCCAQLwCBKDx+rN1BBBAAAEEEECg5gQIQGuuyikwAggggAACCCAQrwABaLz+bB0BBBBAAAEEEKg5AQLQmqtyCowAAggggAACCMQrQAAarz9bRwABBBBAAAEEak6AALTmqpwCI4AAAggggAAC8QoQgMbrz9YRQAABBBBAAIGaEyAArbkqr40Cv/LKKzZy5MjaKCylRAABBBBAoMoECEALVFgmkzH9MVSnwPjx4+28886rzsyTawQQQAABBFIuQACaU8FvvfWWHXbYYXbJJZfYt99+a9tss41dc801tnTp0pwleYsAAggggAACCCBQigABaEDt2Weftf79+9szzzxjy5cvd3MmT55sw4cPt6OPPtqWLVsWWJpRBBBAAAEEEEAAgVIECEC/V1uwYIENGTLElixZktfxqaeesjvuuCPvPCYigAACCCCAAAIIFC9AAPq91dNPP20zZswIlbv33ntD5zMTAQQQQAABBBBAoGEBAtDvjSZNmtSgVjHLNJgICyCAAAIIIIAAAjUuQAD6/Q6w0korNbgrdOnSpcFlWAABBBBAAAEEEEAgXIAA9HufPn36WPPmzUO1+vbtGzqfmfELfPrpp3bqqafaddddZ7NmzbIBAwbYQw89FH/GyAECCCCAAAIIZAUIQL+nWGuttezEE0/MwuSOdO3a1U455ZTcybxPkMCrr75qe+yxh40ePdrmzZvn7uOqG9KrXocOHZqgnJIVBBBAAAEEaluAADRQ/wpSzjzzTGvVqlVgqlnv3r1dK5qCUIZkCixatMhOOOEEd+/WfDm86667bMyYMflmMQ0BBBBAAAEEKixAABoAr6urs9NOO83eeOMN+/nPf26tW7e2cePG2dixY2299dYLLMlo0gT05KMpU6aEZuvOO+8Mnc9MBBBAAAEEEKiMAAFoHmddkLTxxhtby5YtrVevXnmWqP5Jv/71r+29996r/oJ8X4IPP/ywwbIUs0yDibAAAggggAACCDRZgAC0yYTVmUCHDh2sW7du1Zn5PLlWeRoailmmoTSYjwACCCCAAAJNFyAAbbohKSRA4Cc/+UmDudhll10aXIYFEEAAAQQQQCB6AQLQ6I3ZQgUE1GVC/XYLDZ07d7aTTz650GymI4AAAggggEAFBQhAK4jNpqIVuOyyy+yQQw5ZYSM9evQwPUZ1zTXXXGEeExBAAAEEEECg8gIEoJU3Z4sRCeiuBVdeeaU999xz7n6g7dq1szvuuMMmTJiQ2ovJIqIkWQQQQAABBCIVaBFp6k1IvJhHYzYh+QZX1RXwGuLOR4MZLXEBPfVJt51KY/m23XZb23777e31118PPS1fIl0iVmvRooU1a9YslfUnYMqXiN2s5ExQfyXTJWJF6i8R1VByJpJSf0uXLg0tQ2ID0NmzZ4dmPOqZS5YscZuIOx9RlVNXhLdv397SWr5aqD+18Ka1/jp27Ght27alfFEdACJOV/XXpk2b1NZfp06d3H2i0/r5q4Xy6YEzaa0/XfOgRrS4y6ezkmEDp+DDdJiHAAIIIIAAAgggUHYBAtCyk5IgAggggAACCCCAQJgAAWiYDvMQQAABBBBAAAEEyi5AAFp2UhJEAAEEEEAAAQQQCBNI7EVIYZlmHgINCQwcONB22223hhZjPgIIIIAAAgjEIEALaAzobDJ6gfXXX9923XXX6DfEFhBAAAEEEECg0QIEoI0mYwUEEEAAAQQQQACBpggQgDZFj3URQAABBBBAAAEEGi1AANpoMlZAAAEEEEAAAQQQaIoAAWhT9FgXAQQQQAABBBBAoNECBKCNJmMFBBBAAAEEEEAAgaYIEIA2RY91EUAAAQQQQAABBBotQADaaDJWQCB+gRtuuMF22WWX+DNCDhBAAAEEEChBgAC0BDRWQSBOgZkzZ9qLL75ob7/9tr3zzjtxZoVtI4AAAgggUJIAAWhJbKyEQOUFli9fbpdeeqltueWWNmbMGJs7d6717dvX9ttvP/viiy8qnyG2iAACCCCAQIkCBKAlwrEaApUWGDZsmF199dW2dOnSept+9dVX7YADDrDZs2fXm84bBBBAAAEEkipAAJrUmiFfCAQEPv74Y7vlllsCU+qPTp482a6//vr6E3mHAAIIIIBAQgUIQBNaMWQLgaDAU089ZZlMJjhphfEnn3xyhWlMQAABBBBAIIkCBKBJrBXyhECOwJw5c3KmrPiWU/ArmjAFAQQQQCCZAgSgyawXcoVAPYF111233vt8b4pZJt96TEMAAQQQQKDSAgSglRZnewiUILDnnnta586dQ9ccOHBg6HxmIoAAAgggkBQBAtCk1AT5QCBEoFOnTnbVVVdZixYt8i6199572yGHHJJ3HhMRQAABBBBImgABaNJqhPwgUECgX79+9vDDD9vOO+9sdXV1bqnu3bvb+eefbzfddFN2WoHVmYwAAggggEBiBPI3pyQme2QEAQSCAj/60Y/s3nvvtREjRtidd95pL7/8cnB2asZ1r9NFixalpjwUBAEEEECgvgAtoPU9eIdAVQjoOfCnnXZaVeS1sZlU8HnyySdbjx49uLl+Y/FYHgEEEKgSAQLQKqkosolAUKBPnz521llnBSelYvzuu++2LbbYwvSqZ9737NnTBaN67CgDAggggEB6BAhA01OXlASBqhbQY0YVVM+aNStbjuXLl9sDDzxgBx98sC1cuDA7nREEEEAAgeoWIACt7voj9wikQuDLL7+0K664omBZ3n77bbv11lsLzq+2GZ9//rm99957tnjx4mrLOvlFAAEEyiJAAFoWRhJBAIGmCDzxxBOmvp9hw9/+9rew2VUxT2X48Y9/bJtttpn16tXLvQ4bNowLrqqi9sgkAgiUU4AAtJyapIUAAiUJTJs2rcH1pk6d2uAySV7gtttus+OOO84+/fTTbDa//fZbGzlypB1++OENBuDZlRhBAAEEUiBAAJqCSqQICFS7wBprrNFgEYpZpsFEYlpgypQpppbOQsMLL7xg99xzT6HZVTVd3Qquv/56GzJkiLuQrKoyT2YRQKBiAhUNQOfPn2860DIggAACQQHdZL9Vq1bBSSuMDxgwYIVp1TJh7NixDfb3fOihh6qlOAXzefPNN7s7FwwdOtRuuOEG6927t5100knGXQwKkjEDgZoVqFgAqptKX3DBBTZmzJiaxabgCCCQX2D11Vd3T3TKP9dsu+22syOPPLLQ7MRPnzx5coN5LGaZBhOJcYHLLrvM1eG8efOyudBdDB588EH7+c9/Tj/XrAojCCAggYoEoB9//LEdddRRFjwwwY8AAggEBY4++mjXH3LttdfOTm7Tpo0de+yxNmrUKGvZsmV2erWNKMBuaFhttdUaWiSx8z/55BO75pprCubvrbfeck/uKrgAMxBAoOYEKvIoTt2/7ze/+Y3rD/T444/nRQ7egmWTTTYxPeklzqFFi//SdOzYMc5sRLZtfZnreeJpLZ9O51K+yHafyBL+xS9+Yfo777zzbNy4cfb888+bgtBqHw444AC76KKLbNmyZQWLcuCBB1bt5/GZZ54xtXaGDeqGcMYZZ4QtUjXzdPxs1qxZ1dZXQ9A6flK+hpSSOz8p+2dDx4SKBKCbb765q6lnn322YI098sgj2XkKWNUnLM5BHz4Nbdu2jTMbkW1bwZkGyhcZcaQJq/70l9b607Pur7zyygaDmkiRy5j4pptu6n6EX3jhhXlT3XLLLe3UU0+t2mBbT61qaNCdDtKyv6b980f5Gtqbkz0/KfWnrpdhQ0UC0LAM+PMmTJjgj7pXXTUa5+DfILqY28PEmc9St92hQwdr3769Ub5SBeNdT/XXrl271NafWuYVrKRp/zzhhBPchVaXX365ffPNN24H0g9dXVx1ySWXuAt1qvVinZVWWqnBD0S3bt1SU5+dOnWy1q1b2/Tp0xssdzUuUAvlUyvvjBkzqrF6Gsxz586dXZeluMunz4jijEJDYgLQQhlkOgIIIJAWgWOOOcbd83PSpEmudbdr1662yiqrVH3x9tlnH7v44ottyZIlBcuy//77F5zHDAQQqD2BilyEVHuslBgBBBDIL6D+WVtttZX95Cc/SUXwqVLqHq3qt1toUJ/+Qw89tNDsqpuuBwjMmjWr6vJNhhFIkgABaJJqg7wggAACVSowaNAgdxeDddZZJ1sCdRU58cQT7fbbb7fmzZtnp1friK5j2GuvvUx3NdDf1ltvbTfeeGNq+ipXa72Q7+oUqOgp+D59+pj+GBBAAAEE0ifQv39/05/6ni1dutS18KrFNw3DX//6Vzv99NPrFeWrr74yXVj25ptvuqc/6eIPBgQQKE6AFtDinFgKAQQQQKBIgXXXXdc9ESktwefUqVPtnHPOKVh6PWCFh6wU5GEGAnkFCEDzsjARAQQQQACB/wo8+uij9t1334VyjB49OnQ+MxFAoL4AAWh9D94hgAACCCBQT+Dzzz+v9z7fm2KWybce0xCoVQEC0FqtecqNAAIIIFCUwMorr9zgcsUs02AiLIBADQkQgNZQZVNUBBBAAIHGC/Tt27fBlfbcc88Gl6mWBdTnVS26DT1KsVrKQz6TKUAAmsx6IVcIIIAAAgkR0KNUjzjiiIK52XDDDe3oo48uOL9aZjz22GPu/rTrr7++6a9nz5521VVXuTsaVEsZyGf1CBCAVk9dkVMEEEAAgZgE9LjUIUOGuEccBrOw22672f333+8ejRucXm3jt9xyiw0ePNj+85//ZLM+e/Zs06Njjz/+eMtkMtnpjCBQDoGK3ge0HBkmDQQQQAABBCotoBvpn3322XbCCSfY+++/b8uWLbO11lrLgjfer3SeyrW9L7/80t3PtFB6Y8eOtQcffNAOPPDAQotU1XS19OoergMHDqyqfKcts7SApq1GKQ8CCCCAQGQCXbp0MfX31LPt0xB8CuqRRx5p8DS7AtC0DE888YSpxZchXgEC0Hj92ToCCCCAAAKxCqgFtKHhiy++aGiRxM+fNm2aqSuF7uv68ccfuydbvfvuu4nPd1ozSACa1pqlXAgggAACCBQh0LVr1waXKmaZBhOJcYHXX3/dPQr8uuuus+nTp9uiRYtMj1dVa/aoUaNizFntbpoAtHbrnpIjgAACCCBg/fr1a1Bh7733bnCZpC6wYMECO+aYY2zOnDkrZFG3mjrrrLPsnXfeWWEeE6IVIACN1pfUEUAAAQQQSLTAJptsYoMGDSqYx969e9svf/nLgvOTPuPhhx82nX4vNCgI/fOf/1xoNtMjEiAAjQiWZBFAAAEEEKgWgWHDhtnQoUOtbdu29bKsi63uvfdea926db3p1fSmmNbNYpappjJXQ165DVM11BJ5RAABBBBAIEKBuro6O+WUU9y9QD/66CN338811ljDVltttQi3WpmkW7Zs2eCGilmmwURYoFECtIA2iouFEUAAAQQQSK9Au3btbOedd7Y99tgjFcGnamqHHXZosMKKWabBRFigUQIEoI3iYmEEEEAAAQQQqCaBvn37mvqxFho6derkWn4LzWd6NAIEoNG4kioCCCCAAAIIJECgWbNmdtttt1mvXr1WyI1uL3X33Xdbt27dVpjHhGgFCECj9SV1BBBAAAEEEIhZQAHm448/7q5232yzzWyllVayP/zhD/biiy/a1ltvHXPuanPzBKAF6v20006zGTNmFJjLZAQQQAABBBCoJgG1hO611142YMAA22mnndytpdq3b19NRUhVXrkKvkB1akflqrgCOExGAAEEEECgSgXOOecca9WqFY1MMdcfLaAxVwCbRwABBBBAAAEEak2AALTWapzyIoAAAggggAACMQsQgMZcAWweAQQQQAABBBCoNQEC0FqrccqLAAIIIIAAAgjELMBFSDFXAJtHAAEEEEAAAQTKIbBs2TKbMGGCfffdd9azZ09r27ZtOZKNJA0C0EhYSRQBBBBAAAEEEKicwO23324jRoywmTNnuo22adPGjjzySDv77LOtdevWlctIkVviFHyRUCyGAAIIIIAAAggkUWD48OF27rnnZoNP5XHRokW0Mlw3AAAVVUlEQVQ2cuRIO/roo2358uWJyzYBaOKqhAwhgAACCCCAAALFCUycONGuvfbaggs/++yz9uCDDxacH9cMAtC45NkuAggggAACCCDQRIFHH33UMplMaCpjxowJnR/HzMT2AW3Xrl0cHtlt6ikJdXV1Fnc+shkq84ie8pT28omM+ivzjlOh5Fq0aJH6/TPtnz89TS6tn7+075+1UL407Z/FPDZ82rRpifs8JjYA1ZVccQ5+f4m48xGVgcqnX0xpLZ//a5DyRbUHRZtu2uuvFj5/HF+i/YxEmXraP38qX5r2z27dujW4O2iZSn8fKsgPGxIbgOoWAnEO+gWoHTTufERl4D/nPs3l01V/aS6fWunTWj6VLc2fP5VPQ5rrT8fQtJZPxxbKF9W3U/Tpqv6aN2+emv2zX79+dvnll7tjZiG9fffdt+LlbejK+/DwtFBJmI4AAggggAACCCAQu8DGG29sJ554YsF89OnTxw488MCC8+OaQQAalzzbRQABBBBAAAEEyiCgWzBddNFFttJKK2VTUwvk4MGD7bbbbrOGTodnV6rgSGJPwVfQgE0hgAACCCCAAAJVLXDsscfaUUcdZV999ZU7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" /><!-- --></p>
 </div>
 <div id="sec:structure" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Structure of an rvec</h1>
@@ -518,7 +489,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <li><code>&quot;rvec_dbl&quot;</code>, which holds doubles, e.g. <code>3.142</code>, <code>-1.01</code>;</li>
 <li><code>&quot;rvec_int&quot;</code>, which holds integers, e.g. <code>42</code>, <code>-1</code>;</li>
 <li><code>&quot;rvec_lgl&quot;</code>, which holds <code>TRUE</code>, <code>FALSE</code>, and <code>NA</code>; and</li>
-<li><code>&quot;rvec_chr&quot;</code>, which hold characters, e.g. <code>&quot;a&quot;</code>, <code>&quot;Thomas Bayes&quot;</code>.</li>
+<li><code>&quot;rvec_chr&quot;</code>, which holds characters, e.g. <code>&quot;a&quot;</code>, <code>&quot;Thomas Bayes&quot;</code>.</li>
 </ul>
 <p>Internally, an rvec is a matrix, with each row representing one unknown quantity, and each column representing one draw from the joint distribution of the unknown quantities,</p>
 <table style="width:100%;">
@@ -644,7 +615,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">2000</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;1000&gt;[2]&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.018 (-1.9, 2)  -0.048 (-2, 1.9)</span></span></code></pre></div>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] -0.06 (-1.9, 1.8) -0.063 (-2, 1.9)</span></span></code></pre></div>
 <p>or an atomic vector</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">rvec</span>(x)</span>
@@ -661,7 +632,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">rvec_chr</span>(x)</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_chr&lt;3&gt;[1]&gt;</span></span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; [1] &quot;1&quot;,&quot;2&quot;,&quot;3&quot;</span></span></code></pre></div>
-<p>When the raw data take the form of a database with one draw per row, the most efficient way to create rvecs is to use <code>collapse_to_rvec()</code>. See Section <a href="#sec:divorce">2.2</a> for an example.</p>
+<p>When the raw data take the form of a data frame with one draw per row, the most efficient way to create rvecs is to use <code>collapse_to_rvec()</code>. See Section <a href="#sec:examples">2</a> for an example.</p>
 <p>Section <a href="#sec:prob">6</a> shows how to create an rvec consisting of draws from a standard probability distribution.</p>
 </div>
 <div id="mathematical-and-logical-operations" class="section level1" number="5">
@@ -700,288 +671,229 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>}</span>
 <span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; [1] 4,6 3,4</span></span></code></pre></div>
-<p><code>rvec</code> contains a suite of functions for summarising weighted data:</p>
-<ul>
-<li><code>weighted_mad()</code></li>
-<li><code>weighted_mean()</code></li>
-<li><code>weighted_median()</code></li>
-<li><code>weighted_sd()</code></li>
-<li><code>weighted_var()</code></li>
-</ul>
-<p>All of these are built on functions from package <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>.</p>
-<p>The elements of an rvec do not have a well-defined order when there is more than one draw. Functions <code>sort()</code> and <code>order()</code> fail when called on an rvec, unless <code>n_draw</code> is 1.</p>
-<p>Ranking does, however, have a useful interpretation. We apply the ranking operation independently to each draw, and return the results as an integer rvec.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>divorce_ratio <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">select</span>(age, ratio) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(ratio))</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 11 × 3</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt;    age               ratio         rank</span></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;      &lt;rdbl&lt;1000&gt;&gt; &lt;rint&lt;1000&gt;&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19   1.7 (0.66, 4.3)   10 (2, 11)</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24    2.1 (1.6, 2.6)  11 (10, 11)</span></span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29    1.6 (1.4, 1.7)    9 (9, 10)</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34    1.2 (1.1, 1.3)     8 (8, 9)</span></span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39      1.1 (1, 1.2)     7 (5, 8)</span></span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44     1 (0.98, 1.1)     6 (5, 7)</span></span>
-<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49     1 (0.93, 1.1)     5 (5, 7)</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 0.89 (0.83, 0.94)     4 (4, 5)</span></span>
-<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 0.79 (0.74, 0.85)     3 (2, 4)</span></span>
-<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 0.73 (0.65, 0.82)     2 (2, 3)</span></span>
-<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; 11 65+   0.51 (0.45, 0.57)     1 (1, 1)</span></span></code></pre></div>
-<p>In the example above, the rank of the 15-19 age group is uncertain, while the rank of the 65+ age group is estimated precisely.</p>
+<p><code>rvec</code> contains a suite of functions for summarising weighted data, such as <code>weighted_mean()</code> and <code>weighted_var()</code>.</p>
 </div>
 <div id="sec:prob" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Probability distributions</h1>
 <p>Standard R probability functions such as <code>dnorm()</code> or <code>rbinom()</code> do not allow rvec arguments. Package <code>rvec</code> provides modified functions that do. For instance,</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.2</span>),</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">7</span>)))</span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)))</span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="fu">dnorm_rvec</span>(y, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1258,0.1283 0.08066,0.018</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="fu">rbinom_rvec</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fu">round</span>(y<span class="sc">+</span><span class="dv">10</span>), <span class="at">prob =</span> <span class="fl">0.8</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; [1] 7,7 8,3</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.2</span>),</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">7</span>)))</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)))</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">dnorm_rvec</span>(y, <span class="at">mean =</span> mu, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1258,0.1283 0.08066,0.018</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">rbinom_rvec</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fu">round</span>(y<span class="sc">+</span><span class="dv">10</span>), <span class="at">prob =</span> <span class="fl">0.8</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; [1] 6,7  11,3</span></span></code></pre></div>
 <p>The return value from an <code>rvec</code> probability function is an rvec if and only if at least one argument to the function is an rvec, with one exception. The exception is random variate functions, where a value can be supplied for a special argument called <code>n_draw</code>. When a value for <code>n_draw</code> is supplied, the return value is an rvec with <code>n_draw</code> draws,</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">rnorm_rvec</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">n_draw =</span> <span class="dv">2</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[3]&gt;</span></span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt; [1] 88.48,81.91 89.92,102.7 99.73,100.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">rnorm_rvec</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">mean =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">n_draw =</span> <span class="dv">2</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[3]&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; [1] 83.89,105.7 106.2,91.04 84.63,86.39</span></span></code></pre></div>
 <p>This is a convenient way to create inputs to a simulation.</p>
 </div>
 <div id="manipulating-rvecs" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Manipulating rvecs</h1>
-<div id="subsetting" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Subsetting</h2>
+<div id="compatibility-with-base-r" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Compatibility with base R</h2>
+<p>Most code for manipulating ordinary R vectors should continue to work when applied to rvecs. There are, however, important base R functions where things go wrong. In each case, however, there are alternatives.</p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="28%" />
+<col width="46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Base R function(s)</th>
+<th align="left">What goes wrong</th>
+<th align="left">Alternative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>rbind()</code></td>
+<td align="left">Creates a list matrix</td>
+<td align="left"><code>dplyr::bind_rows</code> or <code>vctrs::vec_rbind()</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>cbind()</code></td>
+<td align="left">Creates a list matrix</td>
+<td align="left"><code>dplyr::bind_cols</code> or <code>vctrs::vec_cbind()</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ifelse()</code></td>
+<td align="left">Doesn’t preserve the rvec structure.</td>
+<td align="left"><code>rvec::if_else_rvec()</code>; <code>dplyr::if_else()</code> also works when <code>condition</code> is an ordinary vector</td>
+</tr>
+<tr class="even">
+<td align="left"><code>sapply()</code>, <code>vapply()</code></td>
+<td align="left">Doesn’t combine results into an rvec</td>
+<td align="left"><code>rvec::map_rvec()</code> or <code>lapply()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="subsetting" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Subsetting</h2>
 <p>Standard R ways of selecting elements from vectors work with rvecs.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>               <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>               <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>))</span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>x[<span class="dv">1</span>]  <span class="do">## element number</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[1]&gt;</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;   a </span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 1,2</span></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>)]  <span class="do">## element name</span></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span>
-<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)]  <span class="do">## logical flag</span></span>
-<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
-<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>               <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>               <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>x[<span class="dv">1</span>]  <span class="do">## element number</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[1]&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt;   a </span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt; 1,2</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>)]  <span class="do">## element name</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)]  <span class="do">## logical flag</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt;   a   c </span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt; 1,2 5,6</span></span></code></pre></div>
 </div>
-<div id="sec:ifelse" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> If-Else</h2>
-<p>The standard R function <code>ifelse()</code> does not work at all with rvecs.</p>
+<div id="sec:ifelse" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> If-Else</h2>
+<p>The standard R function <code>ifelse()</code> does not preserve the structure of an rvec.</p>
 <p>The tidyverse function <code>if_else()</code> works when the <code>true</code>, <code>false</code>, or <code>missing</code> arguments are rvecs,</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>        <span class="at">true =</span> x,</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>        <span class="at">false =</span> <span class="sc">-</span>x)        </span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; [1] 1,2   -3,-4</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>               <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), </span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>        <span class="at">true =</span> x,</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>        <span class="at">false =</span> <span class="sc">-</span>x)        </span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;2&gt;[2]&gt;</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; [1] 1,2   -3,-4</span></span></code></pre></div>
 <p>However, <code>if_else()</code> does not work when the <code>condition</code> argument is an rvec. For this we need <code>rvec</code> function <code>if_else_rvec()</code>,</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">if_else_rvec</span>(x <span class="sc">&lt;=</span> <span class="dv">2</span>, x, <span class="dv">2</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; [1] 1,2 2,2</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">if_else_rvec</span>(x <span class="sc">&lt;=</span> <span class="dv">2</span>, x, <span class="dv">2</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; [1] 1,2 2,2</span></span></code></pre></div>
 <p>Function <code>if_else_rvec()</code> can be used to independently transform or recode values across different draws,</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">3.3</span>),</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>)))</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>x</span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 NA,-2</span></span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>x_recode <span class="ot">&lt;-</span> <span class="fu">if_else_rvec</span>(<span class="fu">is.na</span>(x), <span class="dv">99</span>, x)</span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>x_recode</span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 99,-2</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">3.3</span>),</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>               <span class="fu">c</span>(<span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>)))</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>x</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 NA,-2</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>x_recode <span class="ot">&lt;-</span> <span class="fu">if_else_rvec</span>(<span class="fu">is.na</span>(x), <span class="dv">99</span>, x)</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>x_recode</span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3.3 99,-2</span></span></code></pre></div>
 </div>
-<div id="combining" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Combining</h2>
+<div id="combining" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Combining</h2>
 <p>The standard R concatenation function <code>c()</code> works with rvecs,</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>),</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>)))</span>
-<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>),</span>
-<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.8</span>)))</span>
-<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="fu">c</span>(x1, x2)</span>
-<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[4]&gt;</span></span>
-<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1,0.2 0.3,0.4 0.5,0.6 0.7,0.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.4</span>)))</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.6</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>                <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.8</span>)))</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="fu">c</span>(x1, x2)</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[4]&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.1,0.2 0.3,0.4 0.5,0.6 0.7,0.8</span></span></code></pre></div>
 <p>Unfortunately, <code>cbind()</code> and <code>rbind()</code> cannot be made to work properly on raw rvecs,</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">rbind</span>(x1, x2)</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#&gt;    data     </span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="co">#&gt; x1 numeric,4</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt; x2 numeric,4</span></span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="fu">cbind</span>(x1, x2)</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt;      x1        x2       </span></span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co">#&gt; data numeric,4 numeric,4</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">rbind</span>(x1, x2)</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt;    data     </span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&gt; x1 numeric,4</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; x2 numeric,4</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="fu">cbind</span>(x1, x2)</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt;      x1        x2       </span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; data numeric,4 numeric,4</span></span></code></pre></div>
 <p>though <code>cbind()</code> does work if the rvecs are contained in data frames</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x2)</span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="fu">cbind</span>(df1, df2)</span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt;        x1      x2</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
-<p>Tidyverse equivalents such as <code>dplyr::bind_rows()</code>, <code>dbplyr::bind_cols()</code>, <code>vctrs::vec_cbind()</code>, and <code>vctrs::vec_rbind()</code> <em>do</em> work with rvecs,</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">library</span>(vctrs, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">vec_cbind</span>(<span class="at">a =</span> x1, <span class="at">b =</span> x2)</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="co">#&gt;         a       b</span></span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
-<p>Base R function <code>sapply()</code> does not work with rvecs (unless <code>simplify</code> is set to <code>FALSE</code>). <code>rvec</code> supplies a function called <code>map_rvec()</code> (based on map functions in package <a href="https://purrr.tidyverse.org">purrr</a>) that does the same job:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))),</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>          <span class="at">b =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>))))</span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>l</span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co">#&gt; $a</span></span>
-<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="co">#&gt; [1] 1,4</span></span>
-<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="co">#&gt; $b</span></span>
-<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
-<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="co">#&gt; [1] 9,16</span></span>
-<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="fu">map_rvec</span>(l, sqrt)</span>
-<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
-<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt;   a   b </span></span>
-<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a><span class="co">#&gt; 1,2 3,4</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x2)</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="fu">cbind</span>(df1, df2)</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt;        x1      x2</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
+<p>With rvec columns in data frames, <code>dplyr::bind_rows()</code> and
+<code>vctrs::vec_rbind()</code> combine rows. To create columns from bare rvecs, use
+<code>dplyr::bind_cols()</code> or <code>vctrs::vec_cbind()</code>,</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">library</span>(vctrs, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">vec_cbind</span>(<span class="at">a =</span> x1, <span class="at">b =</span> x2)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt;         a       b</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt; 1 0.1,0.2 0.5,0.6</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt; 2 0.3,0.4 0.7,0.8</span></span></code></pre></div>
+<p>When each result is an rvec, base R’s <code>sapply()</code> does not combine them into
+one rvec (<code>simplify = FALSE</code> keeps a list). <code>map_rvec()</code>, based on map
+functions in package <a href="https://purrr.tidyverse.org">purrr</a>, combines
+length-one rvec results:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))),</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>          <span class="at">b =</span> <span class="fu">rvec</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>))))</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>l</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#&gt; $a</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="co">#&gt; [1] 1,4</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#&gt; $b</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[1]&gt;</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#&gt; [1] 9,16</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="fu">map_rvec</span>(l, sqrt)</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_dbl&lt;2&gt;[2]&gt;</span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">#&gt;   a   b </span></span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a><span class="co">#&gt; 1,2 3,4</span></span></code></pre></div>
 </div>
-<div id="coercing" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Coercing</h2>
+<div id="coercing" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Coercing</h2>
 <p>Function <code>as.matrix()</code> returns the data underlying an rvec.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nr =</span> <span class="dv">2</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>m</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(m)</span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>x</span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[2]&gt;</span></span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3,5 2,4,6</span></span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="fu">as.matrix</span>(x)</span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
-<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
-<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nr =</span> <span class="dv">2</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>m</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rvec</span>(m)</span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a>x</span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a><span class="co">#&gt; &lt;rvec_int&lt;3&gt;[2]&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a><span class="co">#&gt; [1] 1,3,5 2,4,6</span></span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a><span class="fu">as.matrix</span>(x)</span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a><span class="co">#&gt;      [,1] [,2] [,3]</span></span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a><span class="co">#&gt; [1,]    1    3    5</span></span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a><span class="co">#&gt; [2,]    2    4    6</span></span></code></pre></div>
 <p>Function <code>as_list_col()</code> returns a list of vectors</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">as_list_col</span>(x)</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 3 5</span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; [1] 2 4 6</span></span></code></pre></div>
-<p>Functions such as <a href="https://mjskay.github.io/ggdist/reference/point_interval.html">point_interval</a> in package <a href="https://mjskay.github.io/ggdist/">ggdist</a> accept lists of vector. A good way to access the facilities for working with random draws in <code>ggdist</code>, or in packages such as <a href="https://mjskay.github.io/tidybayes/">tidybayes</a> and <a href="https://mc-stan.org/bayesplot/">bayesplot</a>, is to use <code>as_list_col()</code> to convert an rvec to a list column.</p>
-<p>Function <code>expand_from_rvec()</code> is the inverse of function <code>collapse_to_rvec()</code>, introduced in Section <a href="#sec:divorce">2.2</a>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
-<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
-<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
-<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a><span class="co">#&gt;   age   sex                    rate</span></span>
-<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a><span class="co">#&gt; 2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
-<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
-<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a>  <span class="fu">expand_from_rvec</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
-<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
-<span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
-<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
-<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
-<span id="cb33-24"><a href="#cb33-24" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">as_list_col</span>(x)</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 3 5</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="co">#&gt; [1] 2 4 6</span></span></code></pre></div>
+<p>Functions such as <a href="https://mjskay.github.io/ggdist/reference/point_interval.html">point_interval</a> in package <a href="https://mjskay.github.io/ggdist/">ggdist</a> accept lists of vectors. A good way to access the facilities for working with random draws in <code>ggdist</code>, or in packages such as <a href="https://mjskay.github.io/tidybayes/">tidybayes</a> and <a href="https://mc-stan.org/bayesplot/">bayesplot</a>, is to use <code>as_list_col()</code> to convert an rvec to a list column.</p>
+<p>Function <code>expand_from_rvec()</code> is the inverse of function <code>collapse_to_rvec()</code>, introduced in Section <a href="#sec:examples">2</a>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 3</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="co">#&gt;   age   sex                    rate</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female 0.036 (0.019, 0.068)</span></span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a><span class="co">#&gt; 2 20-24 Female    0.67 (0.58, 0.78)</span></span>
+<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a>divorce <span class="sc">|&gt;</span></span>
+<span id="cb32-17"><a href="#cb32-17" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">values =</span> rate) <span class="sc">|&gt;</span></span>
+<span id="cb32-18"><a href="#cb32-18" tabindex="-1"></a>  <span class="fu">expand_from_rvec</span>() <span class="sc">|&gt;</span></span>
+<span id="cb32-19"><a href="#cb32-19" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span>
+<span id="cb32-20"><a href="#cb32-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 4</span></span>
+<span id="cb32-21"><a href="#cb32-21" tabindex="-1"></a><span class="co">#&gt;   age   sex     draw   rate</span></span>
+<span id="cb32-22"><a href="#cb32-22" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;</span></span>
+<span id="cb32-23"><a href="#cb32-23" tabindex="-1"></a><span class="co">#&gt; 1 15-19 Female     1 0.0462</span></span>
+<span id="cb32-24"><a href="#cb32-24" tabindex="-1"></a><span class="co">#&gt; 2 15-19 Female     2 0.0369</span></span></code></pre></div>
 </div>
 </div>
 <div id="summarising-distributions" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Summarising distributions</h1>
 <p>Most functions in <code>rvec</code> are concerned with deriving random vectors from other random vectors: that is, with the column-wise calculations described in Section <a href="#sec:structure">3</a>. But once we have derived the random vectors, we typically want to summarise them, using statistics such as means or quantiles: that is, we want to carry out row-wise calculations.</p>
-<p>The functions for carrying out row-wise calculations on rvecs are:</p>
-<ul>
-<li><code>draws_all()</code></li>
-<li><code>draws_any()</code></li>
-<li><code>draws_median()</code></li>
-<li><code>draws_mean()</code></li>
-<li><code>draws_mode()</code></li>
-<li><code>draws_sd()</code></li>
-<li><code>draws_var()</code></li>
-<li><code>draws_cv()</code></li>
-<li><code>draws_ci()</code></li>
-<li><code>draws_quantile()</code></li>
-<li><code>draws_fun()</code></li>
-</ul>
-<p>Internally, most of these functions call functions from <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a>, and are therefore fast.</p>
-<p><code>draws_ci()</code>, which calculates credible intervals, is the draws function that is used most often,</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>divorce_rv <span class="ot">&lt;-</span> divorce <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">collapse_to_rvec</span>(<span class="at">value =</span> rate)</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>divorce_rv</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 3</span></span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate</span></span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)</span></span>
-<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)</span></span>
-<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)</span></span>
-<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)</span></span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)</span></span>
-<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)</span></span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)</span></span>
-<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)</span></span>
-<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)</span></span>
-<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)</span></span>
-<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span>
-<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a>divorce_rv <span class="sc">|&gt;</span></span>
-<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">draws_ci</span>(rate))</span>
-<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 22 × 6</span></span>
-<span id="cb34-21"><a href="#cb34-21" tabindex="-1"></a><span class="co">#&gt;    age   sex                    rate rate.lower rate.mid rate.upper</span></span>
-<span id="cb34-22"><a href="#cb34-22" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;          &lt;rdbl&lt;1000&gt;&gt;      &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;</span></span>
-<span id="cb34-23"><a href="#cb34-23" tabindex="-1"></a><span class="co">#&gt;  1 15-19 Female 0.036 (0.019, 0.068)     0.0193   0.0360     0.0678</span></span>
-<span id="cb34-24"><a href="#cb34-24" tabindex="-1"></a><span class="co">#&gt;  2 20-24 Female    0.67 (0.58, 0.78)     0.579    0.673      0.782 </span></span>
-<span id="cb34-25"><a href="#cb34-25" tabindex="-1"></a><span class="co">#&gt;  3 25-29 Female         3.2 (3, 3.4)     3.02     3.22       3.45  </span></span>
-<span id="cb34-26"><a href="#cb34-26" tabindex="-1"></a><span class="co">#&gt;  4 30-34 Female       5.8 (5.5, 6.1)     5.54     5.80       6.06  </span></span>
-<span id="cb34-27"><a href="#cb34-27" tabindex="-1"></a><span class="co">#&gt;  5 35-39 Female       6.5 (6.2, 6.9)     6.21     6.54       6.86  </span></span>
-<span id="cb34-28"><a href="#cb34-28" tabindex="-1"></a><span class="co">#&gt;  6 40-44 Female       7.1 (6.8, 7.4)     6.85     7.13       7.42  </span></span>
-<span id="cb34-29"><a href="#cb34-29" tabindex="-1"></a><span class="co">#&gt;  7 45-49 Female       7.2 (6.9, 7.6)     6.87     7.22       7.57  </span></span>
-<span id="cb34-30"><a href="#cb34-30" tabindex="-1"></a><span class="co">#&gt;  8 50-54 Female         6 (5.8, 6.3)     5.77     6.03       6.33  </span></span>
-<span id="cb34-31"><a href="#cb34-31" tabindex="-1"></a><span class="co">#&gt;  9 55-59 Female       4.4 (4.2, 4.7)     4.17     4.40       4.66  </span></span>
-<span id="cb34-32"><a href="#cb34-32" tabindex="-1"></a><span class="co">#&gt; 10 60-64 Female         2.7 (2.5, 3)     2.48     2.72       2.99  </span></span>
-<span id="cb34-33"><a href="#cb34-33" tabindex="-1"></a><span class="co">#&gt; # ℹ 12 more rows</span></span></code></pre></div>
+<p>The functions for carrying out row-wise calculations on rvecs include, for instance, <code>draws_median()</code> to calculate the median values across draws, and <code>draws_var()</code> to calculate variance across draws.</p>
+<p>Most draws functions use <a href="https://CRAN.R-project.org/package=matrixStats">matrixStats</a> internally and are therefore fast.</p>
 </div>
-<div id="pooling-distributions" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Pooling distributions</h1>
-<p>Sometimes when working with simulation draws, we want to combine multiple samples of draws into a single overall sample. When using multiple imputation, for instance, we might want to combine posterior samples constructed from each of the <span class="math inline">\(m = 1, \cdots, M\)</span> imputed datasets into a single pooled posterior sample.</p>
-<p>To combine samples, we use function <code>pool_draws()</code>:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>mi_data</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co">#&gt;   sex    imputed_dataset             value</span></span>
-<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt;      &lt;rdbl&lt;1000&gt;&gt;</span></span>
-<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="co">#&gt; 1 Female               1   0.9 (0.52, 1.3)</span></span>
-<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co">#&gt; 2 Female               2   1.2 (0.79, 1.6)</span></span>
-<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co">#&gt; 3 Female               3   1.1 (0.69, 1.5)</span></span>
-<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="co">#&gt; 4 Male                 1  0.81 (0.43, 1.2)</span></span>
-<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co">#&gt; 5 Male                 2   0.7 (0.32, 1.1)</span></span>
-<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="co">#&gt; 6 Male                 3 0.48 (0.12, 0.88)</span></span>
-<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a>mi_data <span class="sc">|&gt;</span></span>
-<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a>  <span class="fu">pool_draws</span>(<span class="at">by =</span> sex)</span>
-<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a><span class="co">#&gt;   sex               value</span></span>
-<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;rdbl&lt;3000&gt;&gt;</span></span>
-<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a><span class="co">#&gt; 1 Female  1.1 (0.61, 1.5)</span></span>
-<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a><span class="co">#&gt; 2 Male   0.67 (0.19, 1.1)</span></span></code></pre></div>
-</div>
-<div id="other-packages" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Other packages</h1>
-<p>The first R package to provide a specialized object for handling multiple draws was <a href="https://CRAN.R-project.org/package=rv">rv</a>. The specialized object, called an rv, can be manipulated and summarized much like an rvec. However, in software terms, an rv is not strictly a vector (calling <code>is.vector()</code> on one returns <code>FALSE</code>) and an rv does not always behave as expected inside a data frame. It is therefore not well suited to tidyverse-style work flows.</p>
-<p>R package <a href="https://CRAN.R-project.org/package=posterior">posterior</a> provides several data structures for handling multiple draws. One of these – the rvar – is similar to an rvec. An rvar is, however, is not limited to a single dimension, and has special facilities for dealing with multiple chains (as produced by Markov chain Monte Carlo methods.) These features are essential for some analyses, but they can make rvars harder to master, and they are not needed for most tidyverse-style work flows.</p>
-<p>Another impportant different between rvers and rvecs is that, whereas rvecs interpret summary functions such as <code>mean()</code> and <code>sum()</code> as operations to be applied independently on each draw, rvars interpret them as operations to be applied across draws. The result is that code written for ordinary R vectors will often work on rvecs, but need modification to work on rvars. The tidyverse function <code>count()</code>, for instance, works with rvecs but not rvars. This again makes rvecs easier to work with for many tasks.</p>
-</div>
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-kerman2007manipulating" class="csl-entry">
-Kerman, Jouni, and Andrew Gelman. 2007. <span>“Manipulating and Summarizing Posterior Simulations Using Random Variable Objects.”</span> <em>Statistics and Computing</em> 17: 235–44.
-</div>
-</div>
+<div id="similar-packages" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Similar packages</h1>
+<p>The first R package to provide a specialized object for handling multiple draws was <a href="https://CRAN.R-project.org/package=rv">rv</a>. The specialized object, called an rv, can be manipulated and summarized much like an rvec. However, in software terms, an rv is not strictly a vector and does not behave like one inside a data frame. It is therefore not well suited to tidyverse-style work flows.</p>
+<p>R package <a href="https://CRAN.R-project.org/package=posterior">posterior</a> provides several data structures for handling multiple draws. One of these – the rvar – is similar to an rvec. An rvar is, however, not limited to a single dimension, and has special facilities for dealing with multiple chains (as produced by Markov chain Monte Carlo methods). These features are essential for some analyses, but they can make rvars harder to master, and they are not needed for most tidyverse-style work flows.</p>
+<p>Another important difference between rvecs and rvars is the way that they implement standard functions such as <code>mean()</code> and <code>sum()</code>. Calling <code>mean()</code> on an rvec yields the mean across elements within each draw. Means across draws within each element are obtained by calling <code>draws_mean()</code>. In contrast, calling <code>mean()</code> on an rvar yields the mean across draws within each element. Means across elements with each draw are obtained by calling <code>rvar_mean()</code>.</p>
+<p>The differences in implementation imply that code written for an ordinary R vector generalises naturally to rvecs but not to rvars. Code such as <code>x &lt;- median(y)</code> that was written originally for a numeric vector will continue to yield medians over elements of <code>y</code> if <code>y</code> is an rvec. If <code>y</code> is an rvar, however, then the code will yield medians over draws, which is a substantial change in meaning.</p>
 </div>
 
 

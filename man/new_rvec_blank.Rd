@@ -6,34 +6,55 @@
 \alias{new_rvec_dbl}
 \alias{new_rvec_int}
 \alias{new_rvec_lgl}
-\title{Create an Empty Rvec}
+\title{Create an Rvec Filled with a Single Value}
 \usage{
-new_rvec_chr(length = 0, n_draw = 1000)
+new_rvec_chr(length = 0, n_draw = 1000, value = "")
 
-new_rvec_dbl(length = 0, n_draw = 1000)
+new_rvec_dbl(length = 0, n_draw = 1000, value = 0)
 
-new_rvec_int(length = 0, n_draw = 1000)
+new_rvec_int(length = 0, n_draw = 1000, value = 0L)
 
-new_rvec_lgl(length = 0, n_draw = 1000)
+new_rvec_lgl(length = 0, n_draw = 1000, value = FALSE)
 }
 \arguments{
 \item{length}{Desired length of rvec.
 Default is \code{0}.}
 
 \item{n_draw}{Number of draws of rvec.
-Default is \code{1000}.}
+Must be at least 1. Default is \code{1000}.}
+
+\item{value}{Value used to fill the rvec.
+Can be \code{NA}. Default is \code{0}, \code{""}, or \code{FALSE}.
+See below for details.}
 }
 \value{
 An rvec.
 }
 \description{
-Create an rvec, filled with \code{0}, \code{""},
-or \code{FALSE}, with a given length
-or number of draws.
+Create an rvec that uses the same value for
+every element and every draw.
+}
+\details{
+\code{value} must be an atomic vector of length 1.
+Matrices, arrays, lists, and rvecs are not allowed.
+Values are coerced to the correct type, when the
+coercion can be done without losing information.
+Character values are not converted to numeric
+or logical values.
+
+The defaults for \code{value} are
+\itemize{
+\item \code{new_rvec_chr()}: \code{""}
+\item \code{new_rvec_dbl()}: \code{0}
+\item \code{new_rvec_int()}: \code{0}
+\item \code{new_rvec_lgl()}: \code{FALSE}
+}
 }
 \examples{
 new_rvec_int()
 new_rvec_lgl(length = 1, n_draw = 5)
+new_rvec_dbl(length = 2, n_draw = 5, value = NA)
+new_rvec_int(length = 3, n_draw = 5, value = 2)
 
 x <- new_rvec_dbl(length = 2)
 x[1] <- rnorm_rvec(n = 1, n_draw = 1000)

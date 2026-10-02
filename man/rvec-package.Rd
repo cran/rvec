@@ -64,10 +64,20 @@ For instance, to calculate a credible interval, use \code{\link[=draws_ci]{draws
 \item \code{\link[=dweibull_rvec]{dweibull_rvec()}} Weibull
 }
 
+\strong{Selecting draws}
+\itemize{
+\item \code{\link[=extract_draw]{extract_draw()}} One draw as an ordinary vector
+\item \code{\link[=extract_draws]{extract_draws()}} Draws selected by index, as an rvec
+\item \code{\link[=thin_draws]{thin_draws()}} Random selection without replacement
+}
+
 \strong{Summarizing across draws}
 \itemize{
 \item \code{\link[=draws_all]{draws_all()}} All
 \item \code{\link[=draws_any]{draws_any()}} Any
+\item \code{\link[=draws_any_na]{draws_any_na()}}, \code{\link[=draws_all_na]{draws_all_na()}} Missing draws
+\item \code{\link[=draws_any_infinite]{draws_any_infinite()}}, \code{\link[=draws_all_infinite]{draws_all_infinite()}} Infinite draws
+\item \code{\link[=draws_any_finite]{draws_any_finite()}}, \code{\link[=draws_all_finite]{draws_all_finite()}} Finite draws
 \item \code{\link[=draws_min]{draws_min()}} Minimum
 \item \code{\link[=draws_max]{draws_max()}} Maximum
 \item \code{\link[=draws_median]{draws_median()}} Median
@@ -79,7 +89,17 @@ For instance, to calculate a credible interval, use \code{\link[=draws_ci]{draws
 \item \code{\link[=draws_ci]{draws_ci()}} Credible intervals
 \item \code{\link[=draws_quantile]{draws_quantile()}} Quantiles
 \item \code{\link[=draws_fun]{draws_fun()}} Arbitrary function
-\item \code{\link[=n_draw]{n_draw()}} Number
+\item \code{\link[=n_draw]{n_draw()}} Number of draws
+}
+
+\strong{Dealing with NAs and infinite values}
+\itemize{
+\item \code{\link[=draws_any_na]{draws_any_na()}}
+\item \code{\link[=draws_all_na]{draws_all_na()}}
+\item \code{\link[=draws_any_infinite]{draws_any_infinite()}}
+\item \code{\link[=draws_all_infinite]{draws_all_infinite()}}
+\item \code{\link[=draws_any_finite]{draws_any_finite()}}
+\item \code{\link[=draws_all_finite]{draws_all_finite()}}
 }
 
 \strong{Coercion, classes}
@@ -124,6 +144,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: John Bryant \email{john@bayesiandemography.com}
+
+Authors:
+\itemize{
+  \item John Bryant \email{john@bayesiandemography.com}
+}
 
 Other contributors:
 \itemize{

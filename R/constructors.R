@@ -18,7 +18,7 @@
 #' @param length Desired length of rvec.
 #' Default is `0`.
 #' @param n_draw Number of draws of rvec.
-#' Default is `1000`.
+#' Must be at least 1. Default is `1000`.
 #'
 #' @returns An rvec.
 #'
@@ -45,7 +45,7 @@
 new_rvec <- function(x = double(), length = 0, n_draw = 1000) {
   check_nonneg_num_scalar(length)
   length <- as.integer(length)
-  check_nonneg_num_scalar(n_draw)
+  check_n_draw(n_draw)
   n_draw <- as.integer(n_draw)
   type <- typeof(x)
   if (type == "character") {
@@ -78,16 +78,32 @@ new_rvec <- function(x = double(), length = 0, n_draw = 1000) {
 }
 
 
-#' Create an Empty Rvec
+#' Create an Rvec Filled with a Single Value
 #'
-#' Create an rvec, filled with `0`, `""`,
-#' or `FALSE`, with a given length
-#' or number of draws.
+#' Create an rvec that uses the same value for
+#' every element and every draw.
+#'
+#' `value` must be an atomic vector of length 1.
+#' Matrices, arrays, lists, and rvecs are not allowed.
+#' Values are coerced to the correct type, when the
+#' coercion can be done without losing information.
+#' Character values are not converted to numeric
+#' or logical values.
+#'
+#' The defaults for `value` are
+#'
+#' - `new_rvec_chr()`: `""`
+#' - `new_rvec_dbl()`: `0`
+#' - `new_rvec_int()`: `0`
+#' - `new_rvec_lgl()`: `FALSE`
 #'
 #' @param length Desired length of rvec.
 #' Default is `0`.
 #' @param n_draw Number of draws of rvec.
-#' Default is `1000`.
+#' Must be at least 1. Default is `1000`.
+#' @param value Value used to fill the rvec.
+#' Can be `NA`. Default is `0`, `""`, or `FALSE`.
+#' See below for details.
 #'
 #' @return An rvec.
 #'
@@ -99,6 +115,8 @@ new_rvec <- function(x = double(), length = 0, n_draw = 1000) {
 #' @examples
 #' new_rvec_int()
 #' new_rvec_lgl(length = 1, n_draw = 5)
+#' new_rvec_dbl(length = 2, n_draw = 5, value = NA)
+#' new_rvec_int(length = 3, n_draw = 5, value = 2)
 #'
 #' x <- new_rvec_dbl(length = 2)
 #' x[1] <- rnorm_rvec(n = 1, n_draw = 1000)
@@ -108,26 +126,26 @@ NULL
 
 #' @export
 #' @rdname new_rvec_blank
-new_rvec_chr <- function(length = 0, n_draw = 1000) {
-  .new_rvec(type = "chr", length = length, n_draw = n_draw)
+new_rvec_chr <- function(length = 0, n_draw = 1000, value = "") {
+  .new_rvec(type = "chr", length = length, n_draw = n_draw, value = value)
 }
 
 #' @export
 #' @rdname new_rvec_blank
-new_rvec_dbl <- function(length = 0, n_draw = 1000) {
-  .new_rvec(type = "dbl", length = length, n_draw = n_draw)
+new_rvec_dbl <- function(length = 0, n_draw = 1000, value = 0) {
+  .new_rvec(type = "dbl", length = length, n_draw = n_draw, value = value)
 }
 
 #' @export
 #' @rdname new_rvec_blank
-new_rvec_int <- function(length = 0, n_draw = 1000) {
-  .new_rvec(type = "int", length = length, n_draw = n_draw)
+new_rvec_int <- function(length = 0, n_draw = 1000, value = 0L) {
+  .new_rvec(type = "int", length = length, n_draw = n_draw, value = value)
 }
 
 #' @export
 #' @rdname new_rvec_blank
-new_rvec_lgl <- function(length = 0, n_draw = 1000) {
-  .new_rvec(type = "lgl", length = length, n_draw = n_draw)
+new_rvec_lgl <- function(length = 0, n_draw = 1000, value = FALSE) {
+  .new_rvec(type = "lgl", length = length, n_draw = n_draw, value = value)
 }
 
 
@@ -143,6 +161,8 @@ new_rvec_lgl <- function(length = 0, n_draw = 1000) {
 #' - `"rvec_int"` integers
 #' - `"rvec_lgl"` logical
 #' - `"rvec_chr"` character
+#'
+#' An rvec may have zero elements, but must have at least one draw.
 #'
 #' These subclasses are analogous to [double()],
 #' [integer()], [logical()], and [character()]
@@ -236,6 +256,9 @@ rvec <- function(x) {
 #' @export
 #' @rdname rvec
 rvec_chr <- function(x = NULL) {
+  data <- same_type_rvec_data(x, "character")
+  if (!is.null(data))
+    return(.new_rvec_chr(data))
   if (is_rvec(x)) {
     m <- field(x, "data")
     data_vec <- as.vector(m)
@@ -285,6 +308,9 @@ rvec_chr <- function(x = NULL) {
 #' @export
 #' @rdname rvec
 rvec_dbl <- function(x = NULL) {
+  data <- same_type_rvec_data(x, "double")
+  if (!is.null(data))
+    return(.new_rvec_dbl(data))
   if (is_rvec(x)) {
     m <- field(x, "data")
     data_vec <- as.vector(m)
@@ -336,6 +362,9 @@ rvec_dbl <- function(x = NULL) {
 #' @export
 #' @rdname rvec
 rvec_int <- function(x = NULL) {
+  data <- same_type_rvec_data(x, "integer")
+  if (!is.null(data))
+    return(.new_rvec_int(data))
   if (is_rvec(x)) {
     m <- field(x, "data")
     data_vec <- as.vector(m)
@@ -387,6 +416,9 @@ rvec_int <- function(x = NULL) {
 #' @export
 #' @rdname rvec
 rvec_lgl <- function(x = NULL) {
+  data <- same_type_rvec_data(x, "logical")
+  if (!is.null(data))
+    return(.new_rvec_lgl(data))
   if (is_rvec(x)) {
     m <- field(x, "data")
     data_vec <- as.vector(m)
@@ -436,54 +468,89 @@ rvec_lgl <- function(x = NULL) {
 
 ## Internal constructors ------------------------------------------------------
 
-#' Create New Empty Rvec
+## Representation invariant: an rvec has zero or more elements (matrix rows)
+## and at least one draw (matrix column), including empty vectors and prototypes.
+## All four low-level constructors check the draw dimension. Coercion and
+## arithmetic use these constructors; vctrs restoration checks it separately.
+## Callers must supply a matrix of the appropriate storage type.
+
+
+#' Create New Rvec Filled with a Single Value
 #'
 #' @param type Character, double, integer, or logical
 #' @param length Length of resulting rvec
-#' @param number of draws of resulting rvec
+#' @param n_draw Number of draws of resulting rvec
+#' @param value Scalar fill value
 #'
 #' @returns An rvec
 #'
 #' @noRd
-.new_rvec <- function(type, length, n_draw) {
+.new_rvec <- function(type, length, n_draw,
+                      value = switch(type, chr = "", dbl = 0, int = 0L, lgl = FALSE)) {
   type <- match.arg(type, choices = c("chr", "dbl", "int", "lgl"))
   check_nonneg_num_scalar(length)
   length <- as.integer(length)
-  check_nonneg_num_scalar(n_draw)
+  check_n_draw(n_draw)
   n_draw <- as.integer(n_draw)
+  if (!is.atomic(value) || !is.null(dim(value)) || length(value) != 1L ||
+      is_rvec(value))
+    cli::cli_abort("{.arg value} must be an atomic vector of length 1, not a matrix, array, or rvec.")
+  value <- unname(value)
   if (type == "chr")
-    x <- ""
-  else if (type == "int")
-    x <- 0L
-  else if (type == "dbl")
-    x <- 0.0
-  else
-    x <- FALSE
-  m <- matrix(x, nrow = length, ncol = n_draw)
+    value <- as.character(value)
+  else {
+    target <- switch(type, dbl = double(), int = integer(), lgl = logical())
+    value <- vec_cast(value, target, x_arg = "value")
+  }
+  m <- matrix(value, nrow = length, ncol = n_draw)
   rvec(m)
 }
 
 
 ## HAS_TESTS
 .new_rvec_chr <- function(data) {
+    check_x_has_at_least_one_col(data)
     new_rcrd(fields = list(data = data),
              class = c("rvec_chr", "rvec"))
 }
 
 ## HAS_TESTS
 .new_rvec_dbl <- function(data) {
+    check_x_has_at_least_one_col(data)
     new_rcrd(fields = list(data = data),
              class = c("rvec_dbl", "rvec"))
 }
 
 ## HAS_TESTS
 .new_rvec_int <- function(data) {
+    check_x_has_at_least_one_col(data)
     new_rcrd(fields = list(data = data),
              class = c("rvec_int", "rvec"))
 }
 
 ## HAS_TESTS
 .new_rvec_lgl <- function(data) {
+    check_x_has_at_least_one_col(data)
     new_rcrd(fields = list(data = data),
              class = c("rvec_lgl", "rvec"))
+}
+
+
+## HAS_TESTS
+#' Reuse a plain matrix when no type conversion is required
+#'
+#' Return NULL for inputs that require the normal constructor path. Preserve
+#' row names while discarding column names, as the typed constructors do.
+#' @noRd
+same_type_rvec_data <- function(x, type) {
+    m <- if (is_rvec(x)) field(x, "data") else x
+    if (!identical(class(m), c("matrix", "array")) ||
+        typeof(m) != type || ncol(m) == 0L ||
+        !all(names(attributes(m)) %in% c("dim", "dimnames")))
+        return(NULL)
+    nms <- rownames(m)
+    dn <- if (is.null(nms)) NULL else list(nms, NULL)
+    if (!identical(dimnames(m), dn))
+        dimnames(m) <- dn
+    m
 }
